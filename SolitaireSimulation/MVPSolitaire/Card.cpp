@@ -48,6 +48,10 @@ bool isVis;
              return false;
          }
      }
+
+     void toString(){
+         std::cout<< num << ","<<suit;
+     }
 };
 
 

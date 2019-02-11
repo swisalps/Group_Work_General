@@ -12,9 +12,14 @@ std::list<Card> shuffled;
 //constructs a card instance made up of the cards number,
 //suit and whether its value is visible to the user or not
     cardDeck(){
-        num = number;
-        suit = cardSuit;
-        isVis = visible;
+        makeClub();
+        makeDiamond();
+        makeHeart();
+        makeSpade();
+
+        for(std::list<Card>::iterator it=unShuffle.begin(); it != unShuffle.end(); ++it)
+            std::cout <<  it->getSuit() ;
+
     }
     void makeDiamond(){
        for(int i= 1; i <= 13; i = i + 1){
@@ -37,5 +42,7 @@ std::list<Card> shuffled;
        }
    }
 };
-
+ int main(){
+     new cardDeck();
+ }
 
