@@ -18,31 +18,33 @@ std::list<Card> shuffled;
         makeSpade();
 
         for(std::list<Card>::iterator it=unShuffle.begin(); it != unShuffle.end(); ++it)
-            std::cout <<  it->getSuit() ;
+            std::cout <<  it->toString() ;
 
     }
     void makeDiamond(){
        for(int i= 1; i <= 13; i = i + 1){
-           unShuffle.emplace_front(new Card(i, "D", false));
+           unShuffle.emplace_front(i, "D", false);
        }
    }
    void makeSpade(){
        for(int i= 1; i <= 13; i = i + 1){
-           unShuffle.emplace_front(new Card(i, "S", false));
+           unShuffle.emplace_front(i, "S", false);
        }
    }
    void makeHeart(){
        for(int i= 1; i <= 13; i = i + 1){
-           unShuffle.emplace_front(new Card(i, "H", false));
+           unShuffle.emplace_front(i, "H", false);
        }
    }
    void makeClub(){
        for(int i= 1; i <= 13; i = i + 1){
-           unShuffle.emplace_front(new Card(i, "C", false));
+           unShuffle.emplace_front(i, "C", false);
        }
    }
-};
- int main(){
-     new cardDeck();
- }
 
+};
+
+    int main(){
+     new cardDeck();
+     return 0;
+ }

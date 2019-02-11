@@ -49,8 +49,9 @@ bool isVis;
          }
      }
 
-     void toString(){
-         std::cout<< num << ","<<suit;
+     std::string toString(){
+         std::string temp = "";
+         return  std::to_string(num) +suit + "\n" ;
      }
 };
 
