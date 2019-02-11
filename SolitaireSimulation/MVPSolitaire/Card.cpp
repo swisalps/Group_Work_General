@@ -3,6 +3,7 @@
 
 
 class Card {
+public:
 int num;
 std::string suit;
 bool isVis;
@@ -47,6 +48,6 @@ bool isVis;
              return false;
          }
      }
-}
+};
 
 

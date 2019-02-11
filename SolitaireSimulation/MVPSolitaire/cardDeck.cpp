@@ -1,44 +1,41 @@
 #include <stdlib.h>     /* srand, rand */
-#include "card.h"
 #include <iostream>
+#include <list>
+#include "Card.cpp"
 
 
-const std::string SUIT[SUIT_MAX]  = {"S", "H", "D", "C"};
-const std::string RANK[RANK_MAX]  = {"2","3","4","5","6","7","8","9","10","J","Q","K","A"};
+class cardDeck {
+    public:
+std::list<Card> unShuffle;
+std::list<Card> shuffled;
+
+//constructs a card instance made up of the cards number,
+//suit and whether its value is visible to the user or not
+    cardDeck(){
+        num = number;
+        suit = cardSuit;
+        isVis = visible;
+    }
+    void makeDiamond(){
+       for(int i= 1; i <= 13; i = i + 1){
+           unShuffle.emplace_front(new Card(i, "D", false));
+       }
+   }
+   void makeSpade(){
+       for(int i= 1; i <= 13; i = i + 1){
+           unShuffle.emplace_front(new Card(i, "S", false));
+       }
+   }
+   void makeHeart(){
+       for(int i= 1; i <= 13; i = i + 1){
+           unShuffle.emplace_front(new Card(i, "H", false));
+       }
+   }
+   void makeClub(){
+       for(int i= 1; i <= 13; i = i + 1){
+           unShuffle.emplace_front(new Card(i, "C", false));
+       }
+   }
+};
 
 
-Card::Card()
-{
-   m_suit = generate_suit();
-   m_rank = generate_rank();
-}
-
-Card::Card(const int &suit, const int &rank) : m_suit(suit), m_rank(rank)
-{
-
-}
-
-int Card::generate_suit()
-{
-    return rand() % (SUIT_MAX-1) + 0;
-}
-
-int Card::generate_rank()
-{
-    return rand() % (RANK_MAX-1) + 0;
-}
-
-std::string Card::Card2Str() const
-{
-    return SUIT[get_suit()] + RANK[get_rank()];
-}
-
-int Card::get_suit() const
-{
-    return m_suit;
-}
-
-int Card::get_rank() const
-{
-    return m_rank;
-}
