@@ -2,12 +2,14 @@
 #include <iostream>
 #include <list>
 #include "Card.cpp"
+#include<random>
 
 
 class cardDeck {
     public:
 std::list<Card> unShuffle;
 std::list<Card> shuffled;
+int randomInt;
 
 //constructs a card instance made up of the cards number,
 //suit and whether its value is visible to the user or not
@@ -18,8 +20,7 @@ std::list<Card> shuffled;
         makeSpade();
 
         for(std::list<Card>::iterator it=unShuffle.begin(); it != unShuffle.end(); ++it)
-            std::cout <<  it->toString() ;
-
+            std::cout <<  it->toString();
     }
     void makeDiamond(){
        for(int i= 1; i <= 13; i = i + 1){
@@ -41,9 +42,14 @@ std::list<Card> shuffled;
            unShuffle.emplace_front(i, "C", false);
        }
    }
-
+   std::list<Card> shuffleDeck(){
+       for(int n = unShuffle.size() + 1; n > 0; n--){
+           randomInt = rand()/RAND_MAX + (n + 1);
+           Card temp = unShuffle.back();
+           unShuffle.pop_back();
+            }
+   }
 };
-
     int main(){
      new cardDeck();
      return 0;
