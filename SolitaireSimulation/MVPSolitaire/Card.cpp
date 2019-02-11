@@ -6,9 +6,12 @@ class Card {
 int num;
 std::string suit;
 bool isVis;
-    Card(int number, std::string cardSuit){
+//constructs a card instance made up of the cards number,
+//suit and whether its value is visible to the user or not
+    Card(int number, std::string cardSuit, bool visible){
         num = number;
         suit = cardSuit;
+        isVis = visible;
     }
     int getNum(){
         return num;
