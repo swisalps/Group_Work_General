@@ -42,6 +42,8 @@ int randomInt;
            unShuffle.emplace_front(i, "C", false);
        }
    }
+
+   // Shuffles the deck
    std::list<Card> shuffleDeck(){
        for(int n = unShuffle.size() + 1; n > 0; n--){
            randomInt = rand()/RAND_MAX + (n + 1);
