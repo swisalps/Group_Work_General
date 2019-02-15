@@ -127,8 +127,13 @@ class GameController
 
 
 
-//moves a card from its current position to a new vector
-    void moveCard(Card c, vector<Card> v)
+/**moves a card from its current position to a new vector
+@param numCards number of cards being moved
+@param source location of card(s) that are going to be moved
+@param dest destination for the cards being moved
+*/
+
+    void moveCard(int numCards, list<Card> source, list<Card> dest)
     {
         v.emplace(v.end(), c);
     }
