@@ -54,10 +54,11 @@ class GameController
     //method that checks what piles a flipcard can be placed on. if their is another card in flippile or a king, repeat process
     //@return true if the method empties the flip
     bool checkFlip(){
+
+        while(!flipPile.empty()){
         Card aCard = flipPile.front();
         int cNum = aCard.getNum();
         bool isRed = aCard.isRed();
-        while(!flipPile.empty()){
         if(lowerOne.front().isRed() != isRed && lowerOne.front().getNum() == cNum + 1){
             //lowerOne.push_front(aCard); will become moveCard
             hasMovedFlip++;
@@ -92,14 +93,13 @@ class GameController
             //lowerSeven.push_front(aCard); will become moveCard
             hasMovedFlip++;
         }
-
+        else{
+            return false;
+        }
 
     }
     if(hasMovedFlip != 0){
         return true;
-    }
-    else{
-        return false;
     }
     }
 
