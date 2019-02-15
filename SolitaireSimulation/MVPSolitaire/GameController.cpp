@@ -19,8 +19,7 @@ class GameController
     {
 
         initSolitaire();
-for(std::list<Card>::iterator it=lowerSeven.begin(); it != lowerSeven.end(); ++it)
-            std::cout <<  it->toString();
+
 
     }
 
@@ -45,7 +44,9 @@ for(std::list<Card>::iterator it=lowerSeven.begin(); it != lowerSeven.end(); ++i
         shuffleDeck.pop_front();
         }
         pile.front().setVis();
-        std::cout<<pile.front().toString();
+        //for(std::list<Card>::iterator it=pile.begin(); it != pile.end(); it++)
+          //  std::cout <<  it->toString();
+
     }
 
 //moves a card from its current position to a new vector
