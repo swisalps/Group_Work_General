@@ -54,43 +54,42 @@ class GameController
     //method that checks what piles a flipcard can be placed on. if their is another card in flippile or a king, repeat process
     //@return true if the method empties the flip
     bool checkFlip(){
-
         while(!flipPile.empty()){
         Card aCard = flipPile.front();
         int cNum = aCard.getNum();
         bool isRed = aCard.isRed();
         if(lowerOne.front().isRed() != isRed && lowerOne.front().getNum() == cNum + 1){
-            //lowerOne.push_front(aCard); will become moveCard
+            moveCard(1, flipPile, lowerOne);
             hasMovedFlip++;
 
         }
         else if(lowerTwo.front().isRed() != isRed && lowerTwo.front().getNum() == cNum + 1){
-            //lowerTwo.push_front(aCard); will become moveCard
+            moveCard(1, flipPile, lowerTwo);
             hasMovedFlip++;
 
         }
         else if(lowerThree.front().isRed() != isRed && lowerThree.front().getNum() == cNum + 1){
-            //lowerThree.push_front(aCard); will become moveCard
+            moveCard(1, flipPile, lowerThree);
             hasMovedFlip++;
 
         }
         else if(lowerFour.front().isRed() != isRed && lowerFour.front().getNum() == cNum + 1){
-            //lowerFour.push_front(aCard); will become moveCard
+            moveCard(1, flipPile, lowerFour);
             hasMovedFlip++;
 
         }
         else if(lowerFive.front().isRed() != isRed && lowerFive.front().getNum() == cNum + 1){
-            //lowerFive.push_front(aCard); will become moveCard
+            moveCard(1, flipPile, lowerFive);
             hasMovedFlip++;
 
         }
         else if(lowerSix.front().isRed() != isRed && lowerSix.front().getNum() == cNum + 1){
-            //lowerSix.push_front(aCard); will become moveCard
+            moveCard(1, flipPile, lowerSix);
             hasMovedFlip++;
 
         }
         else if(lowerSeven.front().isRed() != isRed && lowerSeven.front().getNum() == cNum + 1){
-            //lowerSeven.push_front(aCard); will become moveCard
+            moveCard(1, flipPile, lowerSeven);
             hasMovedFlip++;
         }
         else{
