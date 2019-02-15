@@ -48,6 +48,11 @@ class GameController
           //  std::cout <<  it->toString();
 
     }
+    //method that checks what piles a parameter card can be placed on.
+    //@return could execute the first move it finds, or return a ranked list of moves from best to worse
+    void checkPiles(Card aCard){
+        
+    }
 
 //moves a card from its current position to a new vector
     void moveCard(Card c, vector<Card> v)
