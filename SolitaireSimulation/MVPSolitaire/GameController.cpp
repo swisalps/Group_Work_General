@@ -13,7 +13,7 @@ class GameController
     cardDeck deck;
     std::list<Card> shuffleDeck;
     std::list<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven;
-    //lists below will be treated and interacted with as a stack. but are list becuase of the advanatages the list data structure offers in terms of moving sections of data 
+    //lists below will be treated and interacted with as a stack. but are list becuase of the advanatages the list data structure offers in terms of moving sections of data
     std::list<Card> topOne, topTwo, topThree, topFour, flipPile;
 
     GameController()
@@ -52,7 +52,7 @@ class GameController
     //method that checks what piles a flipcard can be placed on. if their is another card in flippile or a king, repeat process
     //@return could execute the first move it finds, or return a ranked list of moves from best to worse
     void checkFlip(){
-        Card aCard = flipPile.top();
+        Card aCard = flipPile.front();
         int cNum = aCard.getNum();
         bool isRed = aCard.isRed();
         if(lowerOne.front().isRed() != isRed && lowerOne.front().getNum() == cNum + 1){
