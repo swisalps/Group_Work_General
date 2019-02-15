@@ -92,14 +92,15 @@ class GameController
             //lowerSeven.push_front(aCard); will become moveCard
             hasMovedFlip++;
         }
-        else{
-            ;
-        }
+
+
+    }
+    if(hasMovedFlip != 0){
         return true;
-        }
-
-
-
+    }
+    else{
+        return false;
+    }
     }
 
     bool checkLower(bool move){
@@ -122,7 +123,7 @@ class GameController
         //No: return; set bool to false
 
 
-
+        return true;
     }
 
 
