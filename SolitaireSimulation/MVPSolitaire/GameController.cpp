@@ -11,6 +11,8 @@ class GameController
 {
     public:
     cardDeck deck;
+    int hasMovedFlip;
+    int hasMovedLower;
     std::list<Card> shuffleDeck;
     std::list<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven;
     //lists below will be treated and interacted with as a stack. but are list becuase of the advanatages the list data structure offers in terms of moving sections of data
@@ -50,16 +52,54 @@ class GameController
 
     }
     //method that checks what piles a flipcard can be placed on. if their is another card in flippile or a king, repeat process
-    //@return could execute the first move it finds, or return a ranked list of moves from best to worse
-    void checkFlip(){
+    //@return true if the method empties the flip
+    bool checkFlip(){
         Card aCard = flipPile.front();
         int cNum = aCard.getNum();
         bool isRed = aCard.isRed();
+        while(!flipPile.empty()){
         if(lowerOne.front().isRed() != isRed && lowerOne.front().getNum() == cNum + 1){
-            lowerOne.push_front(aCard);
-
+            //lowerOne.push_front(aCard); will become moveCard
+            hasMovedFlip++;
 
         }
+        else if(lowerTwo.front().isRed() != isRed && lowerTwo.front().getNum() == cNum + 1){
+            //lowerTwo.push_front(aCard); will become moveCard
+            hasMovedFlip++;
+
+        }
+        else if(lowerThree.front().isRed() != isRed && lowerThree.front().getNum() == cNum + 1){
+            //lowerThree.push_front(aCard); will become moveCard
+            hasMovedFlip++;
+
+        }
+        else if(lowerFour.front().isRed() != isRed && lowerFour.front().getNum() == cNum + 1){
+            //lowerFour.push_front(aCard); will become moveCard
+            hasMovedFlip++;
+
+        }
+        else if(lowerFive.front().isRed() != isRed && lowerFive.front().getNum() == cNum + 1){
+            //lowerFive.push_front(aCard); will become moveCard
+            hasMovedFlip++;
+
+        }
+        else if(lowerSix.front().isRed() != isRed && lowerSix.front().getNum() == cNum + 1){
+            //lowerSix.push_front(aCard); will become moveCard
+            hasMovedFlip++;
+
+        }
+        else if(lowerSeven.front().isRed() != isRed && lowerSeven.front().getNum() == cNum + 1){
+            //lowerSeven.push_front(aCard); will become moveCard
+            hasMovedFlip++;
+        }
+        else{
+            ;
+        }
+        return true;
+        }
+
+
+
     }
 
 //moves a card from its current position to a new vector
