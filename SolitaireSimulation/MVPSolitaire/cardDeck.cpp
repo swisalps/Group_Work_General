@@ -24,8 +24,8 @@ int randomInt;
 
         shuffleDeck();
 
-        for(std::list<Card>::iterator it=shuffled.begin(); it != shuffled.end(); ++it)
-            std::cout <<  it->toString();
+        //for(std::list<Card>::iterator it=shuffled.begin(); it != shuffled.end(); ++it)
+          //  std::cout <<  it->toString();
     }
     void makeDiamond(){
        for(int i= 1; i <= 13; i = i + 1){

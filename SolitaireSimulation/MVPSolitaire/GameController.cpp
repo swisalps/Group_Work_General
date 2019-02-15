@@ -8,18 +8,34 @@ using namespace std;
 class GameController
 {
     cardDeck deck;
-    std::set<Card> shuffleDeck;
-    std::vector<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven;
+    std::list<Card> shuffleDeck;
+    std::list<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven;
     std::stack<Card> topOne, topTwo, topThree, topFour, flipPile;
 
     GameController()
     {
-
+        initSolitaire();
+        
     }
 
     void initSolitaire()
     {
-        //lowerOne.insert(0, )
+        deck = cardDeck();
+        shuffleDeck = deck.shuffled;
+        makePile(1,lowerOne);
+        makePile(2,lowerTwo);
+        makePile(3,lowerThree);
+        makePile(4,lowerFour);
+        makePile(5,lowerFive);
+        makePile(6,lowerSix);
+        makePile(7,lowerSeven);
+    }
+    void makePile(int numCards, std::list<Card> pile){
+        for(int i = 0; i < numCards; i++){
+        pile.push_front(shuffleDeck.front());
+        shuffleDeck.pop_front();
+        }
+        pile.front().setVis();
     }
 
 //moves a card from its current position to a new vector
