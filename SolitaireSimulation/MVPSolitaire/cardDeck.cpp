@@ -19,7 +19,12 @@ int randomInt;
         makeHeart();
         makeSpade();
 
-        for(std::list<Card>::iterator it=unShuffle.begin(); it != unShuffle.end(); ++it)
+        //for(std::list<Card>::iterator it=unShuffle.begin(); it != unShuffle.end(); ++it)
+        //    std::cout <<  it->toString();
+
+        shuffleDeck();
+
+        for(std::list<Card>::iterator it=shuffled.begin(); it != shuffled.end(); ++it)
             std::cout <<  it->toString();
     }
     void makeDiamond(){
@@ -43,13 +48,16 @@ int randomInt;
        }
    }
 
-   // Shuffles the deck
+   //Shuffles the deck using the original fisher yates theory
    std::list<Card> shuffleDeck(){
-       for(int n = unShuffle.size() + 1; n > 0; n--){
+       for(int n = unShuffle.size(); n > 0; n--){
            randomInt = rand()/RAND_MAX + (n + 1);
            Card temp = unShuffle.back();
+           shuffled.push_back(temp);
            unShuffle.pop_back();
-            }
+        }
+
+        return shuffled;
    }
 };
     int main(){
