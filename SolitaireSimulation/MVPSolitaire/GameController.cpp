@@ -62,6 +62,31 @@ class GameController
         }
     }
 
+    bool checkLower(bool move){
+        //Check if you can move a card from the lower pile you are looking at to the ace-piles
+        //Check if there is an invisible card you can make visible
+        //If you moved, increment the hasMovedLower
+
+        //Check if a whole deck can be moved (use splice method if there are invisible cards underneath pile)
+        //Check if there is an invisible card you can make visible
+        //If you moved, increment the hasMovedLower
+
+        //Check if you can move a card from one pile to another pile
+        //Check if there is an invisible card you can make visible
+        //Check if the card you are moving is a king card
+            //Check if there are any open/empty spaces for the king card
+        //If you moved, increment the hasMovedLower
+
+        //Check if you made a move
+        //Yes: recurse; set bool to true
+        //No: return; set bool to false
+
+
+
+    }
+
+
+
 //moves a card from its current position to a new vector
     void moveCard(Card c, vector<Card> v)
     {
