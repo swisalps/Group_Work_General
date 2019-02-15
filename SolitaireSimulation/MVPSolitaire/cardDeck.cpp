@@ -7,7 +7,7 @@
 
 class cardDeck {
     public:
-std::list<Card> unShuffle;
+std::vector<Card> unShuffle;
 std::list<Card> shuffled;
 int randomInt;
 
@@ -29,32 +29,33 @@ int randomInt;
     }
     void makeDiamond(){
        for(int i= 1; i <= 13; i = i + 1){
-           unShuffle.emplace_front(i, "D", false);
+           unShuffle.emplace_back(i, "D", false);
        }
    }
    void makeSpade(){
        for(int i= 1; i <= 13; i = i + 1){
-           unShuffle.emplace_front(i, "S", false);
+           unShuffle.emplace_back(i, "S", false);
        }
    }
    void makeHeart(){
        for(int i= 1; i <= 13; i = i + 1){
-           unShuffle.emplace_front(i, "H", false);
+           unShuffle.emplace_back(i, "H", false);
        }
    }
    void makeClub(){
        for(int i= 1; i <= 13; i = i + 1){
-           unShuffle.emplace_front(i, "C", false);
+           unShuffle.emplace_back(i, "C", false);
        }
    }
 
    //Shuffles the deck using the original fisher yates theory
    std::list<Card> shuffleDeck(){
        for(int n = unShuffle.size(); n > 0; n--){
-           randomInt = rand()/RAND_MAX + (n + 1);
-           Card temp = unShuffle.back();
+           randomInt = rand() % unShuffle.size();
+           //std::cout<< randomInt<< "||";
+           Card temp = unShuffle[randomInt];
            shuffled.push_back(temp);
-           unShuffle.pop_back();
+           unShuffle.erase(unShuffle.begin() + randomInt);
         }
 
         return shuffled;
