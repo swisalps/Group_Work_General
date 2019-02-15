@@ -3,10 +3,13 @@
 #include <stdlib.h>
 #include <stack>
 #include <set>
+#include <iostream>
 using namespace std;
 
 class GameController
+
 {
+    public:
     cardDeck deck;
     std::list<Card> shuffleDeck;
     std::list<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven;
@@ -14,8 +17,11 @@ class GameController
 
     GameController()
     {
+
         initSolitaire();
-        
+for(std::list<Card>::iterator it=lowerSeven.begin(); it != lowerSeven.end(); ++it)
+            std::cout <<  it->toString();
+
     }
 
     void initSolitaire()
@@ -29,13 +35,17 @@ class GameController
         makePile(5,lowerFive);
         makePile(6,lowerSix);
         makePile(7,lowerSeven);
+
     }
     void makePile(int numCards, std::list<Card> pile){
+
         for(int i = 0; i < numCards; i++){
         pile.push_front(shuffleDeck.front());
+
         shuffleDeck.pop_front();
         }
         pile.front().setVis();
+        std::cout<<pile.front().toString();
     }
 
 //moves a card from its current position to a new vector
@@ -69,9 +79,11 @@ class GameController
     }
 
 
-    int main()
-    {
-        return 0;
-    }
+
 
 };
+int main()
+    {
+        new GameController();
+        return 0;
+    }

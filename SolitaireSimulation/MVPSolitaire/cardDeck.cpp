@@ -61,7 +61,4 @@ int randomInt;
         return shuffled;
    }
 };
-    int main(){
-     new cardDeck();
-     return 0;
- }
+
