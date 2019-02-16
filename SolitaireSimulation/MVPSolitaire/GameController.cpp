@@ -13,6 +13,7 @@ class GameController
     cardDeck deck;
     int hasMovedFlip;
     int hasMovedLower;
+    int failCounter;
     std::list<Card> shuffleDeck;
     std::list<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven;
     //lists below will be treated and interacted with as a stack. but are list becuase of the advanatages the list data structure offers in terms of moving sections of data
@@ -37,6 +38,7 @@ class GameController
         makePile(5,lowerFive);
         makePile(6,lowerSix);
         makePile(7,lowerSeven);
+        failCounter = 0;
 
     }
     void makePile(int numCards, std::list<Card> pile){
@@ -135,18 +137,41 @@ class GameController
 
     void moveCard(int numCards, list<Card> source, list<Card> dest)
     {
-        v.emplace(v.end(), c);
+        if (numCards == 1){
+            dest.push_front(source.front());
+        }
+        else{
+            std::list<Card>::iterator it;
+            it = source.begin();
+            advance(it, numCards);
+            dest.splice(source.begin(), source, it);
+        }
     }
 //flips a card from the shuffled deck to the flip pile.
-    void flipCard(Card c)
+    void flipCard()
     {
-        if(c.getVisible())
+
+        if(!shuffleDeck.empty())
         {
-            c.setNotVis();
+            flipPile.push_front(shuffleDeck.front());
+            shuffleDeck.pop_front();
+            flipPile.front().setVis();
         }
         else
         {
-            c.setVis();
+            flipPile.swap(shuffleDeck);
+            shuffleDeck.reverse();
+            if ((hasMovedFlip == 0 ) && (hasMovedLower == 0)){
+                failCounter++;
+                if (failCounter > 2){
+                    //TODO make game quit and result as loss
+                }
+            }
+            else {
+                hasMovedFlip = 0;
+                hasMovedLower = 0;
+                failCounter = 0;
+            }
         }
     }
 
