@@ -146,6 +146,9 @@ class GameController
             advance(it, numCards);
             dest.splice(source.begin(), source, it);
         }
+       
+        if(!source.front().getVisible())
+            source.front().setVis();
     }
 //flips a card from the shuffled deck to the flip pile.
     void flipCard()
