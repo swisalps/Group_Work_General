@@ -12,7 +12,6 @@ class GameController
     public:
     cardDeck deck;
     int hasMovedFlip;
-    int hasMovedLower;
     int failCounter;
     std::list<Card> shuffleDeck;
     std::list<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven;
@@ -122,6 +121,7 @@ class GameController
         //Check if you can move a card from the lower pile you are looking at to the ace-piles
         //Check if there is an invisible card you can make visible
         //If you moved, increment the hasMovedLower
+        int hasMovedLower = 0;
         if(!lowerOne.empty())
         {
             Card low = lowerOne.back();
