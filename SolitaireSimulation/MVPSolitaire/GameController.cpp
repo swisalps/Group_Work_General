@@ -12,6 +12,7 @@ class GameController
     public:
     cardDeck deck;
     int hasMovedFlip;
+    int hasMovedLower;
     int failCounter;
     std::list<Card> shuffleDeck;
     std::list<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven;
