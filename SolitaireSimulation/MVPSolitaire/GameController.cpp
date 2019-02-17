@@ -194,7 +194,102 @@ class GameController
                 hasMovedLower++;
             }
         }
-
+        else if(!lowerFour.empty())
+        {
+            Card low = lowerFour.back();
+            if(low.getSuit() == topOne.back().getSuit() && low.getNum() == topOne.back().getNum() + 1)
+            {
+                moveCard(1, lowerFour, topOne);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topTwo.back().getSuit() && low.getNum() == topTwo.back().getNum() + 1)
+            {
+                moveCard(1, lowerFour, topTwo);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topThree.back().getSuit() && low.getNum() == topThree.back().getNum() + 1)
+            {
+                moveCard(1, lowerFour, topThree);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topFour.back().getSuit() && low.getNum() == topFour.back().getNum() + 1)
+            {
+                moveCard(1, lowerFour, topFour);
+                hasMovedLower++;
+            }
+        }
+       else if(!lowerFive.empty())
+        {
+            Card low = lowerFive.back();
+            if(low.getSuit() == topOne.back().getSuit() && low.getNum() == topOne.back().getNum() + 1)
+            {
+                moveCard(1, lowerFive, topOne);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topTwo.back().getSuit() && low.getNum() == topTwo.back().getNum() + 1)
+            {
+                moveCard(1, lowerFive, topTwo);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topThree.back().getSuit() && low.getNum() == topThree.back().getNum() + 1)
+            {
+                moveCard(1, lowerFive, topThree);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topFour.back().getSuit() && low.getNum() == topFour.back().getNum() + 1)
+            {
+                moveCard(1, lowerFive, topFour);
+                hasMovedLower++;
+            }
+        }
+        else if(!lowerSix.empty())
+        {
+            Card low = lowerSix.back();
+            if(low.getSuit() == topOne.back().getSuit() && low.getNum() == topOne.back().getNum() + 1)
+            {
+                moveCard(1, lowerSix, topOne);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topTwo.back().getSuit() && low.getNum() == topTwo.back().getNum() + 1)
+            {
+                moveCard(1, lowerSix, topTwo);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topThree.back().getSuit() && low.getNum() == topThree.back().getNum() + 1)
+            {
+                moveCard(1, lowerSix, topThree);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topFour.back().getSuit() && low.getNum() == topFour.back().getNum() + 1)
+            {
+                moveCard(1, lowerSix, topFour);
+                hasMovedLower++;
+            }
+        }
+        else if(!lowerSeven.empty())
+        {
+            Card low = lowerSeven.back();
+            if(low.getSuit() == topOne.back().getSuit() && low.getNum() == topOne.back().getNum() + 1)
+            {
+                moveCard(1, lowerSeven, topOne);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topTwo.back().getSuit() && low.getNum() == topTwo.back().getNum() + 1)
+            {
+                moveCard(1, lowerSeven, topTwo);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topThree.back().getSuit() && low.getNum() == topThree.back().getNum() + 1)
+            {
+                moveCard(1, lowerSeven, topThree);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topFour.back().getSuit() && low.getNum() == topFour.back().getNum() + 1)
+            {
+                moveCard(1, lowerSeven, topFour);
+                hasMovedLower++;
+            }
+        }
         //Check if a whole deck can be moved (use splice method if there are invisible cards underneath pile)
         //Check if there is an invisible card you can make visible
         //If you moved, increment the hasMovedLower
