@@ -24,8 +24,8 @@ class GameController
 
         initSolitaire();
         flipCard();
-        checkFlip();
-
+        bool check = checkFlip();
+        cout << check << endl;
 
     }
 

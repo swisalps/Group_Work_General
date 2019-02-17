@@ -15,14 +15,18 @@ int randomInt;
 //suit and whether its value is visible to the user or not
     cardDeck(){
         makeClub();
-        makeDiamond();
-        makeHeart();
+        shuffleDeck();
         makeSpade();
+        shuffleDeck();
+        makeHeart();
+        shuffleDeck();
+        makeDiamond();
+        shuffleDeck();
 
         //for(std::list<Card>::iterator it=unShuffle.begin(); it != unShuffle.end(); ++it)
         //    std::cout <<  it->toString();
 
-        shuffleDeck();
+
 
         //for(std::list<Card>::iterator it=shuffled.begin(); it != shuffled.end(); ++it)
           //  std::cout <<  it->toString();
