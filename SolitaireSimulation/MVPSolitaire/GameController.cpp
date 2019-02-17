@@ -122,6 +122,78 @@ class GameController
         //Check if you can move a card from the lower pile you are looking at to the ace-piles
         //Check if there is an invisible card you can make visible
         //If you moved, increment the hasMovedLower
+        if(!lowerOne.empty())
+        {
+            Card low = lowerOne.back();
+            if(low.getSuit() == topOne.back().getSuit() && low.getNum() == topOne.back().getNum() + 1)
+            {
+                moveCard(1, lowerOne, topOne);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topTwo.back().getSuit() && low.getNum() == topTwo.back().getNum() + 1)
+            {
+                moveCard(1, lowerOne, topTwo);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topThree.back().getSuit() && low.getNum() == topThree.back().getNum() + 1)
+            {
+                moveCard(1, lowerOne, topThree);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topFour.back().getSuit() && low.getNum() == topFour.back().getNum() + 1)
+            {
+                moveCard(1, lowerOne, topFour);
+                hasMovedLower++;
+            }
+        }
+        else if(!lowerTwo.empty())
+        {
+            Card low = lowerTwo.back();
+            if(low.getSuit() == topOne.back().getSuit() && low.getNum() == topOne.back().getNum() + 1)
+            {
+                moveCard(1, lowerTwo, topOne);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topTwo.back().getSuit() && low.getNum() == topTwo.back().getNum() + 1)
+            {
+                moveCard(1, lowerTwo, topTwo);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topThree.back().getSuit() && low.getNum() == topThree.back().getNum() + 1)
+            {
+                moveCard(1, lowerTwo, topThree);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topFour.back().getSuit() && low.getNum() == topFour.back().getNum() + 1)
+            {
+                moveCard(1, lowerTwo, topFour);
+                hasMovedLower++;
+            }
+        }
+        else if(!lowerThree.empty())
+        {
+            Card low = lowerThree.back();
+            if(low.getSuit() == topOne.back().getSuit() && low.getNum() == topOne.back().getNum() + 1)
+            {
+                moveCard(1, lowerThree, topOne);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topTwo.back().getSuit() && low.getNum() == topTwo.back().getNum() + 1)
+            {
+                moveCard(1, lowerThree, topTwo);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topThree.back().getSuit() && low.getNum() == topThree.back().getNum() + 1)
+            {
+                moveCard(1, lowerThree, topThree);
+                hasMovedLower++;
+            }
+            else if(low.getSuit() == topFour.back().getSuit() && low.getNum() == topFour.back().getNum() + 1)
+            {
+                moveCard(1, lowerThree, topFour);
+                hasMovedLower++;
+            }
+        }
 
         //Check if a whole deck can be moved (use splice method if there are invisible cards underneath pile)
         //Check if there is an invisible card you can make visible
