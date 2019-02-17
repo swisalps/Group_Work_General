@@ -64,8 +64,8 @@ class GameController
         cout << "Flip Card: " << aCard.toString() << endl;
         int cNum = aCard.getNum();
         bool isRed = aCard.isRed();
-        cout << "isRed Value: "<< isRed << endl;
-        cout << "lower4 isRed Value: " << lowerFour.front().isRed() << endl;
+        cout << "isRed Value: "<< isRed << "card num value: "<< cNum << endl;
+        cout << "lower4 isRed Value: " << lowerFour.front().isRed() << "lower4 getNum value: " <<lowerFour.front().getNum() << endl;
         if((lowerOne.front().isRed() != isRed) && (lowerOne.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerOne);
             hasMovedFlip++;
