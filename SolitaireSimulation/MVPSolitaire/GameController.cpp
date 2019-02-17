@@ -53,7 +53,7 @@ class GameController
           //  std::cout <<  it->toString();
 
     }
-    //method that checks what piles a flipcard can be placed on. if their is another card in flippile or a king, repeat process
+    //method that checks what piles a flipcard can be placed on. if there is another card in flippile or a king, repeat process
     //@return true if the method empties the flip
     bool checkFlip(){
         while(!flipPile.empty()){
@@ -146,7 +146,7 @@ class GameController
             advance(it, numCards);
             dest.splice(source.begin(), source, it);
         }
-       
+
         if(!source.front().getVisible())
             source.front().setVis();
     }
