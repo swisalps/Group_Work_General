@@ -64,43 +64,45 @@ class GameController
         cout << "Flip Card: " << aCard.toString() << endl;
         int cNum = aCard.getNum();
         bool isRed = aCard.isRed();
-        if(lowerOne.front().isRed() != isRed && lowerOne.front().getNum() == cNum + 1){
+        cout << "isRed Value: "<< isRed << endl;
+        cout << "lower4 isRed Value: " << lowerFour.front().isRed() << endl;
+        if((lowerOne.front().isRed() != isRed) && (lowerOne.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerOne);
             hasMovedFlip++;
             cout << lowerOne.front().toString()<< endl;
 
         }
-        else if(lowerTwo.front().isRed() != isRed && lowerTwo.front().getNum() == cNum + 1){
+        else if((lowerTwo.front().isRed() != isRed) && (lowerTwo.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerTwo);
             hasMovedFlip++;
             cout << lowerTwo.front().toString()<< endl;
 
         }
-        else if(lowerThree.front().isRed() != isRed && lowerThree.front().getNum() == cNum + 1){
+        else if((lowerThree.front().isRed() != isRed) && (lowerThree.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerThree);
             hasMovedFlip++;
             cout << lowerThree.front().toString()<< endl;
 
         }
-        else if(lowerFour.front().isRed() != isRed && lowerFour.front().getNum() == cNum + 1){
+        else if((lowerFour.front().isRed() != isRed) && (lowerFour.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerFour);
             hasMovedFlip++;
             cout << lowerFour.front().toString()<< endl;
 
         }
-        else if(lowerFive.front().isRed() != isRed && lowerFive.front().getNum() == cNum + 1){
+        else if((lowerFive.front().isRed() != isRed) && (lowerFive.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerFive);
             hasMovedFlip++;
             cout << lowerFive.front().toString()<< endl;
 
         }
-        else if(lowerSix.front().isRed() != isRed && lowerSix.front().getNum() == cNum + 1){
+        else if((lowerSix.front().isRed() != isRed) && (lowerSix.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerSix);
             hasMovedFlip++;
             cout << lowerSix.front().toString()<< endl;
 
         }
-        else if(lowerSeven.front().isRed() != isRed && lowerSeven.front().getNum() == cNum + 1){
+        else if((lowerSeven.front().isRed() != isRed) && (lowerSeven.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerSeven);
             hasMovedFlip++;
             cout << lowerSeven.front().toString()<< endl;
@@ -149,6 +151,7 @@ class GameController
 
     void moveCard(int numCards, list<Card> source, list<Card> dest)
     {
+        cout << "moveCard called" << endl;
         if (numCards == 1){
             dest.push_front(source.front());
         }
