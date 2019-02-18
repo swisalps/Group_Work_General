@@ -255,6 +255,7 @@ class GameController
     //this is method is called only after an pile as the first ACE card. the ace must be placed
     // first before this method is called.
     bool lowerToAce(std::list<Card> lowerPile){
+        if(!lowerPile.empty()){
         Card lowVisCard = lowerPile.front();
             if(lowVisCard.getSuit() == "D"){
                 cout << "1st lower" << endl;
@@ -292,8 +293,9 @@ class GameController
                 cout << "no moves" << endl;
                 return false;
             }
-            return false;
             }
+            return false;
+    }
 
 
 
