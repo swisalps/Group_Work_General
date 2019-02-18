@@ -18,7 +18,7 @@ class GameController
     int failCounter;
     int test;
     int visCtr;
-    bool lowOne, lowTwo, lowThree, lowFour, lowFive, lowSix, lowSeven, gameLost, gameWon;
+    bool lowOne, lowTwo, lowThree, lowFour, lowFive, lowSix, lowSeven, gameLost, gameWon, heartA, clubA, spadeA, diamondA;
     std::list<Card> shuffleDeck;
     std::list<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven, pile, temp;
     //lists below will be treated and interacted with as a stack. but are list becuase of the advanatages the list data structure offers in terms of moving sections of data
@@ -139,6 +139,10 @@ class GameController
         failCounter = 0;
         gameLost = false;
         gameWon = false;
+        spadeA = false;
+        clubA = false;
+        heartA = false;
+        diamondA =false;
 
     }
     std::list<Card> makePile(int numCards){
@@ -276,50 +280,49 @@ class GameController
                 //cout << "no open spaces for king " << endl;
             }
         }
-
-        else if((lowerOne.front().isRed() != isRed) && (lowerOne.front().getNum() == cNum + 1)){
+        else if((lowerOne.front().isRed() != isRed) && (lowerOne.front().getNum() == cNum + 1) && (lowerOne.front().getNum() != 2)){
             moveCard(1, flipPile, lowerOne);
             hasMovedFlip++;
             flipCard();
             //cout << lowerOne.front().toString()<< endl;
 
         }
-        else if((lowerTwo.front().isRed() != isRed) && (lowerTwo.front().getNum() == cNum + 1)){
+        else if((lowerTwo.front().isRed() != isRed) && (lowerTwo.front().getNum() == cNum + 1) && (lowerTwo.front().getNum() != 2)){
             moveCard(1, flipPile, lowerTwo);
             hasMovedFlip++;
             flipCard();
             //cout << lowerTwo.front().toString()<< endl;
 
         }
-        else if((lowerThree.front().isRed() != isRed) && (lowerThree.front().getNum() == cNum + 1)){
+        else if((lowerThree.front().isRed() != isRed) && (lowerThree.front().getNum() == cNum + 1) && (lowerThree.front().getNum() != 2)){
             moveCard(1, flipPile, lowerThree);
             hasMovedFlip++;
             flipCard();
            //cout << lowerThree.front().toString()<< endl;
 
         }
-        else if((lowerFour.front().isRed() != isRed) && (lowerFour.front().getNum() == cNum + 1)){
+        else if((lowerFour.front().isRed() != isRed) && (lowerFour.front().getNum() == cNum + 1) && (lowerFour.front().getNum() != 2)){
             moveCard(1, flipPile, lowerFour);
             hasMovedFlip++;
             flipCard();
             //cout << lowerFour.front().toString()<< endl;
 
         }
-        else if((lowerFive.front().isRed() != isRed) && (lowerFive.front().getNum() == cNum + 1)){
+        else if((lowerFive.front().isRed() != isRed) && (lowerFive.front().getNum() == cNum + 1) && (lowerFive.front().getNum() != 2)){
             moveCard(1, flipPile, lowerFive);
             hasMovedFlip++;
             flipCard();
             //cout << lowerFive.front().toString()<< endl;
 
         }
-        else if((lowerSix.front().isRed() != isRed) && (lowerSix.front().getNum() == cNum + 1)){
+        else if((lowerSix.front().isRed() != isRed) && (lowerSix.front().getNum() == cNum + 1) && (lowerSix.front().getNum() != 2)){
             moveCard(1, flipPile, lowerSix);
             hasMovedFlip++;
             flipCard();
             //cout << lowerSix.front().toString()<< endl;
 
         }
-        else if((lowerSeven.front().isRed() != isRed) && (lowerSeven.front().getNum() == cNum + 1)){
+        else if((lowerSeven.front().isRed() != isRed) && (lowerSeven.front().getNum() == cNum + 1) && (lowerSeven.front().getNum() != 2)){
             moveCard(1, flipPile, lowerSeven);
             hasMovedFlip++;
             flipCard();
@@ -369,21 +372,25 @@ class GameController
 
                 if(lowVisCard.getSuit() == "D"){
                     moveCard(1, lowerPile, topDiamonds);
+                    diamondA = true;
                     //cout << topDiamonds.front().toString()<< endl;
                     return true;
                 }
                 else if(lowVisCard.getSuit() == "S"){
                     moveCard(1, lowerPile, topSpades);
+                    spadeA = true;
                     //cout << topSpades.front().toString()<< endl;
                     return true;
                 }
                 else if(lowVisCard.getSuit() == "H"){
                     moveCard(1, lowerPile, topHearts);
+                    heartA = true;
                     //cout << topHearts.front().toString()<< endl;
                     return true;
                 }
                 else{ // the suit of the lowVisCard is a Club
                     moveCard(1, lowerPile, topClubs);
+                    clubA = true;
                     //cout << topClubs.front().toString()<< endl;
                     return true;
                 }
