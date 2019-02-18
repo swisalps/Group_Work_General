@@ -300,31 +300,38 @@ class GameController
         return true;
     }
     bool checkLowerMove(int startingPile){
-        list<Card>::iterator Itr;
-        if(!(*lowerPiles[startingPile - 1]).empty()){
-            Card lastVisOne = lastVisible(*lowerPiles[startingPile-1]);
-            cout << "lastVis value: " <<lastVisOne.toString() << endl;
-            Itr = (*lowerPiles[startingPile-1]).begin();
-            temp.clear();
-            for(int i = 0; i < 7; i++)
-            {
-                if(i != startingPile - 1)
+        if(startingPile >= 1)
+        {
+            list<Card>::iterator Itr;
+            if(!(*lowerPiles[startingPile - 1]).empty()){
+                Card lastVisOne = lastVisible(*lowerPiles[startingPile-1]);
+                cout << "lastVis value: " <<lastVisOne.toString() << endl;
+                Itr = (*lowerPiles[startingPile-1]).begin();
+                temp.clear();
+                for(int i = 0; i < 7; i++)
                 {
-                    if(((*lowerPiles[i]).front().getNum() == lastVisOne.getNum()+1) && ((*lowerPiles[i]).front().isRed() != lastVisOne.isRed()))
+                    if(i != startingPile - 1)
                     {
-                        for(int j = 0; j < visCtr; j++)
+                        if(((*lowerPiles[i]).front().getNum() == lastVisOne.getNum()+1) && ((*lowerPiles[i]).front().isRed() != lastVisOne.isRed()))
                         {
-                            temp.splice(temp.begin(), *lowerPiles[startingPile -1], Itr);
-                            cout << temp.back().toString() << endl;
-                            Itr++;
+                            for(int j = 0; j < visCtr; j++)
+                            {
+                                temp.splice(temp.begin(), *lowerPiles[startingPile -1], Itr);
+                                cout << temp.back().toString() << endl;
+                                Itr++;
+                            }
+                        moveCard(1, *lowerPiles[startingPile-1], *lowerPiles[i]);
+                        //lowerPiles[i].splice(lowerPiles[i].begin(), temp);
+                        std::string s = std::to_string(i+1);
+                        cout << "lower" + s + " new front: " << (*lowerPiles[i]).front().toString() << endl;
+                        return true;
                         }
-                    moveCard(1, *lowerPiles[startingPile-1], *lowerPiles[i]);
-                    //lowerPiles[i].splice(lowerPiles[i].begin(), temp);
-                    std::string s = std::to_string(i+1);
-                    cout << "lower" + s + " new front: " << (*lowerPiles[i]).front().toString() << endl;
-                    return true;
                     }
                 }
+            }
+            else
+            {
+                return checkLowerMove(startingPile -1);
             }
         }
         else{
@@ -333,10 +340,6 @@ class GameController
                 //checkLowerMove(lower)
                 return false;
         }
-
-
-
-
         return false;
     }
 
@@ -353,6 +356,7 @@ class GameController
         cout << "moveCard called" << endl;
         if (numCards == 1){  //If there is just one card it is moved to the destination pile and then it is remove from the source pile
             dest.push_front(source.front());
+            source.pop_front();
             cout << "where it was moved" <<dest.front().toString() << endl;
         }
         else{ // If there is more than one card then the top card through numCards is spoliced from the source pile to the destination pile
