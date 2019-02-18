@@ -221,6 +221,47 @@ class GameController
                     hasMovedFlip++;
                 }
         }
+        else if(cNum == 13){
+            if(lowerOne.empty()){
+                moveCard(1, flipPile, lowerOne);
+                flipCard();
+                hasMovedFlip++;
+            }
+            else if(lowerTwo.empty()){
+                moveCard(1, flipPile, lowerTwo);
+                flipCard();
+                hasMovedFlip++;
+            }
+            else if(lowerThree.empty()){
+                moveCard(1, flipPile, lowerThree);
+                flipCard();
+                hasMovedFlip++;
+            }
+            else if(lowerFour.empty()){
+                moveCard(1, flipPile, lowerFour);
+                flipCard();
+                hasMovedFlip++;
+            }
+            else if(lowerFive.empty()){
+                moveCard(1, flipPile, lowerFive);
+                flipCard();
+                hasMovedFlip++;
+            }
+            else if(lowerSix.empty()){
+                moveCard(1, flipPile, lowerOne);
+                flipCard();
+                hasMovedFlip++;
+            }
+            else if(lowerSeven.empty()){
+                moveCard(1, flipPile, lowerSeven);
+                flipCard();
+                hasMovedFlip++;
+            }
+            else{
+                cout << "no open spaces for king " << endl;
+            }
+        }
+
         else if((lowerOne.front().isRed() != isRed) && (lowerOne.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerOne);
             hasMovedFlip++;
