@@ -296,14 +296,14 @@ class GameController
     }
     bool checkLowerMove(){
         list<Card>::iterator Itr;
-        if(!lowerOne.empty()){
-            Card lastVisOne = lastVisible(lowerOne);
+        if(!lowerSeven.empty()){
+            Card lastVisOne = lastVisible(lowerSeven);
             cout << "lastVis value: " <<lastVisOne.toString() << endl;
-            Itr = lowerOne.begin();
+            Itr = lowerSeven.begin();
             temp.clear();
             if((lowerTwo.front().getNum() == lastVisOne.getNum()+1) && (lowerTwo.front().isRed() != lastVisOne.isRed())){
                 for(int i=0; i < visCtr; i++){
-                temp.splice(temp.begin(), lowerOne, Itr);
+                temp.splice(temp.begin(), lowerSeven, Itr);
                 cout << temp.back().toString() << endl;
                 Itr++;
             }
@@ -314,7 +314,7 @@ class GameController
 
             else if((lowerThree.front().getNum() == lastVisOne.getNum()+1) && (lowerThree.front().isRed() != lastVisOne.isRed())){
                 for(int i=0; i < visCtr; i++){
-                temp.splice(temp.begin(), lowerOne, Itr);
+                temp.splice(temp.begin(), lowerSeven, Itr);
                 cout << temp.back().toString() << endl;
                 Itr++;
             }
@@ -324,7 +324,7 @@ class GameController
             }
             else if((lowerFour.front().getNum() == lastVisOne.getNum()+1) && (lowerFour.front().isRed() != lastVisOne.isRed())){
                 for(int i=0; i < visCtr; i++){
-                temp.splice(temp.begin(), lowerOne, Itr);
+                temp.splice(temp.begin(), lowerSeven, Itr);
                 cout << temp.back().toString() << endl;
                 Itr++;
             }
@@ -334,7 +334,7 @@ class GameController
             }
             else if((lowerFive.front().getNum() == lastVisOne.getNum()+1) && (lowerFive.front().isRed() != lastVisOne.isRed())){
                 for(int i=0; i < visCtr; i++){
-                temp.splice(temp.begin(), lowerOne, Itr);
+                temp.splice(temp.begin(), lowerSeven, Itr);
                 cout << temp.back().toString() << endl;
                 Itr++;
             }
@@ -344,7 +344,7 @@ class GameController
             }
             else if((lowerSix.front().getNum() == lastVisOne.getNum()+1) && (lowerSix.front().isRed() != lastVisOne.isRed())){
                 for(int i=0; i < visCtr; i++){
-                temp.splice(temp.begin(), lowerOne, Itr);
+                temp.splice(temp.begin(), lowerSeven, Itr);
                 cout << temp.back().toString() << endl;
                 Itr++;
             }
@@ -352,14 +352,14 @@ class GameController
                 cout << "lowerSix new front" << lowerSix.front().toString() << endl;
                 return true;
             }
-            else if((lowerSeven.front().getNum() == lastVisOne.getNum()+1) && (lowerSeven.front().isRed() != lastVisOne.isRed())){
+            else if((lowerOne.front().getNum() == lastVisOne.getNum()+1) && (lowerOne.front().isRed() != lastVisOne.isRed())){
                 for(int i=0; i < visCtr; i++){
-                temp.splice(temp.begin(), lowerOne, Itr);
+                temp.splice(temp.begin(), lowerSeven, Itr);
                 cout << temp.back().toString() << endl;
                 Itr++;
             }
-                lowerSeven.splice(lowerSeven.begin(), temp);
-                cout << "lowerSeven new front" << lowerSeven.front().toString() << endl;
+                lowerOne.splice(lowerOne.begin(), temp);
+                cout << "lowerOne new front" << lowerOne.front().toString() << endl;
                 return true;
             }
             else{
