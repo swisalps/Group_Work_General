@@ -14,6 +14,7 @@ class GameController
     int hasMovedFlip;
     int hasMovedLower;
     int failCounter;
+    list<Card>::iterator Itr;
     std::list<Card> shuffleDeck;
     std::list<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven, pile;
     //lists below will be treated and interacted with as a stack. but are list becuase of the advanatages the list data structure offers in terms of moving sections of data
@@ -63,7 +64,7 @@ class GameController
         Card aCard = flipPile.front();
         int cNum = aCard.getNum();
         bool isRed = aCard.isRed();
-        cout << "Flip Card: " << aCard.toString() << " " << cNum << " " << isRed << endl;
+        cout << "Flip Card: " << aCard.toString() << endl;
         cout << "lowerFour's top card isRed return: " << lowerFour.front().isRed() << " // lowerFours top card getNum return: " << lowerFour.front().toString() << endl;
         if((lowerOne.front().isRed() != isRed) && (lowerOne.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerOne);
@@ -358,6 +359,14 @@ class GameController
                 failCounter = 0;
             }
         }
+    }
+
+    int lastVisible(std::list<Card> pile){
+        for(Itr=pile.begin(); Itr!=pile.end(); ++it){
+            if(pile.)
+
+        }
+
     }
 
 //runs the GameController class
