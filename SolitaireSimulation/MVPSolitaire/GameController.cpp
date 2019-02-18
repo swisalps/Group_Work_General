@@ -130,15 +130,19 @@ class GameController
             if(lowVisCard.getNum() == 1){ // if the top card is an ace
                 if(lowVisCard.getSuit() == "D"){
                     moveCard(1, lowerPile, topDiamonds);
+                    cout << topDiamonds.front().toString()<< endl;
                 }
                 else if(lowVisCard.getSuit() == "S"){
                     moveCard(1, lowerPile, topSpades);
+                    cout << topSpades.front().toString()<< endl;
                 }
                 else if(lowVisCard.getSuit() == "H"){
                     moveCard(1, lowerPile, topHearts);
+                    cout << topHearts.front().toString()<< endl;
                 }
                 else{ // the suit of the lowVisCard is a Club
                     moveCard(1, lowerPile, topClubs);
+                    cout << topClubs.front().toString()<< endl;
                 }
             }
             else if(lowVisCard.getNum() > 1){ // if the top card is NOT and ace
@@ -212,6 +216,7 @@ class GameController
                 cout << "lowerTwo new front" << lowerTwo.front().toString() << endl;
                 return true;
             }
+
             else if((lowerThree.front().getNum() == lastVisOne.getNum()+1) && (lowerThree.front().isRed() != lastVisOne.isRed())){
                 for(int i=0; i < visCtr; i++){
                 temp.splice(temp.begin(), lowerOne, Itr);
