@@ -32,7 +32,6 @@ class GameController
     while(test < 5){
         flipCard();
         checkFlip();
-        displayPiles();
         lowOne = lowerToAceFirst(lowerOne);
         if(lowOne){
             lowerToAce(lowerOne);
@@ -270,6 +269,26 @@ class GameController
             flipCard();
             //cout << lowerSeven.front().toString()<< endl;
         }
+        else if((topHearts.front().getNum() == cNum + 1) && (aCard.getSuit() == "H")){
+            moveCard(1, flipPile, topHearts);
+            hasMovedFlip++;
+            flipCard();
+        }
+        else if((topDiamonds.front().getNum() == cNum + 1) && (aCard.getSuit() == "D")){
+            moveCard(1, flipPile, topDiamonds);
+            hasMovedFlip++;
+            flipCard();
+        }
+        else if((topClubs.front().getNum() == cNum + 1) && (aCard.getSuit() == "C")){
+            moveCard(1, flipPile, topClubs);
+            hasMovedFlip++;
+            flipCard();
+        }
+        else if((topSpades.front().getNum() == cNum + 1) && (aCard.getSuit() == "S")){
+            moveCard(1, flipPile, topSpades);
+            hasMovedFlip++;
+            flipCard();
+        }
         else{
             flipCard();
         }
@@ -320,7 +339,7 @@ class GameController
     }
     //this is method is called only after an pile as the first ACE card. the ace must be placed
     // first before this method is called.
-    bool lowerToAce(std::list<Card> lowerPile){
+    bool lowerToAce(std::list<Card>& lowerPile){
         if(!lowerPile.empty()){
         Card lowVisCard = lowerPile.front();
             if((lowVisCard.getSuit() == "D") && (!topDiamonds.empty())){
