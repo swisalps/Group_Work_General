@@ -15,7 +15,7 @@ class GameController
     int hasMovedLower;
     int failCounter;
     std::list<Card> shuffleDeck;
-    std::list<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven;
+    std::list<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven, pile;
     //lists below will be treated and interacted with as a stack. but are list becuase of the advanatages the list data structure offers in terms of moving sections of data
     std::list<Card> topOne, topTwo, topThree, topFour, flipPile;
 
@@ -32,18 +32,18 @@ class GameController
     {
         deck = cardDeck();
         shuffleDeck = deck.shuffled;
-        makePile(1,lowerOne);
-        makePile(2,lowerTwo);
-        makePile(3,lowerThree);
-        makePile(4,lowerFour);
-        makePile(5,lowerFive);
-        makePile(6,lowerSix);
-        makePile(7,lowerSeven);
+        lowerOne = makePile(1);
+        lowerTwo = makePile(2);
+        lowerThree = makePile(3);
+        lowerFour = makePile(4);
+        lowerFive = makePile(5);
+        lowerSix = makePile(6);
+        lowerSeven = makePile(7);
         failCounter = 0;
 
     }
-    void makePile(int numCards, std::list<Card> pile){
-
+    std::list<Card> makePile(int numCards){
+        pile.clear();
         for(int i = 0; i < numCards; i++){
         pile.push_front(shuffleDeck.front());
 
@@ -51,6 +51,7 @@ class GameController
         }
         pile.front().setVis();
         cout << "pile number: " << numCards << " // top card: " << pile.front().toString() << endl;
+        return pile;
         //for(std::list<Card>::iterator it=pile.begin(); it != pile.end(); it++)
           //  std::cout <<  it->toString();
 
