@@ -16,6 +16,7 @@ class GameController
     int hasMovedFlip;
     int hasMovedLower;
     int failCounter;
+    int test;
     int visCtr;
     bool lowOne, lowTwo, lowThree, lowFour, lowFive, lowSix, lowSeven;
     std::list<Card> shuffleDeck;
@@ -28,39 +29,85 @@ class GameController
     {
 
         initSolitaire();
+    while(test < 5){
         flipCard();
         checkFlip();
         displayPiles();
-        checkLowerMove(7);
         lowOne = lowerToAceFirst(lowerOne);
         if(lowOne){
             lowerToAce(lowerOne);
+            lowerToAce(lowerTwo);
+            lowerToAce(lowerThree);
+            lowerToAce(lowerFour);
+            lowerToAce(lowerFive);
+            lowerToAce(lowerSix);
+            lowerToAce(lowerSeven);
         }
         lowTwo = lowerToAceFirst(lowerTwo);
         if(lowTwo){
+            lowerToAce(lowerOne);
             lowerToAce(lowerTwo);
+            lowerToAce(lowerThree);
+            lowerToAce(lowerFour);
+            lowerToAce(lowerFive);
+            lowerToAce(lowerSix);
+            lowerToAce(lowerSeven);
         }
         lowThree = lowerToAceFirst(lowerThree);
         if(lowThree){
+            lowerToAce(lowerOne);
+            lowerToAce(lowerTwo);
             lowerToAce(lowerThree);
+            lowerToAce(lowerFour);
+            lowerToAce(lowerFive);
+            lowerToAce(lowerSix);
+            lowerToAce(lowerSeven);
         }
         lowFour = lowerToAceFirst(lowerFour);
         if(lowFour){
+            lowerToAce(lowerOne);
+            lowerToAce(lowerTwo);
+            lowerToAce(lowerThree);
             lowerToAce(lowerFour);
+            lowerToAce(lowerFive);
+            lowerToAce(lowerSix);
+            lowerToAce(lowerSeven);
         }
         lowFive = lowerToAceFirst(lowerFive);
         if(lowFive){
+            lowerToAce(lowerOne);
+            lowerToAce(lowerTwo);
+            lowerToAce(lowerThree);
+            lowerToAce(lowerFour);
             lowerToAce(lowerFive);
+            lowerToAce(lowerSix);
+            lowerToAce(lowerSeven);
         }
         lowSix = lowerToAceFirst(lowerSix);
         if(lowSix){
+            lowerToAce(lowerOne);
+            lowerToAce(lowerTwo);
+            lowerToAce(lowerThree);
+            lowerToAce(lowerFour);
+            lowerToAce(lowerFive);
             lowerToAce(lowerSix);
+            lowerToAce(lowerSeven);
         }
         lowSeven = lowerToAceFirst(lowerSeven);
         if(lowSeven){
+            lowerToAce(lowerOne);
+            lowerToAce(lowerTwo);
+            lowerToAce(lowerThree);
+            lowerToAce(lowerFour);
+            lowerToAce(lowerFive);
+            lowerToAce(lowerSix);
             lowerToAce(lowerSeven);
         }
         displayPiles();
+        test++;
+    }
+        //checkLowerMove(7);
+        //displayPiles();
 
 
     }
@@ -98,36 +145,47 @@ class GameController
         cout << "Pile 1: " << endl;
         for(std::list<Card>::iterator it=lowerOne.begin(); it != lowerOne.end(); it++)
             std::cout << it->toString();
+        cout << " " << endl;
         cout << "Pile 2: " << endl;
         for(std::list<Card>::iterator it=lowerTwo.begin(); it != lowerTwo.end(); it++)
             std::cout <<it->toString();
+        cout << " " << endl;
         cout << "Pile 3: " << endl;
         for(std::list<Card>::iterator it=lowerThree.begin(); it != lowerThree.end(); it++)
             std::cout <<it->toString();
+        cout << " " << endl;
         cout << "Pile 4: " << endl;
         for(std::list<Card>::iterator it=lowerFour.begin(); it != lowerFour.end(); it++)
             std::cout <<it->toString();
+        cout << " " << endl;
         cout << "Pile 5: " << endl;
         for(std::list<Card>::iterator it=lowerFive.begin(); it != lowerFive.end(); it++)
             std::cout <<it->toString();
+        cout << " " << endl;
         cout << "Pile 6: " << endl;
         for(std::list<Card>::iterator it=lowerSix.begin(); it != lowerSix.end(); it++)
             std::cout <<it->toString();
+        cout << " " << endl;
         cout << "Pile 7: " << endl;
         for(std::list<Card>::iterator it=lowerSeven.begin(); it != lowerSeven.end(); it++)
             std::cout <<it->toString();
+        cout << " " << endl;
         cout << "Diamond Aces" << endl;
         for(std::list<Card>::iterator it=topDiamonds.begin(); it != topDiamonds.end(); it++)
             std::cout <<it->toString();
+        cout << " " << endl;
         cout << "Hearts Aces" << endl;
         for(std::list<Card>::iterator it=topHearts.begin(); it != topHearts.end(); it++)
             std::cout <<it->toString();
+        cout << " " << endl;
         cout << "Spades Aces" << endl;
         for(std::list<Card>::iterator it=topSpades.begin(); it != topSpades.end(); it++)
             std::cout <<it->toString();
+        cout << " " << endl;
         cout << "Clubs Aces" << endl;
         for(std::list<Card>::iterator it=topClubs.begin(); it != topClubs.end(); it++)
             std::cout <<it->toString();
+        cout << "------------------------" << endl;
 
     }
     //method that checks what piles a flipcard can be placed on. if there is another card in flippile or a king, repeat process
@@ -142,71 +200,79 @@ class GameController
             if(aCard.getSuit() == "D"){
                     moveCard(1, flipPile, topDiamonds);
                     //cout << topDiamonds.front().toString()<< endl;
-                    return true;
+                    flipCard();
+                    hasMovedFlip++;
                 }
                 else if(aCard.getSuit() == "S"){
                     moveCard(1, flipPile, topSpades);
                     //cout << topSpades.front().toString()<< endl;
-                    return true;
+                    flipCard();
+                    hasMovedFlip++;
                 }
                 else if(aCard.getSuit() == "H"){
                     moveCard(1, flipPile, topHearts);
                     //cout << topHearts.front().toString()<< endl;
-                    return true;
+                    flipCard();
+                    hasMovedFlip++;
                 }
                 else{ // the suit of the lowVisCard is a Club
                     moveCard(1, flipPile, topClubs);
                     //cout << topClubs.front().toString()<< endl;
-                    return true;
+                    flipCard();
+                    hasMovedFlip++;
                 }
         }
         else if((lowerOne.front().isRed() != isRed) && (lowerOne.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerOne);
-            flipPile.pop_front();
             hasMovedFlip++;
+            flipCard();
             //cout << lowerOne.front().toString()<< endl;
 
         }
         else if((lowerTwo.front().isRed() != isRed) && (lowerTwo.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerTwo);
             hasMovedFlip++;
+            flipCard();
             //cout << lowerTwo.front().toString()<< endl;
 
         }
         else if((lowerThree.front().isRed() != isRed) && (lowerThree.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerThree);
             hasMovedFlip++;
+            flipCard();
            //cout << lowerThree.front().toString()<< endl;
 
         }
         else if((lowerFour.front().isRed() != isRed) && (lowerFour.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerFour);
             hasMovedFlip++;
+            flipCard();
             //cout << lowerFour.front().toString()<< endl;
 
         }
         else if((lowerFive.front().isRed() != isRed) && (lowerFive.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerFive);
             hasMovedFlip++;
+            flipCard();
             //cout << lowerFive.front().toString()<< endl;
 
         }
         else if((lowerSix.front().isRed() != isRed) && (lowerSix.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerSix);
             hasMovedFlip++;
+            flipCard();
             //cout << lowerSix.front().toString()<< endl;
 
         }
         else if((lowerSeven.front().isRed() != isRed) && (lowerSeven.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerSeven);
             hasMovedFlip++;
+            flipCard();
             //cout << lowerSeven.front().toString()<< endl;
         }
         else{
-            return false;
+            flipCard();
         }
-
-   // }
     if(hasMovedFlip != 0){
         return true;
     }
@@ -221,7 +287,7 @@ class GameController
 
     //This method only looks  for aces that are on the front of any of the lower piles.
     //if it finds an ace it will immiediatly move it to its assoicated ace piles
-    bool lowerToAceFirst(std::list<Card> lowerPile){
+    bool lowerToAceFirst(std::list<Card>& lowerPile){
         if(!lowerPile.empty()){
             Card lowVisCard = lowerPile.front();
             if(lowVisCard.getNum() == 1){ // if the top card is an ace
@@ -257,7 +323,7 @@ class GameController
     bool lowerToAce(std::list<Card> lowerPile){
         if(!lowerPile.empty()){
         Card lowVisCard = lowerPile.front();
-            if(lowVisCard.getSuit() == "D"){
+            if((lowVisCard.getSuit() == "D") && (!topDiamonds.empty())){
                 cout << "1st lower" << endl;
                 Card topCard = topDiamonds.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
@@ -382,7 +448,7 @@ class GameController
         if (numCards == 1){  //If there is just one card it is moved to the destination pile and then it is remove from the source pile
             dest.push_front(source.front());
             source.pop_front();
-            cout << "where it was moved" <<dest.front().toString() << endl;
+            cout << "where it was moved: " <<dest.front().toString() << endl;
         }
         else{ // If there is more than one card then the top card through numCards is spoliced from the source pile to the destination pile
             std::list<Card>::iterator it;
