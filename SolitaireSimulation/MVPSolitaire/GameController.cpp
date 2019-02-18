@@ -475,6 +475,7 @@ class GameController
             }
             return false;
         }
+        return false;
     }
 
 
