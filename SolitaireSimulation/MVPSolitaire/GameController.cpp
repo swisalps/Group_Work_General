@@ -18,7 +18,7 @@ class GameController
     int failCounter;
     int test;
     int visCtr;
-    bool lowOne, lowTwo, lowThree, lowFour, lowFive, lowSix, lowSeven;
+    bool lowOne, lowTwo, lowThree, lowFour, lowFive, lowSix, lowSeven, gameLost, gameWon;
     std::list<Card> shuffleDeck;
     std::list<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven, pile, temp;
     //lists below will be treated and interacted with as a stack. but are list becuase of the advanatages the list data structure offers in terms of moving sections of data
@@ -27,12 +27,13 @@ class GameController
 
     GameController()
     {
-
+        int ctr = 0;
         initSolitaire();
-    while(test < 13){
-        cout << "Times through while loop: " << test << endl;
+    while((!gameWon)&&(!gameLost)){//As long as the game is not won or lost the loop will continue
+        ctr++;
         flipCard();
         checkFlip();
+        cout<<"past Checkflip";
         lowOne = lowerToAceFirst(lowerOne);
         if(lowOne){
             lowerToAce(lowerOne);
@@ -105,6 +106,16 @@ class GameController
         }
         displayPiles();
         test++;
+        if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
+            gameWon = true;
+        cout<<"Run through number:"<<ctr<<"\n";
+        cout<<shuffleDeck.size()<<"\n";
+    }
+    if(gameWon){
+        cout<<"You Won!\n";
+    }
+    else{
+        cout<<"You lost!\n";
     }
         //checkLowerMove(7);
         //displayPiles();
@@ -125,6 +136,8 @@ class GameController
         lowerSeven = makePile(7);
         lowerPiles = {&lowerOne, &lowerTwo, &lowerThree, &lowerFour, &lowerFive, &lowerSix, &lowerSeven};
         failCounter = 0;
+        gameLost = false;
+        gameWon = false;
 
     }
     std::list<Card> makePile(int numCards){
@@ -424,7 +437,60 @@ class GameController
             return false;
     }
 
-
+    // moves a king card from a low pile to an empty low pile
+    // @param lowerPile a pile you are looking at assumed to be empty
+    bool lowKingtoEmpty(std::list<Card> lowerPile){
+        if(lowerPile.empty()){ //if the pile you are looking at is empty
+            // check all piles to find a king
+            if(!lowerOne.empty()){ // check the 1st pile for a king
+                if (lowerOne.front().getNum() == 13){
+                    moveCard(1, lowerOne, lowerPile);
+                    return true;
+                }
+            }
+            else if(!lowerTwo.empty()){// check the 2nd pile for a king
+                if (lowerTwo.front().getNum() == 13){
+                    moveCard(1, lowerTwo, lowerPile);
+                    return true;
+                }
+            }
+            else if(!lowerThree.empty()){
+                if (lowerThree.front().getNum() == 13){
+                    moveCard(1, lowerThree, lowerPile);
+                    return true;
+                }
+            }
+            else if(!lowerFour.empty()){
+                if (lowerFour.front().getNum() == 13){
+                    moveCard(1, lowerFour, lowerPile);
+                    return true;
+                }
+            }
+            else if(!lowerFive.empty()){
+                if (lowerFive.front().getNum() == 13){
+                    moveCard(1, lowerFive, lowerPile);
+                    return true;
+                }
+            }
+            else if(!lowerSix.empty()){
+                if (lowerSix.front().getNum() == 13){
+                    moveCard(1, lowerSix, lowerPile);
+                    return true;
+                }
+            }
+            else if(!lowerSeven.empty()){
+                if (lowerSeven.front().getNum() == 13){
+                    moveCard(1, lowerSeven, lowerPile);
+                    return true;
+                }
+            }
+            else{
+                return false;
+            }
+            return false;
+        }
+        return false;
+    }
 
 
 
@@ -525,7 +591,7 @@ class GameController
     void flipCard()
     {
 
-        if(!shuffleDeck.empty())//If the deck is not empty the top card is pushed to the flippile and removed from the deck
+        if(shuffleDeck.size() > 1)//If the deck is not empty the top card is pushed to the flippile and removed from the deck
         {
             flipPile.push_front(shuffleDeck.front());
             shuffleDeck.pop_front();
@@ -533,12 +599,13 @@ class GameController
         }
         else //If the deck is empty then the flip pile is swaped with the deck and reversevd
         {
-            flipPile.swap(shuffleDeck);
+            shuffleDeck.swap(flipPile);
+            cout<<"\n------"<<"deck swapped: "<<shuffleDeck.size();
             shuffleDeck.reverse();
             if ((hasMovedFlip == 0 ) && (hasMovedLower == 0)){ //Checks if a move has been done since the last time the deck was shuffled
                 failCounter++;
                 if (failCounter > 2){//If there was no moves then the fail counter is increased by one, if it reaches 3 the game is over
-                    //TODO make game quit and result as loss
+                    gameLost = true;
                 }
             }
             else { //If a move has been done since the last shuffling then the hasMoved counters and fail counters are reset to 0
