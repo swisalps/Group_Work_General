@@ -14,9 +14,9 @@ class GameController
     int hasMovedFlip;
     int hasMovedLower;
     int failCounter;
-    list<Card>::iterator Itr;
+    int visCtr;
     std::list<Card> shuffleDeck;
-    std::list<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven, pile;
+    std::list<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven, pile, temp;
     //lists below will be treated and interacted with as a stack. but are list becuase of the advanatages the list data structure offers in terms of moving sections of data
     std::list<Card> topOne, topTwo, topThree, topFour, flipPile;
 
@@ -26,6 +26,7 @@ class GameController
         initSolitaire();
         flipCard();
         checkFlip();
+        checkLowerMove();
 
     }
 
@@ -52,9 +53,9 @@ class GameController
         }
         pile.front().setVis();
         cout << "pile number: " << numCards << " // top card: " << pile.front().toString() << endl;
+        for(std::list<Card>::iterator it=pile.begin(); it != pile.end(); it++)
+            std::cout << it->toString();
         return pile;
-        //for(std::list<Card>::iterator it=pile.begin(); it != pile.end(); it++)
-          //  std::cout <<  it->toString();
 
     }
     //method that checks what piles a flipcard can be placed on. if there is another card in flippile or a king, repeat process
@@ -65,7 +66,6 @@ class GameController
         int cNum = aCard.getNum();
         bool isRed = aCard.isRed();
         cout << "Flip Card: " << aCard.toString() << endl;
-        cout << "lowerFour's top card isRed return: " << lowerFour.front().isRed() << " // lowerFours top card getNum return: " << lowerFour.front().toString() << endl;
         if((lowerOne.front().isRed() != isRed) && (lowerOne.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerOne);
             flipPile.pop_front();
@@ -308,6 +308,85 @@ class GameController
 
         return true;
     }
+    bool checkLowerMove(){
+        list<Card>::iterator Itr;
+        if(!lowerOne.empty()){
+            Card lastVisOne = lastVisible(lowerOne);
+            cout << "lastVis value: " <<lastVisOne.toString() << endl;
+            Itr = lowerOne.begin();
+            temp.clear();
+            if((lowerTwo.front().getNum() == lastVisOne.getNum()+1) && (lowerTwo.front().isRed() != lastVisOne.isRed())){
+                for(int i=0; i < visCtr; i++){
+                temp.splice(temp.begin(), lowerOne, Itr);
+                cout << temp.back().toString() << endl;
+                Itr++;
+            }
+                lowerTwo.splice(lowerTwo.begin(), temp);
+                cout << "lowerTwo new front" << lowerTwo.front().toString() << endl;
+                return true;
+            }
+            else if((lowerThree.front().getNum() == lastVisOne.getNum()+1) && (lowerThree.front().isRed() != lastVisOne.isRed())){
+                for(int i=0; i < visCtr; i++){
+                temp.splice(temp.begin(), lowerOne, Itr);
+                cout << temp.back().toString() << endl;
+                Itr++;
+            }
+                lowerThree.splice(lowerThree.begin(), temp);
+                cout << "lowerThree new front" << lowerThree.front().toString() << endl;
+                return true;
+            }
+            else if((lowerFour.front().getNum() == lastVisOne.getNum()+1) && (lowerFour.front().isRed() != lastVisOne.isRed())){
+                for(int i=0; i < visCtr; i++){
+                temp.splice(temp.begin(), lowerOne, Itr);
+                cout << temp.back().toString() << endl;
+                Itr++;
+            }
+                lowerFour.splice(lowerFour.begin(), temp);
+                cout << "lowerFour new front" << lowerFour.front().toString() << endl;
+                return true;
+            }
+            else if((lowerFive.front().getNum() == lastVisOne.getNum()+1) && (lowerFive.front().isRed() != lastVisOne.isRed())){
+                for(int i=0; i < visCtr; i++){
+                temp.splice(temp.begin(), lowerOne, Itr);
+                cout << temp.back().toString() << endl;
+                Itr++;
+            }
+                lowerFive.splice(lowerFive.begin(), temp);
+                cout << "lowerFive new front" << lowerFive.front().toString() << endl;
+                return true;
+            }
+            else if((lowerSix.front().getNum() == lastVisOne.getNum()+1) && (lowerSix.front().isRed() != lastVisOne.isRed())){
+                for(int i=0; i < visCtr; i++){
+                temp.splice(temp.begin(), lowerOne, Itr);
+                cout << temp.back().toString() << endl;
+                Itr++;
+            }
+                lowerSix.splice(lowerSix.begin(), temp);
+                cout << "lowerSix new front" << lowerSix.front().toString() << endl;
+                return true;
+            }
+            else if((lowerSeven.front().getNum() == lastVisOne.getNum()+1) && (lowerSeven.front().isRed() != lastVisOne.isRed())){
+                for(int i=0; i < visCtr; i++){
+                temp.splice(temp.begin(), lowerOne, Itr);
+                cout << temp.back().toString() << endl;
+                Itr++;
+            }
+                lowerSeven.splice(lowerSeven.begin(), temp);
+                cout << "lowerSeven new front" << lowerSeven.front().toString() << endl;
+                return true;
+            }
+            else{
+                //recursive call, doing this same process with lowerTwo at the top If
+                //lowCtr = lowCtr + 1
+                //checkLowerMove(lower)
+                return false;
+            }
+
+
+
+        }
+        return false;
+    }
 
 
 
@@ -362,18 +441,19 @@ class GameController
         }
     }
 
-    int lastVisible(std::list<Card> pile){
-            int visCtr = 0;
-        for(Itr=pile.begin(); Itr!=pile.end(); ++Itr){
-            if(Itr->getVisible() == 1){
+    Card lastVisible(std::list<Card> pile){
+        visCtr = 0;
+        list<Card>::iterator ItrVis;
+        for(ItrVis=pile.begin(); ItrVis!=pile.end(); ++ItrVis){
+            if(ItrVis->getVisible() == 1){
                 visCtr = visCtr + 1;
             }
-            else if(Itr->getVisible() == 0){
-                return visCtr;
+            else{
+                return *ItrVis;
             }
 
         }
-
+        return flipPile.front();
     }
 
 //runs the GameController class
