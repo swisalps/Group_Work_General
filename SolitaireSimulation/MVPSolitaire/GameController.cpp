@@ -17,8 +17,8 @@ class GameController
     int hasMovedLower;
     int failCounter;
     int test;
-    int visCtr;
-    bool lowOne, lowTwo, lowThree, lowFour, lowFive, lowSix, lowSeven, gameLost, gameWon, heartA, clubA, spadeA, diamondA;
+    int visCtr, lowOneInt, lowTwoInt, lowThreeInt, lowFourInt, lowFiveInt, lowSixInt, lowSevenInt;
+    bool gameLost, gameWon, heartA, clubA, spadeA, diamondA, lowOne, lowTwo, lowThree, lowFour, lowFive, lowSix, lowSeven;
     std::list<Card> shuffleDeck;
     std::list<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven, pile, temp;
     //lists below will be treated and interacted with as a stack. but are list becuase of the advanatages the list data structure offers in terms of moving sections of data
@@ -29,13 +29,13 @@ class GameController
     {
         int ctr = 0;
         initSolitaire();
-        cout<<"\nEnd Game State\n";
     while((!gameWon)&&(!gameLost)){//As long as the game is not won or lost the loop will continue
+    //while(test < 15){
         ctr++;
         flipCard();
         checkFlip();
         lowOne = lowerToAceFirst(lowerOne);
-        if(lowOne){
+        if(diamondA || clubA || spadeA || heartA){
             lowerToAce(lowerOne);
             lowerToAce(lowerTwo);
             lowerToAce(lowerThree);
@@ -45,7 +45,7 @@ class GameController
             lowerToAce(lowerSeven);
         }
         lowTwo = lowerToAceFirst(lowerTwo);
-        if(lowTwo){
+        if(diamondA || clubA || spadeA || heartA){
             lowerToAce(lowerOne);
             lowerToAce(lowerTwo);
             lowerToAce(lowerThree);
@@ -55,7 +55,7 @@ class GameController
             lowerToAce(lowerSeven);
         }
         lowThree = lowerToAceFirst(lowerThree);
-        if(lowThree){
+        if(diamondA || clubA || spadeA || heartA){
             lowerToAce(lowerOne);
             lowerToAce(lowerTwo);
             lowerToAce(lowerThree);
@@ -65,7 +65,7 @@ class GameController
             lowerToAce(lowerSeven);
         }
         lowFour = lowerToAceFirst(lowerFour);
-        if(lowFour){
+        if(diamondA || clubA || spadeA || heartA){
             lowerToAce(lowerOne);
             lowerToAce(lowerTwo);
             lowerToAce(lowerThree);
@@ -75,7 +75,7 @@ class GameController
             lowerToAce(lowerSeven);
         }
         lowFive = lowerToAceFirst(lowerFive);
-        if(lowFive){
+        if(diamondA || clubA || spadeA || heartA){
             lowerToAce(lowerOne);
             lowerToAce(lowerTwo);
             lowerToAce(lowerThree);
@@ -85,7 +85,7 @@ class GameController
             lowerToAce(lowerSeven);
         }
         lowSix = lowerToAceFirst(lowerSix);
-        if(lowSix){
+        if(diamondA || clubA || spadeA || heartA){
             lowerToAce(lowerOne);
             lowerToAce(lowerTwo);
             lowerToAce(lowerThree);
@@ -95,7 +95,7 @@ class GameController
             lowerToAce(lowerSeven);
         }
         lowSeven = lowerToAceFirst(lowerSeven);
-        if(lowSeven){
+        if(diamondA || clubA || spadeA || heartA){
             lowerToAce(lowerOne);
             lowerToAce(lowerTwo);
             lowerToAce(lowerThree);
@@ -108,9 +108,11 @@ class GameController
         test++;
         if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
             gameWon = true;
-
+        //displayPiles();
+        cout<< "return values from ace trackers: D" << diamondA << ", H" << heartA << ", S" << spadeA << ", C" << clubA << endl;
     }
     displayPiles();
+    cout<< "return values from acefirst: " << lowOne << ", " << lowTwo << ", " << lowThree << ", " << lowFour << ", " << lowFive << ", " << lowSix << ", " << lowSeven << endl;
     cout<<"Ran through: "<<ctr<<" times"<<"\n";
     if(gameWon){
         cout<<"You Won!\n";
@@ -137,6 +139,13 @@ class GameController
         lowerSeven = makePile(7);
         lowerPiles = {&lowerOne, &lowerTwo, &lowerThree, &lowerFour, &lowerFive, &lowerSix, &lowerSeven};
         failCounter = 0;
+        lowOne = false;
+        lowTwo = false;
+        lowThree = false;
+        lowFour = false;
+        lowFive = false;
+        lowSix = false;
+        lowSeven = false;
         gameLost = false;
         gameWon = false;
         spadeA = false;
@@ -213,32 +222,34 @@ class GameController
         Card aCard = flipPile.front();
         int cNum = aCard.getNum();
         bool isRed = aCard.isRed();
-        //cout << "Flip Card: " << aCard.toString() << endl;
+        bool hmm;
+        cout << "Flip Card: " << aCard.toString() << endl;
         if(cNum == 1){
-            if(aCard.getSuit() == "D"){
-                    moveCard(1, flipPile, topDiamonds);
-                    //cout << topDiamonds.front().toString()<< endl;
-                    flipCard();
-                    hasMovedFlip++;
-                }
-                else if(aCard.getSuit() == "S"){
-                    moveCard(1, flipPile, topSpades);
-                    //cout << topSpades.front().toString()<< endl;
-                    flipCard();
-                    hasMovedFlip++;
-                }
-                else if(aCard.getSuit() == "H"){
-                    moveCard(1, flipPile, topHearts);
-                    //cout << topHearts.front().toString()<< endl;
-                    flipCard();
-                    hasMovedFlip++;
-                }
-                else{ // the suit of the lowVisCard is a Club
-                    moveCard(1, flipPile, topClubs);
-                    //cout << topClubs.front().toString()<< endl;
-                    flipCard();
-                    hasMovedFlip++;
-                }
+            lowerToAceFirst(flipPile);
+            // if(aCard.getSuit() == "D"){
+            //         moveCard(1, flipPile, topDiamonds);
+            //         //cout << topDiamonds.front().toString()<< endl;
+            //         flipCard();
+            //         hasMovedFlip++;
+            //     }
+            //     else if(aCard.getSuit() == "S"){
+            //         moveCard(1, flipPile, topSpades);
+            //         //cout << topSpades.front().toString()<< endl;
+            //         flipCard();
+            //         hasMovedFlip++;
+            //     }
+            //     else if(aCard.getSuit() == "H"){
+            //         moveCard(1, flipPile, topHearts);
+            //         //cout << topHearts.front().toString()<< endl;
+            //         flipCard();
+            //         hasMovedFlip++;
+            //     }
+            //     else{ // the suit of the lowVisCard is a Club
+            //         moveCard(1, flipPile, topClubs);
+            //         //cout << topClubs.front().toString()<< endl;
+            //         flipCard();
+            //         hasMovedFlip++;
+            //     }
         }
         if(cNum == 13){
             if(lowerOne.empty()){
@@ -365,7 +376,7 @@ class GameController
 
     //This method only looks  for aces that are on the front of any of the lower piles.
     //if it finds an ace it will immiediatly move it to its assoicated ace piles
-    bool lowerToAceFirst(std::list<Card>& lowerPile){
+    int lowerToAceFirst(std::list<Card>& lowerPile){
         if(!lowerPile.empty()){
             Card lowVisCard = lowerPile.front();
             if(lowVisCard.getNum() == 1){ // if the top card is an ace
@@ -373,72 +384,77 @@ class GameController
                 if(lowVisCard.getSuit() == "D"){
                     moveCard(1, lowerPile, topDiamonds);
                     diamondA = true;
-                    //cout << topDiamonds.front().toString()<< endl;
-                    return true;
+                    cout << "lowAceFirst Execute for D: " <<topDiamonds.front().toString()<< endl;
+                    return 1;
                 }
                 else if(lowVisCard.getSuit() == "S"){
                     moveCard(1, lowerPile, topSpades);
                     spadeA = true;
-                    //cout << topSpades.front().toString()<< endl;
-                    return true;
+                    cout << "lowAceFirst Execute for S: "<< topSpades.front().toString()<< endl;
+                    return 1;
                 }
                 else if(lowVisCard.getSuit() == "H"){
                     moveCard(1, lowerPile, topHearts);
                     heartA = true;
-                    //cout << topHearts.front().toString()<< endl;
-                    return true;
+                    cout << "lowAceFirst Execute for H: "<< topHearts.front().toString()<< endl;
+                    return 1;
                 }
                 else{ // the suit of the lowVisCard is a Club
                     moveCard(1, lowerPile, topClubs);
                     clubA = true;
-                    //cout << topClubs.front().toString()<< endl;
-                    return true;
+                    cout << "lowAceFirst Execute for C: "<< topClubs.front().toString()<< endl;
+                    return 1;
                 }
             }
 
-        return false;
+        return 0;
     }
-    return false;
+    return 0;
     }
     //this is method is called only after an pile as the first ACE card. the ace must be placed
     // first before this method is called.
     bool lowerToAce(std::list<Card>& lowerPile){
         if(!lowerPile.empty()){
         Card lowVisCard = lowerPile.front();
+        cout << "lowerToAce Attempt: " << lowVisCard.toString() << endl;
             if((lowVisCard.getSuit() == "D") && (!topDiamonds.empty())){
-                //cout << "1st lower" << endl;
+                cout << "1st lower " << endl;
                 Card topCard = topDiamonds.front();
-                if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
+                if(topCard.getNum() == lowVisCard.getNum() - 1){// if the top card of the ace pile has a number that is less than the number of the low card by 1
+                    cout << "D for attempted " << endl;
                     moveCard(1, lowerPile, topDiamonds);
                     return true;
                 }
             }
             else if((lowVisCard.getSuit() == "S") && (!topSpades.empty())){
-                //cout << "2nd lower" << endl;
+                cout << "2nd lower" << endl;
                 Card topCard = topSpades.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
+                     cout << "S for attempted " << endl;
                      moveCard(1, lowerPile, topSpades);
                      return true;
                 }
             }
             else if((lowVisCard.getSuit() == "H") && (!topHearts.empty())){
-               // cout << "3rd lower" << endl;
+                cout << "3rd lower" << endl;
                 Card topCard = topHearts.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
+                    cout << "H for attempted " << endl;
                     moveCard(1, lowerPile, topHearts);
                     return true;
                 }
             }
             else if((lowVisCard.getSuit() == "C") && (!topClubs.empty())){ // the suit of the lowVisCard is a Club
-                //cout << "4th lower" << endl;
+                cout << "4th lower" << endl;
                 Card topCard = topClubs.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){// if the top card of the ace pile has a number that is less than the number of the low card by 1
+                cout << "C for attempted " << endl;
                     moveCard(1, lowerPile, topClubs);
                     return true;
                 }
                 }
             else{
-                //cout << "no moves" << endl;
+                cout << "no moves" << endl;
                 return false;
             }
             }
