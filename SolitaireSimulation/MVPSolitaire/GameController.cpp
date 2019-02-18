@@ -18,7 +18,7 @@ class GameController
     std::list<Card> shuffleDeck;
     std::list<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven, pile, temp;
     //lists below will be treated and interacted with as a stack. but are list becuase of the advanatages the list data structure offers in terms of moving sections of data
-    std::list<Card> topOne, topTwo, topThree, topFour, flipPile;
+    std::list<Card> topDiamonds, topSpades, topHearts, topClubs, flipPile;
 
     GameController()
     {
@@ -118,6 +118,59 @@ class GameController
     }
     return false;
     }
+
+    // Checks one of the lower piles and finds the top visible card then sees if it can fit into any ace-spots
+    // @return lowerPile the pile located on the lower part of the board (lowerOne, lowerTwo, etc...)
+    // NOTE TO DEVELOPERS: After moving the card, I need to see if there is a non-vis card after it that I need to make visible, which I have yet to implement.
+    //                     I don't know if we already made a method for this. I also have not yet included the hasMoved incrementing factor.
+    //
+    void lowerToAce(std::list<Card> lowerPile){
+        if(!lowerPile.empty()){
+            Card lowVisCard = lowerPile.front();
+            if(lowVisCard.getNum() == 1){ // if the top card is an ace
+                if(lowVisCard.getSuit() == "D"){
+                    moveCard(1, lowerPile, topDiamonds);
+                }
+                else if(lowVisCard.getSuit() == "S"){
+                    moveCard(1, lowerPile, topSpades);
+                }
+                else if(lowVisCard.getSuit() == "H"){
+                    moveCard(1, lowerPile, topHearts);
+                }
+                else{ // the suit of the lowVisCard is a Club
+                    moveCard(1, lowerPile, topClubs);
+                }
+            }
+            else if(lowVisCard.getNum() > 1){ // if the top card is NOT and ace
+                if(lowVisCard.getSuit() == "D"){
+                    Card topCard = topDiamonds.front();
+                    if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
+                        moveCard(1, lowerPile, topDiamonds);
+                    }
+                }
+                else if(lowVisCard.getSuit() == "S"){
+                    Card topCard = topSpades.front();
+                    if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
+                        moveCard(1, lowerPile, topSpades);
+                    }
+                }
+                else if(lowVisCard.getSuit() == "H"){
+                    Card topCard = topHearts.front();
+                    if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
+                        moveCard(1, lowerPile, topHearts);
+                    }
+                }
+                else{ // the suit of the lowVisCard is a Club
+                    Card topCard = topClubs.front();
+                    if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
+                        moveCard(1, lowerPile, topClubs);
+                    }
+                }
+            }
+        }
+    }
+
+
 
     bool checkLower(){
         //Check if you can move a card from the lower pile you are looking at to the ace-piles
