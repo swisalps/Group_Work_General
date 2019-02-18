@@ -4,6 +4,8 @@
 #include <stack>
 #include <set>
 #include <iostream>
+#include <array>
+#include <string>
 using namespace std;
 
 class GameController
@@ -20,6 +22,7 @@ class GameController
     std::list<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven, pile, temp;
     //lists below will be treated and interacted with as a stack. but are list becuase of the advanatages the list data structure offers in terms of moving sections of data
     std::list<Card> topDiamonds, topSpades, topHearts, topClubs, flipPile;
+    std::array<list<Card>*, 7> lowerPiles;
 
     GameController()
     {
@@ -28,7 +31,7 @@ class GameController
         flipCard();
         checkFlip();
         displayPiles();
-        checkLowerMove();
+        checkLowerMove(7);
         lowOne = lowerToAceFirst(lowerOne);
         if(lowOne){
             lowerToAce(lowerOne);
@@ -59,6 +62,7 @@ class GameController
         }
         displayPiles();
 
+
     }
 
     void initSolitaire()
@@ -72,6 +76,7 @@ class GameController
         lowerFive = makePile(5);
         lowerSix = makePile(6);
         lowerSeven = makePile(7);
+        lowerPiles = {&lowerOne, &lowerTwo, &lowerThree, &lowerFour, &lowerFive, &lowerSix, &lowerSeven};
         failCounter = 0;
 
     }
@@ -317,83 +322,46 @@ class GameController
 
         return true;
     }
-    bool checkLowerMove(){
-        list<Card>::iterator Itr;
-        if(!lowerSeven.empty()){
-            Card lastVisOne = lastVisible(lowerSeven);
-            cout << "lastVis value: " <<lastVisOne.toString() << endl;
-            Itr = lowerSeven.begin();
-            temp.clear();
-            if((lowerTwo.front().getNum() == lastVisOne.getNum()+1) && (lowerTwo.front().isRed() != lastVisOne.isRed())){
-                for(int i=0; i < visCtr; i++){
-                temp.splice(temp.begin(), lowerSeven, Itr);
-                cout << temp.back().toString() << endl;
-                Itr++;
+    bool checkLowerMove(int startingPile){
+        if(startingPile >= 1)
+        {
+            list<Card>::iterator Itr;
+            if(!(*lowerPiles[startingPile - 1]).empty()){
+                Card lastVisOne = lastVisible(*lowerPiles[startingPile-1]);
+                cout << "lastVis value: " <<lastVisOne.toString() << endl;
+                Itr = (*lowerPiles[startingPile-1]).begin();
+                temp.clear();
+                for(int i = 0; i < 7; i++)
+                {
+                    if(i != startingPile - 1)
+                    {
+                        if(((*lowerPiles[i]).front().getNum() == lastVisOne.getNum()+1) && ((*lowerPiles[i]).front().isRed() != lastVisOne.isRed()))
+                        {
+                            for(int j = 0; j < visCtr; j++)
+                            {
+                                temp.splice(temp.begin(), *lowerPiles[startingPile -1], Itr);
+                                cout << temp.back().toString() << endl;
+                                Itr++;
+                            }
+                        moveCard(1, *lowerPiles[startingPile-1], *lowerPiles[i]);
+                        //lowerPiles[i].splice(lowerPiles[i].begin(), temp);
+                        std::string s = std::to_string(i+1);
+                        cout << "lower" + s + " new front: " << (*lowerPiles[i]).front().toString() << endl;
+                        return true;
+                        }
+                    }
+                }
             }
-                lowerTwo.splice(lowerTwo.begin(), temp);
-                cout << "lowerTwo new front" << lowerTwo.front().toString() << endl;
-                return true;
+            else
+            {
+                return checkLowerMove(startingPile -1);
             }
-
-            else if((lowerThree.front().getNum() == lastVisOne.getNum()+1) && (lowerThree.front().isRed() != lastVisOne.isRed())){
-                for(int i=0; i < visCtr; i++){
-                temp.splice(temp.begin(), lowerSeven, Itr);
-                cout << temp.back().toString() << endl;
-                Itr++;
-            }
-                lowerThree.splice(lowerThree.begin(), temp);
-                cout << "lowerThree new front" << lowerThree.front().toString() << endl;
-                return true;
-            }
-            else if((lowerFour.front().getNum() == lastVisOne.getNum()+1) && (lowerFour.front().isRed() != lastVisOne.isRed())){
-                for(int i=0; i < visCtr; i++){
-                temp.splice(temp.begin(), lowerSeven, Itr);
-                cout << temp.back().toString() << endl;
-                Itr++;
-            }
-                lowerFour.splice(lowerFour.begin(), temp);
-                cout << "lowerFour new front" << lowerFour.front().toString() << endl;
-                return true;
-            }
-            else if((lowerFive.front().getNum() == lastVisOne.getNum()+1) && (lowerFive.front().isRed() != lastVisOne.isRed())){
-                for(int i=0; i < visCtr; i++){
-                temp.splice(temp.begin(), lowerSeven, Itr);
-                cout << temp.back().toString() << endl;
-                Itr++;
-            }
-                lowerFive.splice(lowerFive.begin(), temp);
-                cout << "lowerFive new front" << lowerFive.front().toString() << endl;
-                return true;
-            }
-            else if((lowerSix.front().getNum() == lastVisOne.getNum()+1) && (lowerSix.front().isRed() != lastVisOne.isRed())){
-                for(int i=0; i < visCtr; i++){
-                temp.splice(temp.begin(), lowerSeven, Itr);
-                cout << temp.back().toString() << endl;
-                Itr++;
-            }
-                lowerSix.splice(lowerSix.begin(), temp);
-                cout << "lowerSix new front" << lowerSix.front().toString() << endl;
-                return true;
-            }
-            else if((lowerOne.front().getNum() == lastVisOne.getNum()+1) && (lowerOne.front().isRed() != lastVisOne.isRed())){
-                for(int i=0; i < visCtr; i++){
-                temp.splice(temp.begin(), lowerSeven, Itr);
-                cout << temp.back().toString() << endl;
-                Itr++;
-            }
-                lowerOne.splice(lowerOne.begin(), temp);
-                cout << "lowerOne new front" << lowerOne.front().toString() << endl;
-                return true;
-            }
-            else{
+        }
+        else{
                 //recursive call, doing this same process with lowerTwo at the top If
                 //lowCtr = lowCtr + 1
                 //checkLowerMove(lower)
                 return false;
-            }
-
-
-
         }
         return false;
     }
@@ -411,6 +379,7 @@ class GameController
         cout << "moveCard called" << endl;
         if (numCards == 1){  //If there is just one card it is moved to the destination pile and then it is remove from the source pile
             dest.push_front(source.front());
+            source.pop_front();
             cout << "where it was moved" <<dest.front().toString() << endl;
         }
         else{ // If there is more than one card then the top card through numCards is spoliced from the source pile to the destination pile
