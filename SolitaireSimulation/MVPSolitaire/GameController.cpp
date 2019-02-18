@@ -29,7 +29,8 @@ class GameController
     {
 
         initSolitaire();
-    while(test < 5){
+    while(test < 13){
+        cout << "Times through while loop: " << test << endl;
         flipCard();
         checkFlip();
         lowOne = lowerToAceFirst(lowerOne);
@@ -221,7 +222,7 @@ class GameController
                     hasMovedFlip++;
                 }
         }
-        else if(cNum == 13){
+        if(cNum == 13){
             if(lowerOne.empty()){
                 moveCard(1, flipPile, lowerOne);
                 flipCard();
