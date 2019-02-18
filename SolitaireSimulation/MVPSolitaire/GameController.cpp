@@ -24,8 +24,7 @@ class GameController
 
         initSolitaire();
         flipCard();
-        bool check = checkFlip();
-        cout << check << endl;
+        checkFlip();
 
     }
 
@@ -59,15 +58,17 @@ class GameController
     //method that checks what piles a flipcard can be placed on. if there is another card in flippile or a king, repeat process
     //@return true if the method empties the flip
     bool checkFlip(){
-        while(!flipPile.empty()){
+        //while(!flipPile.empty()){
         Card aCard = flipPile.front();
-        cout << "Flip Card: " << aCard.toString() << endl;
+        //Card lowCard = lowPile.front(); dont know why this doesnt work
         int cNum = aCard.getNum();
         bool isRed = aCard.isRed();
-        cout << "isRed Value: "<< isRed << "card num value: "<< cNum << endl;
-        cout << "lower4 isRed Value: " << lowerFour.front().isRed() << "lower4 getNum value: " <<lowerFour.front().getNum() << endl;
+        cout << "Flip Card: " << aCard.toString() << endl;
+        cout << "Flip Card Could Be Placed On LowerFour Pile but it isnt happening" << endl;
+        cout << "lowerFour's top card isRed return: " << lowerFour.front().isRed() << " // lowerFours top card getNum return: " << lowerFour.front().getNum() << endl;
         if((lowerOne.front().isRed() != isRed) && (lowerOne.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerOne);
+            flipPile.pop_front();
             hasMovedFlip++;
             cout << lowerOne.front().toString()<< endl;
 
@@ -111,7 +112,7 @@ class GameController
             return false;
         }
 
-    }
+   // }
     if(hasMovedFlip != 0){
         return true;
     }
