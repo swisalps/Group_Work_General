@@ -109,7 +109,6 @@ class GameController
         if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
             gameWon = true;
         cout<<"Run through number:"<<ctr<<"\n";
-        cout<<shuffleDeck.size()<<"\n";
     }
     if(gameWon){
         cout<<"You Won!\n";
@@ -571,11 +570,10 @@ class GameController
 
     void moveCard(int numCards, list<Card>& source, list<Card>& dest)
     {
-        cout << "moveCard called" << endl;
+        cout << "moveCard called " << endl;
         if (numCards == 1){  //If there is just one card it is moved to the destination pile and then it is remove from the source pile
             dest.push_front(source.front());
             source.pop_front();
-            cout << "where it was moved: " <<dest.front().toString() << endl;
         }
         else{ // If there is more than one card then the top card through numCards is spoliced from the source pile to the destination pile
             std::list<Card>::iterator it;
@@ -600,7 +598,6 @@ class GameController
         else //If the deck is empty then the flip pile is swaped with the deck and reversevd
         {
             shuffleDeck.swap(flipPile);
-            cout<<"\n------"<<"deck swapped: "<<shuffleDeck.size();
             shuffleDeck.reverse();
             if ((hasMovedFlip == 0 ) && (hasMovedLower == 0)){ //Checks if a move has been done since the last time the deck was shuffled
                 failCounter++;
