@@ -21,12 +21,15 @@ bool isVis;
          return suit;
      }
      bool isRed(){
-         if ((suit != "S") || (suit != "C")){
+         if ((this->suit == "H") || (this->suit == "D")){
              return true;
          }
 
-         else{
+         else if((this->suit == "C") || (this->suit == "S")){
              return false;
+         }
+         else{
+             return bool(nullptr);
          }
      }
      bool getVisible(){

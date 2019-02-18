@@ -61,12 +61,10 @@ class GameController
     bool checkFlip(){
         //while(!flipPile.empty()){
         Card aCard = flipPile.front();
-        //Card lowCard = lowPile.front(); dont know why this doesnt work
         int cNum = aCard.getNum();
         bool isRed = aCard.isRed();
-        cout << "Flip Card: " << aCard.toString() << endl;
-        cout << "Flip Card Could Be Placed On LowerFour Pile but it isnt happening" << endl;
-        cout << "lowerFour's top card isRed return: " << lowerFour.front().isRed() << " // lowerFours top card getNum return: " << lowerFour.front().getNum() << endl;
+        cout << "Flip Card: " << aCard.toString() << " " << cNum << " " << isRed << endl;
+        cout << "lowerFour's top card isRed return: " << lowerFour.front().isRed() << " // lowerFours top card getNum return: " << lowerFour.front().toString() << endl;
         if((lowerOne.front().isRed() != isRed) && (lowerOne.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerOne);
             flipPile.pop_front();
