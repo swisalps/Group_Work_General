@@ -133,7 +133,29 @@ class GameController
         int cNum = aCard.getNum();
         bool isRed = aCard.isRed();
         cout << "Flip Card: " << aCard.toString() << endl;
-        if((lowerOne.front().isRed() != isRed) && (lowerOne.front().getNum() == cNum + 1)){
+        if(cNum == 1){
+            if(aCard.getSuit() == "D"){
+                    moveCard(1, flipPile, topDiamonds);
+                    //cout << topDiamonds.front().toString()<< endl;
+                    return true;
+                }
+                else if(aCard.getSuit() == "S"){
+                    moveCard(1, flipPile, topSpades);
+                    //cout << topSpades.front().toString()<< endl;
+                    return true;
+                }
+                else if(aCard.getSuit() == "H"){
+                    moveCard(1, flipPile, topHearts);
+                    //cout << topHearts.front().toString()<< endl;
+                    return true;
+                }
+                else{ // the suit of the lowVisCard is a Club
+                    moveCard(1, flipPile, topClubs);
+                    //cout << topClubs.front().toString()<< endl;
+                    return true;
+                }
+        }
+        else if((lowerOne.front().isRed() != isRed) && (lowerOne.front().getNum() == cNum + 1)){
             moveCard(1, flipPile, lowerOne);
             flipPile.pop_front();
             hasMovedFlip++;
@@ -191,31 +213,31 @@ class GameController
     // NOTE TO DEVELOPERS: After moving the card, I need to see if there is a non-vis card after it that I need to make visible, which I have yet to implement.
     //                     I don't know if we already made a method for this. I also have not yet included the hasMoved incrementing factor.
     //
+
+    //This method only looks  for aces that are on the front of any of the lower piles.
+    //if it finds an ace it will immiediatly move it to its assoicated ace piles
     bool lowerToAceFirst(std::list<Card> lowerPile){
         if(!lowerPile.empty()){
             Card lowVisCard = lowerPile.front();
             if(lowVisCard.getNum() == 1){ // if the top card is an ace
+
                 if(lowVisCard.getSuit() == "D"){
                     moveCard(1, lowerPile, topDiamonds);
-                    cout << "through first if D " << endl;
                     //cout << topDiamonds.front().toString()<< endl;
                     return true;
                 }
                 else if(lowVisCard.getSuit() == "S"){
                     moveCard(1, lowerPile, topSpades);
-                    cout << "through first if S" << endl;
                     //cout << topSpades.front().toString()<< endl;
                     return true;
                 }
                 else if(lowVisCard.getSuit() == "H"){
                     moveCard(1, lowerPile, topHearts);
-                    cout << "through first if H" << endl;
                     //cout << topHearts.front().toString()<< endl;
                     return true;
                 }
                 else{ // the suit of the lowVisCard is a Club
                     moveCard(1, lowerPile, topClubs);
-                    cout << "through first if C" << endl;
                     //cout << topClubs.front().toString()<< endl;
                     return true;
                 }
@@ -225,7 +247,8 @@ class GameController
     }
     return false;
     }
-
+    //this is method is called only after an pile as the first ACE card. the ace must be placed
+    // first before this method is called.
     bool lowerToAce(std::list<Card> lowerPile){
         Card lowVisCard = lowerPile.front();
             if(lowVisCard.getSuit() == "D"){
