@@ -29,11 +29,11 @@ class GameController
     {
         int ctr = 0;
         initSolitaire();
+        cout<<"\nEnd Game State\n";
     while((!gameWon)&&(!gameLost)){//As long as the game is not won or lost the loop will continue
         ctr++;
         flipCard();
         checkFlip();
-        cout<<"past Checkflip";
         lowOne = lowerToAceFirst(lowerOne);
         if(lowOne){
             lowerToAce(lowerOne);
@@ -104,12 +104,14 @@ class GameController
             lowerToAce(lowerSix);
             lowerToAce(lowerSeven);
         }
-        displayPiles();
+
         test++;
         if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
             gameWon = true;
-        cout<<"Run through number:"<<ctr<<"\n";
+
     }
+    displayPiles();
+    cout<<"Ran through: "<<ctr<<" times"<<"\n";
     if(gameWon){
         cout<<"You Won!\n";
     }
@@ -207,7 +209,7 @@ class GameController
         Card aCard = flipPile.front();
         int cNum = aCard.getNum();
         bool isRed = aCard.isRed();
-        cout << "Flip Card: " << aCard.toString() << endl;
+        //cout << "Flip Card: " << aCard.toString() << endl;
         if(cNum == 1){
             if(aCard.getSuit() == "D"){
                     moveCard(1, flipPile, topDiamonds);
@@ -271,7 +273,7 @@ class GameController
                 hasMovedFlip++;
             }
             else{
-                cout << "no open spaces for king " << endl;
+                //cout << "no open spaces for king " << endl;
             }
         }
 
@@ -397,7 +399,7 @@ class GameController
         if(!lowerPile.empty()){
         Card lowVisCard = lowerPile.front();
             if((lowVisCard.getSuit() == "D") && (!topDiamonds.empty())){
-                cout << "1st lower" << endl;
+                //cout << "1st lower" << endl;
                 Card topCard = topDiamonds.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
                     moveCard(1, lowerPile, topDiamonds);
@@ -405,7 +407,7 @@ class GameController
                 }
             }
             else if((lowVisCard.getSuit() == "S") && (!topSpades.empty())){
-                cout << "2nd lower" << endl;
+                //cout << "2nd lower" << endl;
                 Card topCard = topSpades.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
                      moveCard(1, lowerPile, topSpades);
@@ -413,7 +415,7 @@ class GameController
                 }
             }
             else if((lowVisCard.getSuit() == "H") && (!topHearts.empty())){
-                cout << "3rd lower" << endl;
+               // cout << "3rd lower" << endl;
                 Card topCard = topHearts.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
                     moveCard(1, lowerPile, topHearts);
@@ -421,7 +423,7 @@ class GameController
                 }
             }
             else if((lowVisCard.getSuit() == "C") && (!topClubs.empty())){ // the suit of the lowVisCard is a Club
-                cout << "4th lower" << endl;
+                //cout << "4th lower" << endl;
                 Card topCard = topClubs.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){// if the top card of the ace pile has a number that is less than the number of the low card by 1
                     moveCard(1, lowerPile, topClubs);
@@ -429,7 +431,7 @@ class GameController
                 }
                 }
             else{
-                cout << "no moves" << endl;
+                //cout << "no moves" << endl;
                 return false;
             }
             }
@@ -570,7 +572,7 @@ class GameController
 
     void moveCard(int numCards, list<Card>& source, list<Card>& dest)
     {
-        cout << "moveCard called " << endl;
+        //cout << "moveCard called " << endl;
         if (numCards == 1){  //If there is just one card it is moved to the destination pile and then it is remove from the source pile
             dest.push_front(source.front());
             source.pop_front();
