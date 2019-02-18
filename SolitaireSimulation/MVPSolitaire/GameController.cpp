@@ -382,7 +382,59 @@ class GameController
             return false;
     }
 
-
+    // moves a king card from a low pile to an empty low pile
+    // @param lowerPile a pile you are looking at assumed to be empty
+    bool lowKingtoEmpty(std::list<Card> lowerPile){
+        if(lowerPile.empty()){ //if the pile you are looking at is empty
+            // check all piles to find a king
+            if(!lowerOne.empty()){ // check the 1st pile for a king
+                if (lowerOne.front().getNum() == 13){
+                    moveCard(1, lowerOne, lowerPile);
+                    return true;
+                }
+            }
+            else if(!lowerTwo.empty()){// check the 2nd pile for a king
+                if (lowerTwo.front().getNum() == 13){
+                    moveCard(1, lowerTwo, lowerPile);
+                    return true;
+                }
+            }
+            else if(!lowerThree.empty()){
+                if (lowerThree.front().getNum() == 13){
+                    moveCard(1, lowerThree, lowerPile);
+                    return true;
+                }
+            }
+            else if(!lowerFour.empty()){
+                if (lowerFour.front().getNum() == 13){
+                    moveCard(1, lowerFour, lowerPile);
+                    return true;
+                }
+            }
+            else if(!lowerFive.empty()){
+                if (lowerFive.front().getNum() == 13){
+                    moveCard(1, lowerFive, lowerPile);
+                    return true;
+                }
+            }
+            else if(!lowerSix.empty()){
+                if (lowerSix.front().getNum() == 13){
+                    moveCard(1, lowerSix, lowerPile);
+                    return true;
+                }
+            }
+            else if(!lowerSeven.empty()){
+                if (lowerSeven.front().getNum() == 13){
+                    moveCard(1, lowerSeven, lowerPile);
+                    return true;
+                }
+            }
+            else{
+                return false;
+            }
+            return false;
+        }
+    }
 
 
 
