@@ -18,7 +18,7 @@ class GameController
     int failCounter;
     int test;
     int visCtr;
-    bool lowOne, lowTwo, lowThree, lowFour, lowFive, lowSix, lowSeven;
+    bool lowOne, lowTwo, lowThree, lowFour, lowFive, lowSix, lowSeven, gameLost, gameWon;
     std::list<Card> shuffleDeck;
     std::list<Card> lowerOne, lowerTwo, lowerThree, lowerFour, lowerFive, lowerSix, lowerSeven, pile, temp;
     //lists below will be treated and interacted with as a stack. but are list becuase of the advanatages the list data structure offers in terms of moving sections of data
@@ -27,11 +27,14 @@ class GameController
 
     GameController()
     {
-
+        int ctr = 0;
         initSolitaire();
-    while(test < 5){
+    while((!gameWon)&&(!gameLost)){//As long as the game is not won or lost the loop will continue
+        ctr++;
+
         flipCard();
         checkFlip();
+        cout<<"past Checkflip";
         lowOne = lowerToAceFirst(lowerOne);
         if(lowOne){
             lowerToAce(lowerOne);
@@ -104,6 +107,16 @@ class GameController
         }
         displayPiles();
         test++;
+        if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
+            gameWon = true;
+        cout<<"Run through number:"<<ctr<<"\n";
+        cout<<shuffleDeck.size()<<"\n";
+    }
+    if(gameWon){
+        cout<<"You Won!\n";
+    }
+    else{
+        cout<<"You lost!\n";
     }
         //checkLowerMove(7);
         //displayPiles();
@@ -124,6 +137,8 @@ class GameController
         lowerSeven = makePile(7);
         lowerPiles = {&lowerOne, &lowerTwo, &lowerThree, &lowerFour, &lowerFive, &lowerSix, &lowerSeven};
         failCounter = 0;
+        gameLost = false;
+        gameWon = false;
 
     }
     std::list<Card> makePile(int numCards){
@@ -524,7 +539,7 @@ class GameController
     void flipCard()
     {
 
-        if(!shuffleDeck.empty())//If the deck is not empty the top card is pushed to the flippile and removed from the deck
+        if(shuffleDeck.size() > 1)//If the deck is not empty the top card is pushed to the flippile and removed from the deck
         {
             flipPile.push_front(shuffleDeck.front());
             shuffleDeck.pop_front();
@@ -532,12 +547,13 @@ class GameController
         }
         else //If the deck is empty then the flip pile is swaped with the deck and reversevd
         {
-            flipPile.swap(shuffleDeck);
+            shuffleDeck.swap(flipPile);
+            cout<<"\n------"<<"deck swapped: "<<shuffleDeck.size();
             shuffleDeck.reverse();
             if ((hasMovedFlip == 0 ) && (hasMovedLower == 0)){ //Checks if a move has been done since the last time the deck was shuffled
                 failCounter++;
                 if (failCounter > 2){//If there was no moves then the fail counter is increased by one, if it reaches 3 the game is over
-                    //TODO make game quit and result as loss
+                    gameLost = true;
                 }
             }
             else { //If a move has been done since the last shuffling then the hasMoved counters and fail counters are reset to 0
