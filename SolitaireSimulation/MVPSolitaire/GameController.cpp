@@ -322,6 +322,7 @@ class GameController
         cout << "moveCard called" << endl;
         if (numCards == 1){
             dest.push_front(source.front());
+            cout << dest.front().toString() << endl;
         }
         else{
             std::list<Card>::iterator it;
@@ -362,8 +363,14 @@ class GameController
     }
 
     int lastVisible(std::list<Card> pile){
-        for(Itr=pile.begin(); Itr!=pile.end(); ++it){
-            if(pile.)
+            int visCtr = 0;
+        for(Itr=pile.begin(); Itr!=pile.end(); ++Itr){
+            if(Itr->getVisible() == 1){
+                visCtr = visCtr + 1;
+            }
+            else if(Itr->getVisible() == 0){
+                return visCtr;
+            }
 
         }
 
