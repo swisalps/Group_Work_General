@@ -291,11 +291,11 @@ class GameController
     void moveCard(int numCards, list<Card> source, list<Card> dest)
     {
         cout << "moveCard called" << endl;
-        if (numCards == 1){
+        if (numCards == 1){  //If there is just one card it is moved to the destination pile and then it is remove from the source pile
             dest.push_front(source.front());
             cout << dest.front().toString() << endl;
         }
-        else{
+        else{ // If there is more than one card then the top card through numCards is spoliced from the source pile to the destination pile
             std::list<Card>::iterator it;
             it = source.begin();
             advance(it, numCards);
@@ -309,23 +309,23 @@ class GameController
     void flipCard()
     {
 
-        if(!shuffleDeck.empty())
+        if(!shuffleDeck.empty())//If the deck is not empty the top card is pushed to the flippile and removed from the deck
         {
             flipPile.push_front(shuffleDeck.front());
             shuffleDeck.pop_front();
             flipPile.front().setVis();
         }
-        else
+        else //If the deck is empty then the flip pile is swaped with the deck and reversevd
         {
             flipPile.swap(shuffleDeck);
             shuffleDeck.reverse();
-            if ((hasMovedFlip == 0 ) && (hasMovedLower == 0)){
+            if ((hasMovedFlip == 0 ) && (hasMovedLower == 0)){ //Checks if a move has been done since the last time the deck was shuffled
                 failCounter++;
-                if (failCounter > 2){
+                if (failCounter > 2){//If there was no moves then the fail counter is increased by one, if it reaches 3 the game is over
                     //TODO make game quit and result as loss
                 }
             }
-            else {
+            else { //If a move has been done since the last shuffling then the hasMoved counters and fail counters are reset to 0
                 hasMovedFlip = 0;
                 hasMovedLower = 0;
                 failCounter = 0;
