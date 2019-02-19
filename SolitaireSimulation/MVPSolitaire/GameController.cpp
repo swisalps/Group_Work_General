@@ -111,6 +111,7 @@ class GameController
         //displayPiles();
 
     }
+    displayPiles();
     cout<< "return values from ace trackers: D" << diamondA << ", H" << heartA << ", S" << spadeA << ", C" << clubA << endl;
     cout<< "lower1 lastVis return: " << lastVisible(lowerOne).toString() << endl;
     cout<< "lower2 lastVis return: " << lastVisible(lowerTwo).toString() << endl;
@@ -119,13 +120,6 @@ class GameController
     cout<< "lower5 lastVis return: " << lastVisible(lowerFive).toString() << endl;
     cout<< "lower6 lastVis return: " << lastVisible(lowerSix).toString() << endl;
     cout<< "lower7 lastVis return: " << lastVisible(lowerSeven).toString() << endl;
-
-
-
-
-
-
-    displayPiles();
     cout<<"Ran through: "<<ctr<<" times"<<"\n";
     if(gameWon){
         cout<<"You Won!\n";
@@ -454,7 +448,6 @@ class GameController
                 }
                 }
             else{
-                cout << "no moves" << endl;
                 return false;
             }
             }
@@ -642,10 +635,11 @@ class GameController
         visCtr = 0;
         list<Card>::iterator ItrVis;
         for(ItrVis=pile.begin(); ItrVis!=pile.end(); ++ItrVis){
-            if(ItrVis->getVisible() == 0){
+            if(ItrVis->getVisible() == 1){
                 visCtr = visCtr + 1;
             }
             else{
+                ItrVis--;
                 return *ItrVis;
             }
 
