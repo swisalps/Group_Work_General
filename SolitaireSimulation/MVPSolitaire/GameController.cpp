@@ -29,8 +29,8 @@ class GameController
     {
         int ctr = 0;
         initSolitaire();
-    //while((!gameWon)&&(!gameLost)){//As long as the game is not won or lost the loop will continue
-    while(test < 10){
+    while((!gameWon)&&(!gameLost)){//As long as the game is not won or lost the loop will continue
+    //while(test < 10){
         ctr++;
         flipCard();
         checkFlip();
@@ -113,14 +113,14 @@ class GameController
 
     }
     displayPiles();
-    cout<< "return values from ace trackers: D" << diamondA << ", H" << heartA << ", S" << spadeA << ", C" << clubA << endl;
-    cout<< "lower1 lastVis return: " << lastVisible(lowerOne).toString() << endl;
-    cout<< "lower2 lastVis return: " << lastVisible(lowerTwo).toString() << endl;
-    cout<< "lower3 lastVis return: " << lastVisible(lowerThree).toString() << endl;
-    cout<< "lower4 lastVis return: " << lastVisible(lowerFour).toString() << endl;
-    cout<< "lower5 lastVis return: " << lastVisible(lowerFive).toString() << endl;
-    cout<< "lower6 lastVis return: " << lastVisible(lowerSix).toString() << endl;
-    cout<< "lower7 lastVis return: " << lastVisible(lowerSeven).toString() << endl;
+    //cout<< "return values from ace trackers: D" << diamondA << ", H" << heartA << ", S" << spadeA << ", C" << clubA << endl;
+    //cout<< "lower1 lastVis return: " << lastVisible(lowerOne).toString() << endl;
+    //cout<< "lower2 lastVis return: " << lastVisible(lowerTwo).toString() << endl;
+    //cout<< "lower3 lastVis return: " << lastVisible(lowerThree).toString() << endl;
+    //cout<< "lower4 lastVis return: " << lastVisible(lowerFour).toString() << endl;
+    //cout<< "lower5 lastVis return: " << lastVisible(lowerFive).toString() << endl;
+    //cout<< "lower6 lastVis return: " << lastVisible(lowerSix).toString() << endl;
+    //cout<< "lower7 lastVis return: " << lastVisible(lowerSeven).toString() << endl;
     cout<<"Ran through: "<<ctr<<" times"<<"\n";
     if(gameWon){
         cout<<"You Won!\n";
@@ -177,49 +177,50 @@ class GameController
 
     }
     void displayPiles(){
-        cout << "Pile 1: " << endl;
+        cout << "Pile 1: ";
         for(std::list<Card>::iterator it=lowerOne.begin(); it != lowerOne.end(); it++)
-            std::cout << it->toString();
+            std::cout << it->toStringOneLine() << ", ";
         cout << " " << endl;
-        cout << "Pile 2: " << endl;
+        cout << "Pile 2: ";
         for(std::list<Card>::iterator it=lowerTwo.begin(); it != lowerTwo.end(); it++)
-            std::cout <<it->toString();
+            std::cout <<it->toStringOneLine() << ", ";
         cout << " " << endl;
-        cout << "Pile 3: " << endl;
+        cout << "Pile 3: ";
         for(std::list<Card>::iterator it=lowerThree.begin(); it != lowerThree.end(); it++)
-            std::cout <<it->toString();
+            std::cout <<it->toStringOneLine() << ", ";
         cout << " " << endl;
-        cout << "Pile 4: " << endl;
+        cout << "Pile 4: ";
         for(std::list<Card>::iterator it=lowerFour.begin(); it != lowerFour.end(); it++)
-            std::cout <<it->toString();
+            std::cout <<it->toStringOneLine() << ", ";
         cout << " " << endl;
-        cout << "Pile 5: " << endl;
+        cout << "Pile 5: ";
         for(std::list<Card>::iterator it=lowerFive.begin(); it != lowerFive.end(); it++)
-            std::cout <<it->toString();
+            std::cout <<it->toStringOneLine() << ", ";
         cout << " " << endl;
-        cout << "Pile 6: " << endl;
+        cout << "Pile 6: ";
         for(std::list<Card>::iterator it=lowerSix.begin(); it != lowerSix.end(); it++)
-            std::cout <<it->toString();
+            std::cout <<it->toStringOneLine() << ", ";
         cout << " " << endl;
-        cout << "Pile 7: " << endl;
+        cout << "Pile 7: ";
         for(std::list<Card>::iterator it=lowerSeven.begin(); it != lowerSeven.end(); it++)
-            std::cout <<it->toString();
+            std::cout <<it->toStringOneLine() << ", ";
         cout << " " << endl;
-        cout << "Diamond Aces" << endl;
+        cout << "Diamond Aces: ";
         for(std::list<Card>::iterator it=topDiamonds.begin(); it != topDiamonds.end(); it++)
-            std::cout <<it->toString();
+            std::cout <<it->toStringOneLine() << ", ";
         cout << " " << endl;
-        cout << "Hearts Aces" << endl;
+        cout << "Hearts Aces: ";
         for(std::list<Card>::iterator it=topHearts.begin(); it != topHearts.end(); it++)
-            std::cout <<it->toString();
+            std::cout <<it->toStringOneLine() << ", ";
         cout << " " << endl;
-        cout << "Spades Aces" << endl;
+        cout << "Spades Aces: ";
         for(std::list<Card>::iterator it=topSpades.begin(); it != topSpades.end(); it++)
-            std::cout <<it->toString();
+            std::cout <<it->toStringOneLine() << ", ";
         cout << " " << endl;
-        cout << "Clubs Aces" << endl;
+        cout << "Clubs Aces: ";
         for(std::list<Card>::iterator it=topClubs.begin(); it != topClubs.end(); it++)
-            std::cout <<it->toString();
+            std::cout <<it->toStringOneLine() << ", ";
+        cout << "" << endl;
         cout << "------------------------" << endl;
 
     }

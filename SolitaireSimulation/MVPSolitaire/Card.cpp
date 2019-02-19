@@ -56,6 +56,10 @@ bool isVis;
          std::string temp = "";
          return  std::to_string(num) + suit + std::to_string(isVis) + "\n" ;
      }
+     std::string toStringOneLine(){
+         std::string temp = "";
+         return  std::to_string(num) + suit + std::to_string(isVis);
+     }
 };
 
 
