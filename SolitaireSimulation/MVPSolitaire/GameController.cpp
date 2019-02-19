@@ -29,8 +29,8 @@ class GameController
     {
         int ctr = 0;
         initSolitaire();
-    while((!gameWon)&&(!gameLost)){//As long as the game is not won or lost the loop will continue
-    //while(test < 15){
+    //while((!gameWon)&&(!gameLost)){//As long as the game is not won or lost the loop will continue
+    while(test < 10){
         ctr++;
         flipCard();
         checkFlip();
@@ -104,11 +104,12 @@ class GameController
             lowerToAce(lowerSix);
             lowerToAce(lowerSeven);
         }
+        checkLowerMove(7);
 
         test++;
         if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
             gameWon = true;
-        //displayPiles();
+        displayPiles();
 
     }
     displayPiles();
