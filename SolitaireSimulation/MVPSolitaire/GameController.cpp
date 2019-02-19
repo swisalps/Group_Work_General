@@ -109,10 +109,23 @@ class GameController
         if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
             gameWon = true;
         //displayPiles();
-        cout<< "return values from ace trackers: D" << diamondA << ", H" << heartA << ", S" << spadeA << ", C" << clubA << endl;
+
     }
+    cout<< "return values from ace trackers: D" << diamondA << ", H" << heartA << ", S" << spadeA << ", C" << clubA << endl;
+    cout<< "lower1 lastVis return: " << lastVisible(lowerOne).toString() << endl;
+    cout<< "lower2 lastVis return: " << lastVisible(lowerTwo).toString() << endl;
+    cout<< "lower3 lastVis return: " << lastVisible(lowerThree).toString() << endl;
+    cout<< "lower4 lastVis return: " << lastVisible(lowerFour).toString() << endl;
+    cout<< "lower5 lastVis return: " << lastVisible(lowerFive).toString() << endl;
+    cout<< "lower6 lastVis return: " << lastVisible(lowerSix).toString() << endl;
+    cout<< "lower7 lastVis return: " << lastVisible(lowerSeven).toString() << endl;
+
+
+
+
+
+
     displayPiles();
-    cout<< "return values from acefirst: " << lowOne << ", " << lowTwo << ", " << lowThree << ", " << lowFour << ", " << lowFive << ", " << lowSix << ", " << lowSeven << endl;
     cout<<"Ran through: "<<ctr<<" times"<<"\n";
     if(gameWon){
         cout<<"You Won!\n";
@@ -384,25 +397,21 @@ class GameController
                 if(lowVisCard.getSuit() == "D"){
                     moveCard(1, lowerPile, topDiamonds);
                     diamondA = true;
-                    cout << "lowAceFirst Execute for D: " <<topDiamonds.front().toString()<< endl;
                     return 1;
                 }
                 else if(lowVisCard.getSuit() == "S"){
                     moveCard(1, lowerPile, topSpades);
                     spadeA = true;
-                    cout << "lowAceFirst Execute for S: "<< topSpades.front().toString()<< endl;
                     return 1;
                 }
                 else if(lowVisCard.getSuit() == "H"){
                     moveCard(1, lowerPile, topHearts);
                     heartA = true;
-                    cout << "lowAceFirst Execute for H: "<< topHearts.front().toString()<< endl;
                     return 1;
                 }
                 else{ // the suit of the lowVisCard is a Club
                     moveCard(1, lowerPile, topClubs);
                     clubA = true;
-                    cout << "lowAceFirst Execute for C: "<< topClubs.front().toString()<< endl;
                     return 1;
                 }
             }
@@ -416,39 +425,30 @@ class GameController
     bool lowerToAce(std::list<Card>& lowerPile){
         if(!lowerPile.empty()){
         Card lowVisCard = lowerPile.front();
-        cout << "lowerToAce Attempt: " << lowVisCard.toString() << endl;
             if((lowVisCard.getSuit() == "D") && (!topDiamonds.empty())){
-                cout << "1st lower " << endl;
                 Card topCard = topDiamonds.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){// if the top card of the ace pile has a number that is less than the number of the low card by 1
-                    cout << "D for attempted " << endl;
                     moveCard(1, lowerPile, topDiamonds);
                     return true;
                 }
             }
             else if((lowVisCard.getSuit() == "S") && (!topSpades.empty())){
-                cout << "2nd lower" << endl;
                 Card topCard = topSpades.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
-                     cout << "S for attempted " << endl;
                      moveCard(1, lowerPile, topSpades);
                      return true;
                 }
             }
             else if((lowVisCard.getSuit() == "H") && (!topHearts.empty())){
-                cout << "3rd lower" << endl;
                 Card topCard = topHearts.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
-                    cout << "H for attempted " << endl;
                     moveCard(1, lowerPile, topHearts);
                     return true;
                 }
             }
             else if((lowVisCard.getSuit() == "C") && (!topClubs.empty())){ // the suit of the lowVisCard is a Club
-                cout << "4th lower" << endl;
                 Card topCard = topClubs.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){// if the top card of the ace pile has a number that is less than the number of the low card by 1
-                cout << "C for attempted " << endl;
                     moveCard(1, lowerPile, topClubs);
                     return true;
                 }
