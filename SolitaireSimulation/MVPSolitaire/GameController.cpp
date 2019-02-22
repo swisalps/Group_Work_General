@@ -430,6 +430,24 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
 
         return true;
     }
+
+    // **** This method will be later incorporated into the checkLowerMethod() once finished. ****
+    // **** MAYBE KEEP FOR TESTING PURPOSES? ***
+    // This method will check all the lower piles one-by-one and see if the ENTIRE pile of visible cards
+    // can be moved to another pile or empty pile (the pile moved will have a king in it).
+    //@param pileNumber the number indicating which pile we want (1-7)
+    void checkLowerMoveEntirePile(int pileNumber){
+        //get the current pile to look at (ENCOMPASS INSIDE FOR LOOP???????)
+        std::list<Card> currentPile = *lowerPiles[pileNumber-1]; // NOTE: lowerPiles indices count from 0-6 and pile number ranges between 1-7, so we need -1.
+        //check to see if the pile is NOT empty
+        //check to see if the pile has more than one card in it.
+        if(!currentPile.empty()
+            && ){
+
+        }
+    }
+
+
     //Check if you can move a card from the lower pile you are looking at to the ace-piles
         //Check if there is an invisible card you can make visible
         //If you moved, increment the hasMovedLower
