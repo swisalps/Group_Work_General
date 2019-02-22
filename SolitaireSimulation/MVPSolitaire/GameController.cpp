@@ -430,8 +430,12 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     // can be moved to another pile, or an empty pile if the pile we want to move will have a king in it.
     //@param pileNumber the number indicating which pile (1-7) we want to move
     //@return true the pile has been moved
-    //@return false the pile we want to move is either empty, has only 1 card in it, or cannot find a valid pile to move into
+    //@return false the pile we want to move is either empty, has only 1 card in it, or cannot find a valid pile to move into, or if the pileNumber is out of range
     bool checkLowerMoveEntirePile(int pileNumber){
+        if(pileNumber > 7 || pileNumber < 1){ // check if the pileNumber is out of range. If so, return false.
+            std::cout << "Error: the pile we want to move is out of range.";
+            return false;
+        }
         //get the current pile to look at (ENCOMPASS INSIDE FOR LOOP???????)
         std::list<Card> currentPile = *lowerPiles[pileNumber-1]; // NOTE: lowerPiles indices count from 0-6 and pileNumber ranges between 1-7, so we need -1.
         //check to see if the pile is NOT empty.
