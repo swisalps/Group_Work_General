@@ -439,14 +439,53 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     void checkLowerMoveEntirePile(int pileNumber){
         //get the current pile to look at (ENCOMPASS INSIDE FOR LOOP???????)
         std::list<Card> currentPile = *lowerPiles[pileNumber-1]; // NOTE: lowerPiles indices count from 0-6 and pile number ranges between 1-7, so we need -1.
-        //check to see if the pile is NOT empty
+        //check to see if the pile is NOT empty.
         //check to see if the pile has more than one card in it.
-        if(!currentPile.empty()
-            && ){
-
+        //check to see if the pile has any non-visible cards in it.
+        if((!currentPile.empty()) && (currentPile.size() > 1) && (findNonVis(currentPile) == true)){
+                // look at the current pile's bottom-most visible card, assuming there are non-vis cards in the pile
+                Card bottomMostVisCard = getCard(currentPile, 0); // place-holder
+                for(int i=0; i<currentPile.size(); i++){
+                    Card currentCard = getCard(currentPile, i);
+                    if((currentCard.getVisible() == false) || (i == currentPile.size())){ // if you reach a non-vis card OR you reach past the end of the list
+                        // you found a non-vis card or reached past the end of the list, get the card before it which should be vis
+                        bottomMostVisCard = getCard(currentPile, i-1);
+                        break;
+                    }
+                }
+                
         }
     }
 
+
+    // this method checks if there are any non-visible cards left in the pile
+    // this method uses the getCard method as well
+    // this method is useful to find if the entire pile can be moved without worrying if there are any non-visible cards we need to splice
+    // @param myPile the pile you want to find if it has a non-visible card in it
+    // @return true the pile has a non-visible card in it
+    // @return false the pile does not have a non-visible card in it; only visible cards
+    bool findNonVis(list<Card> myPile){
+        for(int i=0; i<myPile.size(); i++){
+            Card myCard = getCard(myPile, i);
+            if(myCard.getVisible() == false){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        return false;
+    }
+
+    // This method getCard() takes in the list you want to search and the index of that list
+    // and finds the Card element in that list.
+    Card getCard(list<Card> myList, int index){
+        list<Card>::iterator it = myList.begin();
+        for(int i=0; i<index; i++){
+            ++it;
+        }
+        return *it;
+    }
 
     //Check if you can move a card from the lower pile you are looking at to the ace-piles
         //Check if there is an invisible card you can make visible
