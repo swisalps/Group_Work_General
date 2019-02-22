@@ -126,8 +126,10 @@ class GameController
 
     }
 
-    //method that checks what piles a flipcard can be placed on. if there is another card in flippile or a king, repeat process
-    //@return true if the method empties the flip
+    //method that checks what piles the most recent flip card can be placed on. First checks if the flip card is an ace, if so it places it on the ace proper ace pile
+    //if not an ace, it then checks to see if the flip card was a king, if so, it checks to see if any of the lower piles are empty so the king can be placed
+    //if the flip card is not an ace or a king, it will check all 7 lower piles and the 4 ace piles to see if the flip card can be placed at all
+    //@return boolean
     bool checkFlip()
     {
         //while(!flipPile.empty()){
@@ -293,7 +295,9 @@ class GameController
     return 0;
     }
     //this is method is called only after an pile as the first ACE card. the ace must be placed
-    // first before this method is called.
+    // first before this method is called. this method will always see if any cards in the lower piles can be addded to the ace piles
+    //@param: the lowerPile you want to see if its front card fits in any of the ace piles
+    //@return: true if it moves a card from lowerPile to an ace spot, false if not
     bool lowerToAce(std::list<Card>& lowerPile){
         if(!lowerPile.empty()){
         Card lowVisCard = lowerPile.front();
@@ -388,11 +392,16 @@ class GameController
     }
 
 
-
+/*
+This method is executed at the beginning of the gameController() method each time a new flip card is flipped. it sees if pile lowerOne has a size of 1.
+if it does, it sees if it can move that card to any of the other lower piles in order to free up lowerOne so a king can be placed in the newly created
+open pile spot. this method could become obsolete once checkLowerMove() is fully implemented.
+@return bool: true if pile one is now open, false if not
+*/
     bool freeUpFirstPile()
     {
 
-        if(lowerOne.size() == 1){
+        if(lowerOne.size() == 1){ //checks to see if lowerOne has only one card. if so the method will attempt to move it in order to free up the pile
             Card pOneCard = lowerOne.front();
             if((lowerTwo.front().isRed() != pOneCard.isRed()) && (lowerTwo.front().getNum() == pOneCard.getNum() + 1)){
                 moveCard(1, lowerOne, lowerTwo);
