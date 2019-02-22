@@ -29,12 +29,12 @@ class GameController
     {
         int ctr = 0;
         initSolitaire();
-    while((!gameWon)&&(!gameLost)){//As long as the game is not won or lost the loop will continue
-    //while(test < 10){
+    //while((!gameWon)&&(!gameLost)){//As long as the game is not won or lost the loop will continue
+    while(test < 10){
         ctr++;
         flipCard();
+        freeUpFirstPile();
         checkFlip();
-        lowOne = lowerToAceFirst(lowerOne);
         if(diamondA || clubA || spadeA || heartA){
             lowerToAce(lowerOne);
             lowerToAce(lowerTwo);
@@ -104,7 +104,7 @@ class GameController
             lowerToAce(lowerSix);
             lowerToAce(lowerSeven);
         }
-        checkLowerMove(7);
+        //checkLowerMove(7);
 
         test++;
         if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
@@ -177,31 +177,31 @@ class GameController
 
     }
     void displayPiles(){
-        cout << "Pile 1: ";
+        cout << "Pile 1 Front->: ";
         for(std::list<Card>::iterator it=lowerOne.begin(); it != lowerOne.end(); it++)
             std::cout << it->toStringOneLine() << ", ";
         cout << " " << endl;
-        cout << "Pile 2: ";
+        cout << "Pile 2 Front->: ";
         for(std::list<Card>::iterator it=lowerTwo.begin(); it != lowerTwo.end(); it++)
             std::cout <<it->toStringOneLine() << ", ";
         cout << " " << endl;
-        cout << "Pile 3: ";
+        cout << "Pile 3 Front->: ";
         for(std::list<Card>::iterator it=lowerThree.begin(); it != lowerThree.end(); it++)
             std::cout <<it->toStringOneLine() << ", ";
         cout << " " << endl;
-        cout << "Pile 4: ";
+        cout << "Pile 4 Front->: ";
         for(std::list<Card>::iterator it=lowerFour.begin(); it != lowerFour.end(); it++)
             std::cout <<it->toStringOneLine() << ", ";
         cout << " " << endl;
-        cout << "Pile 5: ";
+        cout << "Pile 5 Front->: ";
         for(std::list<Card>::iterator it=lowerFive.begin(); it != lowerFive.end(); it++)
             std::cout <<it->toStringOneLine() << ", ";
         cout << " " << endl;
-        cout << "Pile 6: ";
+        cout << "Pile 6 Front->: ";
         for(std::list<Card>::iterator it=lowerSix.begin(); it != lowerSix.end(); it++)
             std::cout <<it->toStringOneLine() << ", ";
         cout << " " << endl;
-        cout << "Pile 7: ";
+        cout << "Pile 7 Front->: ";
         for(std::list<Card>::iterator it=lowerSeven.begin(); it != lowerSeven.end(); it++)
             std::cout <<it->toStringOneLine() << ", ";
         cout << " " << endl;
@@ -300,14 +300,14 @@ class GameController
                 //cout << "no open spaces for king " << endl;
             }
         }
-        else if((lowerOne.front().isRed() != isRed) && (lowerOne.front().getNum() == cNum + 1) && (lowerOne.front().getNum() != 2)){
+        else if((lowerOne.front().isRed() != isRed) && (lowerOne.front().getNum() == cNum + 1) && (lowerOne.front().getNum() != 2) && (!lowerOne.empty())){
             moveCard(1, flipPile, lowerOne);
             hasMovedFlip++;
             flipCard();
             //cout << lowerOne.front().toString()<< endl;
 
         }
-        else if((lowerTwo.front().isRed() != isRed) && (lowerTwo.front().getNum() == cNum + 1) && (lowerTwo.front().getNum() != 2)){
+        else if((lowerTwo.front().isRed() != isRed) && (lowerTwo.front().getNum() == cNum + 1) && (lowerTwo.front().getNum() != 2) && (!lowerTwo.empty())){
             moveCard(1, flipPile, lowerTwo);
             hasMovedFlip++;
             flipCard();
@@ -513,9 +513,39 @@ class GameController
 
 
 
-    bool checkLower()
+    bool freeUpFirstPile()
     {
-        //Check if you can move a card from the lower pile you are looking at to the ace-piles
+
+        if(lowerOne.size() == 1){
+            Card pOneCard = lowerOne.front();
+            if((lowerTwo.front().isRed() != pOneCard.isRed()) && (lowerTwo.front().getNum() == pOneCard.getNum() + 1)){
+                moveCard(1, lowerOne, lowerTwo);
+        }
+            else if((lowerThree.front().isRed() != pOneCard.isRed()) && (lowerThree.front().getNum() == pOneCard.getNum() + 1)){
+                moveCard(1, lowerOne, lowerThree);
+            }
+            else if((lowerFour.front().isRed() != pOneCard.isRed()) && (lowerFour.front().getNum() == pOneCard.getNum() + 1)){
+                moveCard(1, lowerOne, lowerFour);
+            }
+            else if((lowerFive.front().isRed() != pOneCard.isRed()) && (lowerFive.front().getNum() == pOneCard.getNum() + 1)){
+                moveCard(1, lowerOne, lowerFive);
+            }
+            else if((lowerSix.front().isRed() != pOneCard.isRed()) && (lowerSix.front().getNum() == pOneCard.getNum() + 1)){
+                moveCard(1, lowerOne, lowerSix);
+            }
+            else if((lowerSeven.front().isRed() != pOneCard.isRed()) && (lowerSeven.front().getNum() == pOneCard.getNum() + 1)){
+                moveCard(1, lowerOne, lowerSeven);
+            }
+            else{
+                return false;
+            }
+            return false;
+        }
+
+
+        return true;
+    }
+    //Check if you can move a card from the lower pile you are looking at to the ace-piles
         //Check if there is an invisible card you can make visible
         //If you moved, increment the hasMovedLower
 
@@ -532,10 +562,6 @@ class GameController
         //Check if you made a move
         //Yes: recurse; set bool to true
         //No: return; set bool to false
-
-
-        return true;
-    }
     bool checkLowerMove(int startingPile){
         if(startingPile >= 1)
         {
