@@ -9,7 +9,6 @@
 using namespace std;
 
 class GameController
-
 {
     public:
     cardDeck deck;
@@ -25,116 +24,14 @@ class GameController
     std::list<Card> topDiamonds, topSpades, topHearts, topClubs, flipPile;
     std::array<list<Card>*, 7> lowerPiles;
 
+    //constructor for the GameController object: creates and runs the solitaire deck
     GameController()
     {
         int ctr = 0;
         initSolitaire();
-    while((!gameWon)&&(!gameLost)){//As long as the game is not won or lost the loop will continue
-    //while(test < 10){
-        ctr++;
-        flipCard();
-        freeUpFirstPile();
-        lowKingtoEmpty(lowerOne);
-        checkFlip();
-        if(diamondA || clubA || spadeA || heartA){
-            lowerToAce(lowerOne);
-            lowerToAce(lowerTwo);
-            lowerToAce(lowerThree);
-            lowerToAce(lowerFour);
-            lowerToAce(lowerFive);
-            lowerToAce(lowerSix);
-            lowerToAce(lowerSeven);
-        }
-        lowTwo = lowerToAceFirst(lowerTwo);
-        if(diamondA || clubA || spadeA || heartA){
-            lowerToAce(lowerOne);
-            lowerToAce(lowerTwo);
-            lowerToAce(lowerThree);
-            lowerToAce(lowerFour);
-            lowerToAce(lowerFive);
-            lowerToAce(lowerSix);
-            lowerToAce(lowerSeven);
-        }
-        lowThree = lowerToAceFirst(lowerThree);
-        if(diamondA || clubA || spadeA || heartA){
-            lowerToAce(lowerOne);
-            lowerToAce(lowerTwo);
-            lowerToAce(lowerThree);
-            lowerToAce(lowerFour);
-            lowerToAce(lowerFive);
-            lowerToAce(lowerSix);
-            lowerToAce(lowerSeven);
-        }
-        lowFour = lowerToAceFirst(lowerFour);
-        if(diamondA || clubA || spadeA || heartA){
-            lowerToAce(lowerOne);
-            lowerToAce(lowerTwo);
-            lowerToAce(lowerThree);
-            lowerToAce(lowerFour);
-            lowerToAce(lowerFive);
-            lowerToAce(lowerSix);
-            lowerToAce(lowerSeven);
-        }
-        lowFive = lowerToAceFirst(lowerFive);
-        if(diamondA || clubA || spadeA || heartA){
-            lowerToAce(lowerOne);
-            lowerToAce(lowerTwo);
-            lowerToAce(lowerThree);
-            lowerToAce(lowerFour);
-            lowerToAce(lowerFive);
-            lowerToAce(lowerSix);
-            lowerToAce(lowerSeven);
-        }
-        lowSix = lowerToAceFirst(lowerSix);
-        if(diamondA || clubA || spadeA || heartA){
-            lowerToAce(lowerOne);
-            lowerToAce(lowerTwo);
-            lowerToAce(lowerThree);
-            lowerToAce(lowerFour);
-            lowerToAce(lowerFive);
-            lowerToAce(lowerSix);
-            lowerToAce(lowerSeven);
-        }
-        lowSeven = lowerToAceFirst(lowerSeven);
-        if(diamondA || clubA || spadeA || heartA){
-            lowerToAce(lowerOne);
-            lowerToAce(lowerTwo);
-            lowerToAce(lowerThree);
-            lowerToAce(lowerFour);
-            lowerToAce(lowerFive);
-            lowerToAce(lowerSix);
-            lowerToAce(lowerSeven);
-        }
-        //checkLowerMove(7);
-
-        test++;
-        if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
-            gameWon = true;
-        displayPiles();
-
+        run();
     }
-    displayPiles();
-    //cout<< "return values from ace trackers: D" << diamondA << ", H" << heartA << ", S" << spadeA << ", C" << clubA << endl;
-    //cout<< "lower1 lastVis return: " << lastVisible(lowerOne).toString() << endl;
-    //cout<< "lower2 lastVis return: " << lastVisible(lowerTwo).toString() << endl;
-    //cout<< "lower3 lastVis return: " << lastVisible(lowerThree).toString() << endl;
-    //cout<< "lower4 lastVis return: " << lastVisible(lowerFour).toString() << endl;
-    //cout<< "lower5 lastVis return: " << lastVisible(lowerFive).toString() << endl;
-    //cout<< "lower6 lastVis return: " << lastVisible(lowerSix).toString() << endl;
-    //cout<< "lower7 lastVis return: " << lastVisible(lowerSeven).toString() << endl;
-    cout<<"Ran through: "<<ctr<<" times"<<"\n";
-    if(gameWon){
-        cout<<"You Won!\n";
-    }
-    else{
-        cout<<"You lost!\n";
-    }
-        //checkLowerMove(7);
-        //displayPiles();
-
-
-    }
-
+    //initalizes the solitaire game
     void initSolitaire()
     {
         deck = cardDeck();
@@ -161,8 +58,9 @@ class GameController
         clubA = false;
         heartA = false;
         diamondA =false;
-
     }
+
+    //makes each pile
     std::list<Card> makePile(int numCards){
         pile.clear();
         for(int i = 0; i < numCards; i++){
@@ -177,6 +75,8 @@ class GameController
         return pile;
 
     }
+
+    //displays the piles
     void displayPiles(){
         cout << "Pile 1 Front->: ";
         for(std::list<Card>::iterator it=lowerOne.begin(); it != lowerOne.end(); it++)
@@ -225,9 +125,11 @@ class GameController
         cout << "------------------------" << endl;
 
     }
+
     //method that checks what piles a flipcard can be placed on. if there is another card in flippile or a king, repeat process
     //@return true if the method empties the flip
-    bool checkFlip(){
+    bool checkFlip()
+    {
         //while(!flipPile.empty()){
         Card aCard = flipPile.front();
         int cNum = aCard.getNum();
@@ -282,14 +184,12 @@ class GameController
             hasMovedFlip++;
             flipCard();
             //cout << lowerOne.front().toString()<< endl;
-
         }
         else if((lowerTwo.front().isRed() != isRed) && (lowerTwo.front().getNum() == cNum + 1) && (lowerTwo.front().getNum() != 2) && (!lowerTwo.empty())){
             moveCard(1, flipPile, lowerTwo);
             hasMovedFlip++;
             flipCard();
             //cout << lowerTwo.front().toString()<< endl;
-
         }
         else if((lowerThree.front().isRed() != isRed) && (lowerThree.front().getNum() == cNum + 1) && (lowerThree.front().getNum() != 2)){
             moveCard(1, flipPile, lowerThree);
@@ -348,10 +248,10 @@ class GameController
         else{
             flipCard();
         }
-    if(hasMovedFlip != 0){
-        return true;
-    }
-    return false;
+        if(hasMovedFlip != 0){
+            return true;
+        }
+        return false;
     }
 
     // Checks one of the lower piles and finds the top visible card then sees if it can fit into any ace-spots
@@ -359,7 +259,6 @@ class GameController
     // NOTE TO DEVELOPERS: After moving the card, I need to see if there is a non-vis card after it that I need to make visible, which I have yet to implement.
     //                     I don't know if we already made a method for this. I also have not yet included the hasMoved incrementing factor.
     //
-
     //This method only looks  for aces that are on the front of any of the lower piles.
     //if it finds an ace it will immiediatly move it to its assoicated ace piles
     int lowerToAceFirst(std::list<Card>& lowerPile){
@@ -424,12 +323,12 @@ class GameController
                 if(topCard.getNum() == lowVisCard.getNum() - 1){// if the top card of the ace pile has a number that is less than the number of the low card by 1
                     moveCard(1, lowerPile, topClubs);
                     return true;
-                }
+                    }
                 }
             else{
                 return false;
             }
-            }
+        }
             return false;
     }
 
@@ -575,9 +474,6 @@ class GameController
             }
         }
         else{
-                //recursive call, doing this same process with lowerTwo at the top If
-                //lowCtr = lowCtr + 1
-                //checkLowerMove(lower)
                 return false;
         }
         return false;
@@ -655,7 +551,106 @@ class GameController
 //runs the GameController class
     void run()
     {
-
+            int ctr = 0;
+        while((!gameWon)&&(!gameLost))
+        {
+            //As long as the game is not won or lost the loop will continue
+    //while(test < 10){
+            ctr++;
+            flipCard();
+            freeUpFirstPile();
+            lowKingtoEmpty(lowerOne);
+            checkFlip();
+            if(diamondA || clubA || spadeA || heartA){
+                lowerToAce(lowerOne);
+                lowerToAce(lowerTwo);
+                lowerToAce(lowerThree);
+                lowerToAce(lowerFour);
+                lowerToAce(lowerFive);
+                lowerToAce(lowerSix);
+                lowerToAce(lowerSeven);
+            }
+            lowTwo = lowerToAceFirst(lowerTwo);
+            if(diamondA || clubA || spadeA || heartA){
+                lowerToAce(lowerOne);
+                lowerToAce(lowerTwo);
+                lowerToAce(lowerThree);
+                lowerToAce(lowerFour);
+                lowerToAce(lowerFive);
+                lowerToAce(lowerSix);
+                lowerToAce(lowerSeven);
+            }
+            lowThree = lowerToAceFirst(lowerThree);
+            if(diamondA || clubA || spadeA || heartA){
+                lowerToAce(lowerOne);
+                lowerToAce(lowerTwo);
+                lowerToAce(lowerThree);
+                lowerToAce(lowerFour);
+                lowerToAce(lowerFive);
+                lowerToAce(lowerSix);
+                lowerToAce(lowerSeven);
+            }
+            lowFour = lowerToAceFirst(lowerFour);
+            if(diamondA || clubA || spadeA || heartA){
+                lowerToAce(lowerOne);
+                lowerToAce(lowerTwo);
+                lowerToAce(lowerThree);
+                lowerToAce(lowerFour);
+                lowerToAce(lowerFive);
+                lowerToAce(lowerSix);
+                lowerToAce(lowerSeven);
+            }
+            lowFive = lowerToAceFirst(lowerFive);
+            if(diamondA || clubA || spadeA || heartA){
+                lowerToAce(lowerOne);
+                lowerToAce(lowerTwo);
+                lowerToAce(lowerThree);
+                lowerToAce(lowerFour);
+                lowerToAce(lowerFive);
+                lowerToAce(lowerSix);
+                lowerToAce(lowerSeven);
+            }
+            lowSix = lowerToAceFirst(lowerSix);
+            if(diamondA || clubA || spadeA || heartA){
+                lowerToAce(lowerOne);
+                lowerToAce(lowerTwo);
+                lowerToAce(lowerThree);
+                lowerToAce(lowerFour);
+                lowerToAce(lowerFive);
+                lowerToAce(lowerSix);
+                lowerToAce(lowerSeven);
+            }
+            lowSeven = lowerToAceFirst(lowerSeven);
+            if(diamondA || clubA || spadeA || heartA){
+                lowerToAce(lowerOne);
+                lowerToAce(lowerTwo);
+                lowerToAce(lowerThree);
+                lowerToAce(lowerFour);
+                lowerToAce(lowerFive);
+                lowerToAce(lowerSix);
+                lowerToAce(lowerSeven);
+            }
+            test++;
+            if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
+                gameWon = true;
+            displayPiles();
+    }
+    displayPiles();
+    //cout<< "return values from ace trackers: D" << diamondA << ", H" << heartA << ", S" << spadeA << ", C" << clubA << endl;
+    //cout<< "lower1 lastVis return: " << lastVisible(lowerOne).toString() << endl;
+    //cout<< "lower2 lastVis return: " << lastVisible(lowerTwo).toString() << endl;
+    //cout<< "lower3 lastVis return: " << lastVisible(lowerThree).toString() << endl;
+    //cout<< "lower4 lastVis return: " << lastVisible(lowerFour).toString() << endl;
+    //cout<< "lower5 lastVis return: " << lastVisible(lowerFive).toString() << endl;
+    //cout<< "lower6 lastVis return: " << lastVisible(lowerSix).toString() << endl;
+    //cout<< "lower7 lastVis return: " << lastVisible(lowerSeven).toString() << endl;
+    cout<<"Ran through: "<<ctr<<" times"<<"\n";
+    if(gameWon){
+        cout<<"You Won!\n";
+    }
+    else{
+        cout<<"You lost!\n";
+    }
     }
 
 //terminates the program
@@ -663,10 +658,6 @@ class GameController
     {
         return;
     }
-
-
-
-
 };
 int main()
     {
