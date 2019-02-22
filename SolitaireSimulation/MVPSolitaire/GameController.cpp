@@ -45,19 +45,9 @@ class GameController
         lowerSeven = makePile(7);
         lowerPiles = {&lowerOne, &lowerTwo, &lowerThree, &lowerFour, &lowerFive, &lowerSix, &lowerSeven};
         failCounter = 0;
-        lowOne = false;
-        lowTwo = false;
-        lowThree = false;
-        lowFour = false;
-        lowFive = false;
-        lowSix = false;
-        lowSeven = false;
-        gameLost = false;
-        gameWon = false;
-        spadeA = false; //SpadeA, clubA, heartA, diamondA are all bools that are set to true by the lowerToAceFirst() method.
-        clubA = false;  // if the ace of spades is placed on the spades ace pile, spadeA becomes true, and now can have 2,3,4,5... added to it
-        heartA = false; // by calling the lowerToAce() method, which cannot be called until the first ace is placed on the ace pile
-        diamondA =false;
+        lowOne = false, lowTwo = false, lowThree = false, lowFour = false, lowFive = false, lowSix = false, lowSeven = false;
+        gameLost = false, gameWon = false;
+        spadeA = false, clubA = false, heartA = false, diamondA = false;
     }
 
     //makes each pile
@@ -69,9 +59,12 @@ class GameController
         shuffleDeck.pop_front();
         }
         pile.front().setVis();
-        cout << "pile number: " << numCards << " // top card: " << pile.front().toString() << endl;
+        cout << "Pile " + std::to_string(numCards) + " Front->: ";
         for(std::list<Card>::iterator it=pile.begin(); it != pile.end(); it++)
-            std::cout << it->toString();
+        {
+            std::cout << it->toStringOneLine() << ", ";
+        }
+        cout << " " << endl;
         return pile;
 
     }
@@ -453,10 +446,11 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                         break;
                     }
                 }
-                
+
         }
     }
 
+        if(!currentPile.empty()){
 
     // this method checks if there are any non-visible cards left in the pile
     // this method uses the getCard method as well
@@ -513,6 +507,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 cout << "lastVis value: " <<lastVisOne.toString() << endl;
                 Itr = (*lowerPiles[startingPile-1]).begin();
                 temp.clear();
+                int n = 0;
                 for(int i = 0; i < 7; i++)
                 {
                     if(i != startingPile - 1)
@@ -532,6 +527,10 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                         return true;
                         }
                     }
+                }
+                if(n == 0)
+                {
+                    return checkLowerMove(startingPile - 1);
                 }
             }
             else
@@ -618,10 +617,10 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     void run()
     {
             int ctr = 0;
-        while((!gameWon)&&(!gameLost))
-        {
+        //while((!gameWon)&&(!gameLost))
+       // {
             //As long as the game is not won or lost the loop will continue
-    //while(test < 10){
+    while(test < 10){
             ctr++;
             flipCard();
             freeUpFirstPile(); //checks if lowerOne size = 1. if so attempts to move that one card to free up pile
@@ -697,6 +696,11 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 lowerToAce(lowerFive);
                 lowerToAce(lowerSix);
                 lowerToAce(lowerSeven);
+            }
+            bool b = checkLowerMove(7);
+            if(b == true)
+            {
+
             }
             test++;
             if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
