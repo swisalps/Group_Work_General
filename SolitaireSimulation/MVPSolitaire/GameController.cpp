@@ -450,8 +450,6 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
         }
     }
 
-        if(!currentPile.empty()){
-
     // this method checks if there are any non-visible cards left in the pile
     // this method uses the getCard method as well
     // this method is useful to find if the entire pile can be moved without worrying if there are any non-visible cards we need to splice
