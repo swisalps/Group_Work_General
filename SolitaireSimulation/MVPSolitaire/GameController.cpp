@@ -426,9 +426,9 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
 
     // **** This method will be later incorporated into the checkLowerMethod() once finished. ****
     // **** MAYBE KEEP FOR TESTING PURPOSES? ***
-    // This method will check all the lower piles one-by-one and see if the ENTIRE pile of visible cards
+    // This method will check a lower pile (pileNumber) and see if its ENTIRE group of visible cards
     // can be moved to another pile, or an empty pile if the pile we want to move will have a king in it.
-    //@param pileNumber the number indicating which pile we want (1-7)
+    //@param pileNumber the number indicating which pile (1-7) we want to move
     //@return true the pile has been moved
     //@return false the pile we want to move is either empty, has only 1 card in it, or cannot find a valid pile to move into
     bool checkLowerMoveEntirePile(int pileNumber){
