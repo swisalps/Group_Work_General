@@ -29,11 +29,12 @@ class GameController
     {
         int ctr = 0;
         initSolitaire();
-    //while((!gameWon)&&(!gameLost)){//As long as the game is not won or lost the loop will continue
-    while(test < 10){
+    while((!gameWon)&&(!gameLost)){//As long as the game is not won or lost the loop will continue
+    //while(test < 10){
         ctr++;
         flipCard();
         freeUpFirstPile();
+        lowKingtoEmpty(lowerOne);
         checkFlip();
         if(diamondA || clubA || spadeA || heartA){
             lowerToAce(lowerOne);
