@@ -236,30 +236,6 @@ class GameController
         cout << "Flip Card: " << aCard.toString() << endl;
         if(cNum == 1){
             lowerToAceFirst(flipPile);
-            // if(aCard.getSuit() == "D"){
-            //         moveCard(1, flipPile, topDiamonds);
-            //         //cout << topDiamonds.front().toString()<< endl;
-            //         flipCard();
-            //         hasMovedFlip++;
-            //     }
-            //     else if(aCard.getSuit() == "S"){
-            //         moveCard(1, flipPile, topSpades);
-            //         //cout << topSpades.front().toString()<< endl;
-            //         flipCard();
-            //         hasMovedFlip++;
-            //     }
-            //     else if(aCard.getSuit() == "H"){
-            //         moveCard(1, flipPile, topHearts);
-            //         //cout << topHearts.front().toString()<< endl;
-            //         flipCard();
-            //         hasMovedFlip++;
-            //     }
-            //     else{ // the suit of the lowVisCard is a Club
-            //         moveCard(1, flipPile, topClubs);
-            //         //cout << topClubs.front().toString()<< endl;
-            //         flipCard();
-            //         hasMovedFlip++;
-            //     }
         }
         if(cNum == 13){
             if(lowerOne.empty()){
