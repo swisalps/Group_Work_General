@@ -119,8 +119,10 @@ class GameController
 
     }
 
-    //method that checks what piles a flipcard can be placed on. if there is another card in flippile or a king, repeat process
-    //@return true if the method empties the flip
+    //method that checks what piles the most recent flip card can be placed on. First checks if the flip card is an ace, if so it places it on the ace proper ace pile
+    //if not an ace, it then checks to see if the flip card was a king, if so, it checks to see if any of the lower piles are empty so the king can be placed
+    //if the flip card is not an ace or a king, it will check all 7 lower piles and the 4 ace piles to see if the flip card can be placed at all
+    //@return boolean
     bool checkFlip()
     {
         //while(!flipPile.empty()){
@@ -286,7 +288,9 @@ class GameController
     return 0;
     }
     //this is method is called only after an pile as the first ACE card. the ace must be placed
-    // first before this method is called.
+    // first before this method is called. this method will always see if any cards in the lower piles can be addded to the ace piles
+    //@param: the lowerPile you want to see if its front card fits in any of the ace piles
+    //@return: true if it moves a card from lowerPile to an ace spot, false if not
     bool lowerToAce(std::list<Card>& lowerPile){
         if(!lowerPile.empty()){
         Card lowVisCard = lowerPile.front();
@@ -381,11 +385,16 @@ class GameController
     }
 
 
-
+/*
+This method is executed at the beginning of the gameController() method each time a new flip card is flipped. it sees if pile lowerOne has a size of 1.
+if it does, it sees if it can move that card to any of the other lower piles in order to free up lowerOne so a king can be placed in the newly created
+open pile spot. this method could become obsolete once checkLowerMove() is fully implemented.
+@return bool: true if pile one is now open, false if not
+*/
     bool freeUpFirstPile()
     {
 
-        if(lowerOne.size() == 1){
+        if(lowerOne.size() == 1){ //checks to see if lowerOne has only one card. if so the method will attempt to move it in order to free up the pile
             Card pOneCard = lowerOne.front();
             if((lowerTwo.front().isRed() != pOneCard.isRed()) && (lowerTwo.front().getNum() == pOneCard.getNum() + 1)){
                 moveCard(1, lowerOne, lowerTwo);
@@ -414,6 +423,23 @@ class GameController
 
         return true;
     }
+
+    // **** This method will be later incorporated into the checkLowerMethod() once finished. ****
+    // **** MAYBE KEEP FOR TESTING PURPOSES? ***
+    // This method will check all the lower piles one-by-one and see if the ENTIRE pile of visible cards
+    // can be moved to another pile or empty pile (the pile moved will have a king in it).
+    //@param pileNumber the number indicating which pile we want (1-7)
+    void checkLowerMoveEntirePile(int pileNumber){
+        //get the current pile to look at (ENCOMPASS INSIDE FOR LOOP???????)
+        std::list<Card> currentPile = *lowerPiles[pileNumber-1]; // NOTE: lowerPiles indices count from 0-6 and pile number ranges between 1-7, so we need -1.
+        //check to see if the pile is NOT empty
+        //check to see if the pile has more than one card in it.
+        if(!currentPile.empty()){
+
+        }
+    }
+
+
     //Check if you can move a card from the lower pile you are looking at to the ace-piles
         //Check if there is an invisible card you can make visible
         //If you moved, increment the hasMovedLower
@@ -556,9 +582,41 @@ class GameController
     while(test < 10){
             ctr++;
             flipCard();
-            freeUpFirstPile();
-            lowKingtoEmpty(lowerOne);
+            freeUpFirstPile(); //checks if lowerOne size = 1. if so attempts to move that one card to free up pile
+            lowKingtoEmpty(lowerOne); //checks to see if lowerOne or lowerTwo are empty. if so will check the other 5 piles front card to see if they are kings
+            lowKingtoEmpty(lowerTwo); // and can be moved to either of the potentially open piles
             checkFlip();
+            lowerToAceFirst(lowerOne);//trys to place the front lowerOne card if its an ace onto the ace piles
+            if(diamondA || clubA || spadeA || heartA){ //if statement that checks to see if the any of the aces have been placed on the ace piles
+                lowerToAce(lowerOne);
+                lowerToAce(lowerTwo);
+                lowerToAce(lowerThree);
+                lowerToAce(lowerFour);
+                lowerToAce(lowerFive);
+                lowerToAce(lowerSix);
+                lowerToAce(lowerSeven);
+            }
+            lowerToAceFirst(lowerTwo); //trys to place the front lowerTwo card if its an ace onto the ace piles
+            if(diamondA || clubA || spadeA || heartA){//if statement that checks to see if the any of the aces have been placed on the ace piles
+                lowerToAce(lowerOne);
+                lowerToAce(lowerTwo);
+                lowerToAce(lowerThree);
+                lowerToAce(lowerFour);
+                lowerToAce(lowerFive);
+                lowerToAce(lowerSix);
+                lowerToAce(lowerSeven);
+            }
+            lowerToAceFirst(lowerThree); //trys to place the front lowerThree card if its an ace onto the ace piles
+            if(diamondA || clubA || spadeA || heartA){//if statement that checks to see if the any of the aces have been placed on the ace piles
+                lowerToAce(lowerOne);
+                lowerToAce(lowerTwo);
+                lowerToAce(lowerThree);
+                lowerToAce(lowerFour);
+                lowerToAce(lowerFive);
+                lowerToAce(lowerSix);
+                lowerToAce(lowerSeven);
+            }
+            lowerToAceFirst(lowerFour);//trys to place the front lowerFour card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){
                 lowerToAce(lowerOne);
                 lowerToAce(lowerTwo);
@@ -568,7 +626,7 @@ class GameController
                 lowerToAce(lowerSix);
                 lowerToAce(lowerSeven);
             }
-            lowTwo = lowerToAceFirst(lowerTwo);
+            lowerToAceFirst(lowerFive);
             if(diamondA || clubA || spadeA || heartA){
                 lowerToAce(lowerOne);
                 lowerToAce(lowerTwo);
@@ -578,7 +636,7 @@ class GameController
                 lowerToAce(lowerSix);
                 lowerToAce(lowerSeven);
             }
-            lowThree = lowerToAceFirst(lowerThree);
+            lowerToAceFirst(lowerSix);
             if(diamondA || clubA || spadeA || heartA){
                 lowerToAce(lowerOne);
                 lowerToAce(lowerTwo);
@@ -588,37 +646,7 @@ class GameController
                 lowerToAce(lowerSix);
                 lowerToAce(lowerSeven);
             }
-            lowFour = lowerToAceFirst(lowerFour);
-            if(diamondA || clubA || spadeA || heartA){
-                lowerToAce(lowerOne);
-                lowerToAce(lowerTwo);
-                lowerToAce(lowerThree);
-                lowerToAce(lowerFour);
-                lowerToAce(lowerFive);
-                lowerToAce(lowerSix);
-                lowerToAce(lowerSeven);
-            }
-            lowFive = lowerToAceFirst(lowerFive);
-            if(diamondA || clubA || spadeA || heartA){
-                lowerToAce(lowerOne);
-                lowerToAce(lowerTwo);
-                lowerToAce(lowerThree);
-                lowerToAce(lowerFour);
-                lowerToAce(lowerFive);
-                lowerToAce(lowerSix);
-                lowerToAce(lowerSeven);
-            }
-            lowSix = lowerToAceFirst(lowerSix);
-            if(diamondA || clubA || spadeA || heartA){
-                lowerToAce(lowerOne);
-                lowerToAce(lowerTwo);
-                lowerToAce(lowerThree);
-                lowerToAce(lowerFour);
-                lowerToAce(lowerFive);
-                lowerToAce(lowerSix);
-                lowerToAce(lowerSeven);
-            }
-            lowSeven = lowerToAceFirst(lowerSeven);
+            lowerToAceFirst(lowerSeven);
             if(diamondA || clubA || spadeA || heartA){
                 lowerToAce(lowerOne);
                 lowerToAce(lowerTwo);
