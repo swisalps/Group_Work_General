@@ -54,9 +54,9 @@ class GameController
         lowSeven = false;
         gameLost = false;
         gameWon = false;
-        spadeA = false;
-        clubA = false;
-        heartA = false;
+        spadeA = false; //SpadeA, clubA, heartA, diamondA are all bools that are set to true by the lowerToAceFirst() method.
+        clubA = false;  // if the ace of spades is placed on the spades ace pile, spadeA becomes true, and now can have 2,3,4,5... added to it
+        heartA = false; // by calling the lowerToAce() method, which cannot be called until the first ace is placed on the ace pile
         diamondA =false;
     }
 
@@ -567,9 +567,41 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     //while(test < 10){
             ctr++;
             flipCard();
-            freeUpFirstPile();
-            lowKingtoEmpty(lowerOne);
+            freeUpFirstPile(); //checks if lowerOne size = 1. if so attempts to move that one card to free up pile
+            lowKingtoEmpty(lowerOne); //checks to see if lowerOne or lowerTwo are empty. if so will check the other 5 piles front card to see if they are kings
+            lowKingtoEmpty(lowerTwo); // and can be moved to either of the potentially open piles
             checkFlip();
+            lowerToAceFirst(lowerOne);//trys to place the front lowerOne card if its an ace onto the ace piles
+            if(diamondA || clubA || spadeA || heartA){ //if statement that checks to see if the any of the aces have been placed on the ace piles
+                lowerToAce(lowerOne);
+                lowerToAce(lowerTwo);
+                lowerToAce(lowerThree);
+                lowerToAce(lowerFour);
+                lowerToAce(lowerFive);
+                lowerToAce(lowerSix);
+                lowerToAce(lowerSeven);
+            }
+            lowerToAceFirst(lowerTwo); //trys to place the front lowerTwo card if its an ace onto the ace piles
+            if(diamondA || clubA || spadeA || heartA){//if statement that checks to see if the any of the aces have been placed on the ace piles
+                lowerToAce(lowerOne);
+                lowerToAce(lowerTwo);
+                lowerToAce(lowerThree);
+                lowerToAce(lowerFour);
+                lowerToAce(lowerFive);
+                lowerToAce(lowerSix);
+                lowerToAce(lowerSeven);
+            }
+            lowerToAceFirst(lowerThree); //trys to place the front lowerThree card if its an ace onto the ace piles
+            if(diamondA || clubA || spadeA || heartA){//if statement that checks to see if the any of the aces have been placed on the ace piles
+                lowerToAce(lowerOne);
+                lowerToAce(lowerTwo);
+                lowerToAce(lowerThree);
+                lowerToAce(lowerFour);
+                lowerToAce(lowerFive);
+                lowerToAce(lowerSix);
+                lowerToAce(lowerSeven);
+            }
+            lowerToAceFirst(lowerFour);//trys to place the front lowerFour card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){
                 lowerToAce(lowerOne);
                 lowerToAce(lowerTwo);
@@ -579,7 +611,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 lowerToAce(lowerSix);
                 lowerToAce(lowerSeven);
             }
-            lowTwo = lowerToAceFirst(lowerTwo);
+            lowerToAceFirst(lowerFive);
             if(diamondA || clubA || spadeA || heartA){
                 lowerToAce(lowerOne);
                 lowerToAce(lowerTwo);
@@ -589,7 +621,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 lowerToAce(lowerSix);
                 lowerToAce(lowerSeven);
             }
-            lowThree = lowerToAceFirst(lowerThree);
+            lowerToAceFirst(lowerSix);
             if(diamondA || clubA || spadeA || heartA){
                 lowerToAce(lowerOne);
                 lowerToAce(lowerTwo);
@@ -599,37 +631,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 lowerToAce(lowerSix);
                 lowerToAce(lowerSeven);
             }
-            lowFour = lowerToAceFirst(lowerFour);
-            if(diamondA || clubA || spadeA || heartA){
-                lowerToAce(lowerOne);
-                lowerToAce(lowerTwo);
-                lowerToAce(lowerThree);
-                lowerToAce(lowerFour);
-                lowerToAce(lowerFive);
-                lowerToAce(lowerSix);
-                lowerToAce(lowerSeven);
-            }
-            lowFive = lowerToAceFirst(lowerFive);
-            if(diamondA || clubA || spadeA || heartA){
-                lowerToAce(lowerOne);
-                lowerToAce(lowerTwo);
-                lowerToAce(lowerThree);
-                lowerToAce(lowerFour);
-                lowerToAce(lowerFive);
-                lowerToAce(lowerSix);
-                lowerToAce(lowerSeven);
-            }
-            lowSix = lowerToAceFirst(lowerSix);
-            if(diamondA || clubA || spadeA || heartA){
-                lowerToAce(lowerOne);
-                lowerToAce(lowerTwo);
-                lowerToAce(lowerThree);
-                lowerToAce(lowerFour);
-                lowerToAce(lowerFive);
-                lowerToAce(lowerSix);
-                lowerToAce(lowerSeven);
-            }
-            lowSeven = lowerToAceFirst(lowerSeven);
+            lowerToAceFirst(lowerSeven);
             if(diamondA || clubA || spadeA || heartA){
                 lowerToAce(lowerOne);
                 lowerToAce(lowerTwo);
