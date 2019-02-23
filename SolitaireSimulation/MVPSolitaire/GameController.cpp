@@ -458,7 +458,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 if(bottomMostVisCard.getNum() == 13){
                     for(int i=1; i<=7; i++){
                         if(i!=pileNumber){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to moveCard
-                            std::list<Card> otherPile = *lowerPiles[i]; // the pile we are comparing the currentPile to
+                            std::list<Card> otherPile = *lowerPiles[i-1]; // the pile we are comparing the currentPile to
                             if(otherPile.empty()){ // make sure the otherPile is empty
                                 moveCard(numOfVisCards, currentPile, otherPile);
                                 return true;
@@ -470,7 +470,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 else{ // the bottomMostVisCard is NOT a king
                     for(int i=1; i<=7; i++){
                         if(i!=pileNumber){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to move
-                            std::list<Card> otherPile = *lowerPiles[i]; // the pile we are comparing the currentPile to
+                            std::list<Card> otherPile = *lowerPiles[i-1]; // the pile we are comparing the currentPile to
                             // compare the front/top card of the otherPile to the bottomMostVisCard of the currentPile
                             if(otherPile.front().getNum() == bottomMostVisCard.getNum() + 1 && //if the num of the other card is higher by 1...
                                 otherPile.front().isRed() != bottomMostVisCard.isRed()){       //if the colors are not the same...
