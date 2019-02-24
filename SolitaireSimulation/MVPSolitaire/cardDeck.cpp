@@ -31,6 +31,34 @@ int randomInt;
         //for(std::list<Card>::iterator it=shuffled.begin(); it != shuffled.end(); ++it)
           //  std::cout <<  it->toString();
     }
+        //used to construct pass/fail test decks
+        //@param test indicates whether the deck should pass(test = 0) or fail(test = 0)
+        cardDeck(int test){
+            if(test == 0){
+                //construct first part of deck
+
+                for(int i = 13; i >= 4; i--){
+                    shuffled.emplace_back(i, "C", false);
+                }
+                 for(int i = 13; i >= 3; i--){
+                    shuffled.emplace_back(i, "S", false);
+                }
+                shuffled.emplace_back(13, "H", false);
+                shuffled.emplace_back(12, "H", false);
+                for(int i = 3; i >= 1; i--){
+                    shuffled.emplace_back(i, "D", false);
+                }
+                shuffled.emplace_back(2, "S", false);
+                shuffled.emplace_back(1, "S", false);
+                for(int i = 1; i <= 13; i++){
+                    shuffled.emplace_back(i, "D", false);
+                }
+                for(int i = 1; i <= 11; i++){
+                    shuffled.emplace_back(i, "H", false);
+
+            }
+            }
+        }
     void makeDiamond(){
        for(int i= 1; i <= 13; i = i + 1){
            unShuffle.emplace_back(i, "D", false);
@@ -66,4 +94,5 @@ int randomInt;
         return shuffled;
    }
 };
+
 
