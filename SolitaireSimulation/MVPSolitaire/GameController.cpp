@@ -553,7 +553,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 int n = 0;
                 for(int i = 0; i < 7; i++)
                 {
-                    if(i != startingPile && !lowerPiles[i].empty())
+                    if((i != startingPile) && (!lowerPiles[i].empty()))
                     {
                         if((lowerPiles[i].front().getNum() == lastVisOne.getNum()+1) && (lowerPiles[i].front().isRed() != lastVisOne.isRed()))
                         {
@@ -563,7 +563,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                             int numOfVisCards = 0; // the number of cards we need to move
                             for(int j=0; j<lowerPiles[startingPile].size(); j++)
                             {
-                                Card currentCard = getCard(lowerPiles[startingPile], i);
+                                Card currentCard = getCard(lowerPiles[startingPile], j);
                                 if((currentCard.getVisible() == false) || (j == lowerPiles[startingPile].size()-1)){ // if you reach a non-vis card OR you reach past the end of the list (there are only visible cards in the pile)
                                 // you found a non-vis card or reached past the end of the list, get the card before it which should be vis
                                 bottomMostVisCard = getCard(lowerPiles[startingPile], j-1);
@@ -572,6 +572,17 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                             numOfVisCards++;
 
                             }
+                            if(bottomMostVisCard.getNum() == 13){
+                            for(int j=0; j<=6; j++){
+                            if(j != startingPile){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to moveCard
+                                if(lowerPiles[j].empty()){ // make sure the otherPile is empty
+                                    moveCard(numOfVisCards, lowerPiles[startingPile], lowerPiles[j]);
+                                    return true;
+                                }
+                                //else look for another pile that could be empty
+                            }
+                        }
+                }
                             moveCard(numOfVisCards, lowerPiles[startingPile], lowerPiles[i]);
                         std::string s = std::to_string(i+1);
                         cout << "lower" + s + " new front: " << lowerPiles[i].front().toString() << endl;
