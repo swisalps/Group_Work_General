@@ -561,12 +561,12 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                             cout << "Possibility Confirmed" << endl;
                             Card bottomMostVisCard = getCard(lowerPiles[startingPile], 0); // place-holder
                             int numOfVisCards = 0; // the number of cards we need to move
-                            for(int i=0; i<lowerPiles[startingPile].size(); i++)
+                            for(int j=0; j<lowerPiles[startingPile].size(); j++)
                             {
                                 Card currentCard = getCard(lowerPiles[startingPile], i);
-                                if((currentCard.getVisible() == false) || (i == lowerPiles[startingPile].size())){ // if you reach a non-vis card OR you reach past the end of the list (there are only visible cards in the pile)
+                                if((currentCard.getVisible() == false) || (j == lowerPiles[startingPile].size()-1)){ // if you reach a non-vis card OR you reach past the end of the list (there are only visible cards in the pile)
                                 // you found a non-vis card or reached past the end of the list, get the card before it which should be vis
-                                bottomMostVisCard = getCard(lowerPiles[startingPile], i-1);
+                                bottomMostVisCard = getCard(lowerPiles[startingPile], j-1);
                                 break;
                             }
                             numOfVisCards++;
