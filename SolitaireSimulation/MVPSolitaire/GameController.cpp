@@ -6,6 +6,7 @@
 #include <iostream>
 #include <array>
 #include <string>
+#include <chrono>
 using namespace std;
 
 class GameController
@@ -27,9 +28,13 @@ class GameController
     //constructor for the GameController object: creates and runs the solitaire deck
     GameController()
     {
+        auto start = std::chrono::high_resolution_clock::now();
         int ctr = 0;
         initSolitaire();
         run();
+        auto stop = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop-start);
+        cout<<"Execution Time: "<<duration.count()<<" microseconds\n";
     }
     //initializes the solitaire game
     void initSolitaire()
@@ -651,8 +656,8 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     void run()
     {
             int ctr = 0;
-        //while((!gameWon)&&(!gameLost))
-       // {
+    //     while((!gameWon)&&(!gameLost))
+    //    {
             //As long as the game is not won or lost the loop will continue
     while(test < 5){
             ctr++;
