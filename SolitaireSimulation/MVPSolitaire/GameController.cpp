@@ -531,13 +531,13 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
         //Yes: recurse; set bool to true
         //No: return; set bool to false
     bool checkLowerMove(int startingPile){
-        if(startingPile >= 0 && startingPile <= 6)
+        if(startingPile >= 1 && startingPile <= 7)
         {
             list<Card>::iterator Itr;
-            if(!(lowerPiles[startingPile]).empty())
+            if(!(lowerPiles[startingPile-1]).empty())
             {
-                Card lastVisOne = lastVisible(lowerPiles[startingPile]);
-                std::string t = std::to_string(startingPile + 1);
+                Card lastVisOne = lastVisible(lowerPiles[startingPile-1]);
+                std::string t = std::to_string(startingPile);
                 cout << "lastVis value for Pile " + t + ": "<<lastVisOne.toString() << endl;
                 Itr = lowerPiles[startingPile-1].begin();
                 //temp.clear();
@@ -555,7 +555,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                             //    cout << temp.back().toString() << endl;
                             //    Itr++;
                             //}
-                        moveCard(1, lowerPiles[startingPile], lowerPiles[i]);
+                        moveCard(1, lowerPiles[startingPile-1], lowerPiles[i]);
                         std::string s = std::to_string(i+1);
                         cout << "lower" + s + " new front: " << lowerPiles[i].front().toString() << endl;
                         return true;
@@ -731,7 +731,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 lowerToAce(lowerPiles[5]);
                 lowerToAce(lowerPiles[6]);
             }
-            bool b = checkLowerMove(6);
+            bool b = checkLowerMove(7);
             if(b == true)
             {
 
