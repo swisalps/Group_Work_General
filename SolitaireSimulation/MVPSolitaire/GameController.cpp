@@ -39,6 +39,7 @@ class GameController
     //initializes the solitaire game
     void initSolitaire()
     {
+        //To play using rigged deck set deck equal to cardDeck(0) for a pasing deck
         deck = cardDeck();
         shuffleDeck = deck.shuffled;
         visCtr = 0;
