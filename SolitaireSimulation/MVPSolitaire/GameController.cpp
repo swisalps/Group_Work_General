@@ -553,7 +553,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 int n = 0;
                 for(int i = 0; i < 7; i++)
                 {
-                    if(i != startingPile || !lowerPiles[i].empty())
+                    if(i != startingPile && !lowerPiles[i].empty())
                     {
                         if((lowerPiles[i].front().getNum() == lastVisOne.getNum()+1) && (lowerPiles[i].front().isRed() != lastVisOne.isRed()))
                         {
