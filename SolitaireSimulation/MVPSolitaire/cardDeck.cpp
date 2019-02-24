@@ -46,7 +46,7 @@ int randomInt;
                 shuffled.emplace_back(13, "H", false);
                 shuffled.emplace_back(12, "H", false);
                 for(int i = 3; i >= 1; i--){
-                    shuffled.emplace_back(i, "D", false);
+                    shuffled.emplace_back(i, "C", false);
                 }
                 shuffled.emplace_back(2, "S", false);
                 shuffled.emplace_back(1, "S", false);
@@ -56,6 +56,9 @@ int randomInt;
                 for(int i = 1; i <= 11; i++){
                     shuffled.emplace_back(i, "H", false);
 
+            }
+            for (Card card: shuffled){
+                std::cout<<card.toString()<<"\n";
             }
             }
         }
