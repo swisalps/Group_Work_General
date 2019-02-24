@@ -40,7 +40,7 @@ class GameController
     void initSolitaire()
     {
         //To play using rigged deck set deck equal to cardDeck(0) for a pasing deck
-        deck = cardDeck();
+        deck = cardDeck(0);
         shuffleDeck = deck.shuffled;
         visCtr = 0;
 	for(int i = 0; i < 7; i++)
@@ -133,6 +133,7 @@ class GameController
         int cNum = aCard.getNum();
         bool isRed = aCard.isRed();
         bool hmm;
+        cout<<"Deck Top: "<<shuffleDeck.front().toString();
         cout << "Flip Card: " << aCard.toString() << endl;
         if(cNum == 1){
             lowerToAceFirst(flipPile);
@@ -638,7 +639,6 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
 //flips a card from the shuffled deck to the flip pile.
     void flipCard()
     {
-
         if(shuffleDeck.size() > 1)//If the deck is not empty the top card is pushed to the flippile and removed from the deck
         {
             flipPile.push_front(shuffleDeck.front());
@@ -683,12 +683,13 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     void run()
     {
             int ctr = 0;
-    //     while((!gameWon)&&(!gameLost))
-    //    {
-            //As long as the game is not won or lost the loop will continue
-    while(test < 15){
-            ctr++;
             flipCard();
+        while((!gameWon)&&(!gameLost))
+       {
+            //As long as the game is not won or lost the loop will continue
+    // while(test < 15){
+            ctr++;
+
             lowKingtoEmpty(lowerPiles[0]); //checks to see if lowerPiles[0] or lowerPiles[1] are empty. if so will check the other 5 piles front card to see if they are kings
             lowKingtoEmpty(lowerPiles[1]); // and can be moved to either of the potentially open piles
             checkFlip();
