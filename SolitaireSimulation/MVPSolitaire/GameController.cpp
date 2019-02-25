@@ -40,7 +40,7 @@ class GameController
     void initSolitaire()
     {
         //To play using rigged deck set deck equal to cardDeck(0) for a pasing deck
-        deck = cardDeck(0);//stacked deck
+        deck = cardDeck();//stacked deck
         shuffleDeck = deck.shuffled;
         visCtr = 0;
 	for(int i = 0; i < 7; i++)
@@ -139,8 +139,17 @@ class GameController
             lowerToAceFirst(flipPile);
         }
         if(cNum == 13){
-            if(topDiamonds.front().getNum() == 12){
+            if((topDiamonds.front().getNum() == 12) && (aCard.getSuit() == "D")){
                 moveCard(1, flipPile, topDiamonds);
+            }
+            else if((topHearts.front().getNum() == 12) && (aCard.getSuit() == "H")){
+                moveCard(1, flipPile, topHearts);
+            }
+            else if((topSpades.front().getNum() == 12) && (aCard.getSuit() == "S")){
+                moveCard(1, flipPile, topSpades);
+            }
+            else if((topClubs.front().getNum() == 12) && (aCard.getSuit() == "C")){
+                moveCard(1, flipPile, topClubs);
             }
             else if(lowerPiles[0].empty()){
                 moveCard(1, flipPile, lowerPiles[0]);
@@ -194,35 +203,35 @@ class GameController
             //flipCard();
             //cout << lowerPiles[1].front().toString()<< endl;
         }
-        else if((lowerPiles[2].front().isRed() != isRed) && (lowerPiles[2].front().getNum() == cNum + 1) && (lowerPiles[2].front().getNum() != 2)){
+        else if((lowerPiles[2].front().isRed() != isRed) && (lowerPiles[2].front().getNum() == cNum + 1) && (lowerPiles[2].front().getNum() != 2) && (!lowerPiles[2].empty())){
             moveCard(1, flipPile, lowerPiles[2]);
             hasMovedFlip++;
             //flipCard();
            //cout << lowerPiles[2].front().toString()<< endl;
 
         }
-        else if((lowerPiles[3].front().isRed() != isRed) && (lowerPiles[3].front().getNum() == cNum + 1) && (lowerPiles[3].front().getNum() != 2)){
+        else if((lowerPiles[3].front().isRed() != isRed) && (lowerPiles[3].front().getNum() == cNum + 1) && (lowerPiles[3].front().getNum() != 2) && (!lowerPiles[3].empty())){
             moveCard(1, flipPile, lowerPiles[3]);
             hasMovedFlip++;
             //flipCard();
             //cout << lowerPiles[3].front().toString()<< endl;
 
         }
-        else if((lowerPiles[4].front().isRed() != isRed) && (lowerPiles[4].front().getNum() == cNum + 1) && (lowerPiles[4].front().getNum() != 2)){
+        else if((lowerPiles[4].front().isRed() != isRed) && (lowerPiles[4].front().getNum() == cNum + 1) && (lowerPiles[4].front().getNum() != 2) && (!lowerPiles[4].empty())){
             moveCard(1, flipPile, lowerPiles[4]);
             hasMovedFlip++;
             //flipCard();
             //cout << lowerPiles[4].front().toString()<< endl;
 
         }
-        else if((lowerPiles[5].front().isRed() != isRed) && (lowerPiles[5].front().getNum() == cNum + 1) && (lowerPiles[5].front().getNum() != 2)){
+        else if((lowerPiles[5].front().isRed() != isRed) && (lowerPiles[5].front().getNum() == cNum + 1) && (lowerPiles[5].front().getNum() != 2) && (!lowerPiles[5].empty())){
             moveCard(1, flipPile, lowerPiles[5]);
             hasMovedFlip++;
             //flipCard();
             //cout << lowerPiles[5].front().toString()<< endl;
 
         }
-        else if((lowerPiles[6].front().isRed() != isRed) && (lowerPiles[6].front().getNum() == cNum + 1) && (lowerPiles[6].front().getNum() != 2)){
+        else if((lowerPiles[6].front().isRed() != isRed) && (lowerPiles[6].front().getNum() == cNum + 1) && (lowerPiles[6].front().getNum() != 2) && (!lowerPiles[6].empty())){
             moveCard(1, flipPile, lowerPiles[6]);
             hasMovedFlip++;
             //flipCard();
@@ -598,6 +607,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                             if(j != startingPile){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to moveCard
                                 if(lowerPiles[j].empty()){ // make sure the otherPile is empty
                                     moveCard(numOfVisCards, lowerPiles[startingPile], lowerPiles[j]);
+                                    //hasMovedLower++;
                                     return true;
                                 }
                                 //else look for another pile that could be empty
@@ -606,6 +616,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 }
                         moveCard(numOfVisCards, lowerPiles[startingPile], lowerPiles[i]);
                         std::string s = std::to_string(i+1);
+                        //hasMovedLower++;
                         //cout << "lower" + s + " new front: " << lowerPiles[i].front().toString() << endl;
                         return true;
                         }
@@ -718,6 +729,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             //As long as the game is not won or lost the loop will continue
       //while(test < 50){
             ctr++;
+            bool b = checkLowerMove(6);
             checkFlip();
             lowKingtoEmpty(lowerPiles[0]); //checks to see if lowerPiles[0] or lowerPiles[1] are empty. if so will check the other 5 piles front card to see if they are kings
             lowKingtoEmpty(lowerPiles[1]); // and can be moved to either of the potentially open piles
@@ -800,7 +812,6 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 lowerToAce(lowerPiles[6]);
             }
             //cout << "test 8" << endl;
-            bool b = checkLowerMove(6);
             //cout << "test 9" << endl;
             //cout << "checkLowerMove(6) return value:" << b << endl;
             freeUpFirstPile(); //checks if lowerPiles[0] size = 1. if so attempts to move that one card to free up pile
