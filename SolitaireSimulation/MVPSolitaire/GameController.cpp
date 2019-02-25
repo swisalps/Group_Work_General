@@ -40,7 +40,7 @@ class GameController
     void initSolitaire()
     {
         //To play using rigged deck set deck equal to cardDeck(0) for a pasing deck
-        deck = cardDeck(0);//stacked deck
+        deck = cardDeck();//stacked deck
         shuffleDeck = deck.shuffled;
         visCtr = 0;
 	for(int i = 0; i < 7; i++)
@@ -545,17 +545,21 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
         //Yes: recurse; set bool to true
         //No: return; set bool to false
     bool checkLowerMove(int startingPile){
+        cout << "recursion: " << startingPile << endl;
+        int n = 0;
         if(startingPile >= 0 && startingPile <= 6)
         {
+
             list<Card>::iterator Itr;
             if(!(lowerPiles[startingPile]).empty())
             {
                 Card lastVisOne = lastVisible(lowerPiles[startingPile]);
+                cout << "lastVis card from pile " << startingPile << ": " << lastVisOne.toString() << endl;
                 std::string t = std::to_string(startingPile);
                 //cout << "lastVis value for Pile " + t + ": "<<lastVisOne.toString() << endl;
                 Itr = lowerPiles[startingPile].begin();
                 //temp.clear();
-                int n = 0;
+
                 for(int i = 0; i < 7; i++)
                 {
                     if((i != startingPile) && (!lowerPiles[i].empty()))
@@ -572,6 +576,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                                 if((currentCard.getVisible() == false) || (j == lowerPiles[startingPile].size()-1)){ // if you reach a non-vis card OR you reach past the end of the list (there are only visible cards in the pile)
                                 // you found a non-vis card or reached past the end of the list, get the card before it which should be vis
                                 bottomMostVisCard = getCard(lowerPiles[startingPile], j-1);
+
                                 break;
                             }
                             numOfVisCards++;
@@ -588,7 +593,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                             }
                         }
                 }
-                            moveCard(numOfVisCards, lowerPiles[startingPile], lowerPiles[i]);
+                        moveCard(numOfVisCards, lowerPiles[startingPile], lowerPiles[i]);
                         std::string s = std::to_string(i+1);
                         //cout << "lower" + s + " new front: " << lowerPiles[i].front().toString() << endl;
                         return true;
@@ -597,20 +602,23 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                     }
 
                 }
-                n++;
-                if(n == 0)
-                {
-                    return checkLowerMove(startingPile - 1);
-                }
+
+
             }
             else
             {
-                return checkLowerMove(startingPile -1);
+                return checkLowerMove(startingPile - 1);
             }
-        }
+
+        n++;
+        if(n == 0)
+                {
+                    return checkLowerMove(startingPile - 1);
+                }
         else
         {
-            return false;
+            return checkLowerMove(startingPile - 1);
+        }
         }
         return false;
     }
@@ -686,12 +694,12 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     void run()
     {
             int ctr = 0;
-            cout<<"\n\nTest\n\n";
+            //cout<<"\n\nTest\n\n";
             flipCard();
-        while((!gameWon)&&(!gameLost))
-       {
+        //while((!gameWon)&&(!gameLost))
+       //{
             //As long as the game is not won or lost the loop will continue
-    // while(test < 15){
+      while(test < 15){
             ctr++;
             lowKingtoEmpty(lowerPiles[0]); //checks to see if lowerPiles[0] or lowerPiles[1] are empty. if so will check the other 5 piles front card to see if they are kings
             lowKingtoEmpty(lowerPiles[1]); // and can be moved to either of the potentially open piles
@@ -767,6 +775,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 lowerToAce(lowerPiles[6]);
             }
             bool b = checkLowerMove(6);
+            cout << "checkLowerMove(6) return value:" << b << endl;
             freeUpFirstPile(); //checks if lowerPiles[0] size = 1. if so attempts to move that one card to free up pile
             test++;
             if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
