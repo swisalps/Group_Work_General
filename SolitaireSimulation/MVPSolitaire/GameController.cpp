@@ -519,14 +519,11 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     // @param myPile the pile you want to find if it has a non-visible card in it
     // @return true the pile has a non-visible card in it
     // @return false the pile does not have a non-visible card in it; only visible cards
-    bool findNonVis(list<Card> myPile){
+    bool findNonVis(list<Card> &myPile){
         for(int i=0; i<myPile.size(); i++){
             Card myCard = getCard(myPile, i);
             if(myCard.getVisible() == false){
                 return true;
-            }
-            else{
-                return false;
             }
         }
         return false;
@@ -536,11 +533,16 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     // and finds the Card element in that list.
     Card getCard(list<Card> myList, int index){
         list<Card>::iterator it = myList.begin();
-        for(int i=0; i<index; i++){
-            ++it;
+        if(myList.size() > 1){
+            for(int i=0; i<index; i++){
+                ++it;
+            }
+            --it;
+            return *it;
+            }
+        else{
+            return *it;
         }
-        //--it;
-        return *it;
     }
 
     //Check if you can move a card from the lower pile you are looking at to the ace-piles
@@ -570,9 +572,9 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             if(!(lowerPiles[startingPile]).empty())
             {
                 Card lastVisOne = lastVisible(lowerPiles[startingPile]);
-                //cout << "lastVis card from pile " << startingPile << ": " << lastVisOne.toString() << endl;
+                cout << "lastVis card from pile " << startingPile << ": " << lastVisOne.toString() << endl;
 
-                std::string t = std::to_string(startingPile);
+                //std::string t = std::to_string(startingPile);
                 //cout << "lastVis value for Pile " + t + ": "<<lastVisOne.toString() << endl;
                 Itr = lowerPiles[startingPile].begin();
                 //temp.clear();
@@ -583,30 +585,30 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                         //cout << "Testing 1" << endl;
                         if((lowerPiles[i].front().getNum() == lastVisOne.getNum()+1) && (lowerPiles[i].front().isRed() != lastVisOne.isRed()))
                         {
-                            //cout << "Possibility Confirmed" << endl;
-                            Card bottomMostVisCard = getCard(lowerPiles[startingPile], 0); // place-holder
-                            cout << "getCardReturn 1: " << bottomMostVisCard.toString() << endl;
-                            int numOfVisCards = 0; // the number of cards we need to move
-                            for(int j=0; j<lowerPiles[startingPile].size(); j++)
-                            {
-                                Card currentCard = getCard(lowerPiles[startingPile], j);
-                                cout << "the getcard return2: " << currentCard.toString() << endl;
+                            cout << "Possibility Confirmed" << endl;
+                            //Card bottomMostVisCard = lastVisible(lowerPiles[startingPile]); // place-holder
+                            //cout << "getCardReturn 1: " << bottomMostVisCard.toString() << endl;
+                            //int numOfVisCards = 0; // the number of cards we need to move
+                            //for(int j=0; j<lowerPiles[startingPile].size(); j++)
+                            //{
+                                //Card currentCard = lastVisible(lowerPiles[startingPile]);
+                                //cout << "the getcard return2: " << currentCard.toString() << endl;
 
-                                if((currentCard.getVisible() == false) || (j == lowerPiles[startingPile].size()-1)){ // if you reach a non-vis card OR you reach past the end of the list (there are only visible cards in the pile)
+                                //if(j == lowerPiles[startingPile]{ // if you reach a non-vis card OR you reach past the end of the list (there are only visible cards in the pile)
                                 // you found a non-vis card or reached past the end of the list, get the card before it which should be vis
-                                bottomMostVisCard = getCard(lowerPiles[startingPile], j-1);//THIS LINE CAUSES CORE DUMPS OCCASIONALLY, when pile is only one big the j-1 doesnt work
-                                cout << "reached Test 3" << endl;
+                                //bottomMostVisCard = lastVisible(lowerPiles[startingPile]);//THIS LINE CAUSES CORE DUMPS OCCASIONALLY, when pile is only one big the j-1 doesnt work
+                                //cout << "reached Test 3" << endl;
 
-                                break;
-                            }
-                            numOfVisCards++;
+                                //break;
+                            //}
+                            //numOfVisCards++;
 
-                            }
-                            if(bottomMostVisCard.getNum() == 13){
+                            //}
+                            if(lastVisOne.getNum() == 13){
                             for(int j=0; j<=6; j++){
                             if(j != startingPile){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to moveCard
                                 if(lowerPiles[j].empty()){ // make sure the otherPile is empty
-                                    moveCard(numOfVisCards, lowerPiles[startingPile], lowerPiles[j]);
+                                    moveCard(visCtr, lowerPiles[startingPile], lowerPiles[j]);
                                     //hasMovedLower++;
                                     return true;
                                 }
@@ -614,7 +616,8 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                             }
                         }
                 }
-                        moveCard(numOfVisCards, lowerPiles[startingPile], lowerPiles[i]);
+                        cout << "visCtr Value: " << visCtr << endl;
+                        moveCard(visCtr, lowerPiles[startingPile], lowerPiles[i]);
                         std::string s = std::to_string(i+1);
                         //hasMovedLower++;
                         //cout << "lower" + s + " new front: " << lowerPiles[i].front().toString() << endl;
@@ -710,9 +713,9 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     Card lastVisible(std::list<Card> &pile){
         visCtr = 0;
         list<Card>::iterator ItrVis = pile.begin();
-        if(pile.size() > 1){
+        if((pile.size() > 1) && (findNonVis(pile) == true)){
         for(ItrVis=pile.begin(); ItrVis!=pile.end(); ++ItrVis){
-            if(ItrVis->getVisible() == 1){
+            if((ItrVis->getVisible() == 1) && (visCtr != pile.size())){
                 visCtr++;
             }
             else{
@@ -734,10 +737,10 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             int ctr = 0;
             //cout<<"\n\nTest\n\n";
             flipCard();
-        while((!gameWon)&&(!gameLost))
-       {
+        //while((!gameWon)&&(!gameLost))
+       //{
             //As long as the game is not won or lost the loop will continue
-      //while(test < 25){
+      while(test < 25){
             ctr++;
             bool b = checkLowerMove(6);
             checkFlip();
