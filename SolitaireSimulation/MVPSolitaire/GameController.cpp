@@ -523,6 +523,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
         for(int i=0; i<myPile.size(); i++){
             Card myCard = getCard(myPile, i);
             if(myCard.getVisible() == false){
+                cout << "Find nonvis return: " << myCard.getNum() << endl;
                 return true;
             }
         }
@@ -673,6 +674,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             it = source.begin();
             advance(it, numCards);
             source.splice(dest.begin(), source, source.begin(), it);
+            cout << "MoveCard call num: " << numCards << endl;
         }
         if(!source.front().getVisible())
             source.front().setVis();
@@ -691,11 +693,11 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             shuffleDeck.swap(flipPile);
             shuffleDeck.reverse();
             //cout << "flipPile becomes deck: "; //testing to make sure the flipPile is correctly reassembled to into the deck once the deck is emptied
-            for(std::list<Card>::iterator it=shuffleDeck.begin(); it != shuffleDeck.end(); it++)
-        {
-            cout << it->toStringOneLine() << ", ";
-        }
-            cout << "\n";
+            //for(std::list<Card>::iterator it=shuffleDeck.begin(); it != shuffleDeck.end(); it++)
+        //{
+            //cout << it->toStringOneLine() << ", ";
+        //}
+            //cout << "\n";
             if ((hasMovedFlip == 0 ) && (hasMovedLower == 0)){ //Checks if a move has been done since the last time the deck was shuffled
                 failCounter++;
                 if (failCounter > 2){//If there was no moves then the fail counter is increased by one, if it reaches 3 the game is over
@@ -726,7 +728,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
         }
         }
         else{
-            if(pile.size() != 1){
+            if(pile.size() > 1){
             for(ItrVis=pile.begin(); ItrVis!=pile.end(); ++ItrVis){
                 cout << "loop" << endl;
             }
@@ -751,7 +753,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
         //while((!gameWon)&&(!gameLost))
        //{
             //As long as the game is not won or lost the loop will continue
-      while(test < 25){
+      while(test < 45){
             ctr++;
             bool b = checkLowerMove(6);
             checkFlip();
