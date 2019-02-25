@@ -661,7 +661,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
 //flips a card from the shuffled deck to the flip pile.
     void flipCard()
     {
-        if(shuffleDeck.size() > 1)//If the deck is not empty the top card is pushed to the flippile and removed from the deck
+        if(shuffleDeck.size() > 0)//If the deck is not empty the top card is pushed to the flippile and removed from the deck
         {
             flipPile.push_front(shuffleDeck.front());
             shuffleDeck.pop_front();
