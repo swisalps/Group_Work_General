@@ -734,10 +734,10 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             int ctr = 0;
             //cout<<"\n\nTest\n\n";
             flipCard();
-        //while((!gameWon)&&(!gameLost))
-       //{
+        while((!gameWon)&&(!gameLost))
+       {
             //As long as the game is not won or lost the loop will continue
-      while(test < 15){
+      //while(test < 25){
             ctr++;
             bool b = checkLowerMove(6);
             checkFlip();
