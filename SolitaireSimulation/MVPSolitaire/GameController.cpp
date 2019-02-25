@@ -525,6 +525,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
         for(int i=0; i<index; i++){
             ++it;
         }
+        //--it;
         return *it;
     }
 
@@ -546,7 +547,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
         //Yes: recurse; set bool to true
         //No: return; set bool to false
     bool checkLowerMove(int startingPile){
-        //cout << "recursion: " << startingPile << endl;
+        cout << "recursion: " << startingPile << endl;
         int n = 0;
         if(startingPile >= 0 && startingPile <= 6)
         {
@@ -556,6 +557,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             {
                 Card lastVisOne = lastVisible(lowerPiles[startingPile]);
                 //cout << "lastVis card from pile " << startingPile << ": " << lastVisOne.toString() << endl;
+                cout << "Testing 1" << endl;
                 std::string t = std::to_string(startingPile);
                 //cout << "lastVis value for Pile " + t + ": "<<lastVisOne.toString() << endl;
                 Itr = lowerPiles[startingPile].begin();
@@ -568,15 +570,18 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                         if((lowerPiles[i].front().getNum() == lastVisOne.getNum()+1) && (lowerPiles[i].front().isRed() != lastVisOne.isRed()))
                         {
 
-                           // cout << "Possibility Confirmed" << endl;
+                            //cout << "Possibility Confirmed" << endl;
                             Card bottomMostVisCard = getCard(lowerPiles[startingPile], 0); // place-holder
+                            cout << "Reached test" << endl;
                             int numOfVisCards = 0; // the number of cards we need to move
                             for(int j=0; j<lowerPiles[startingPile].size(); j++)
                             {
                                 Card currentCard = getCard(lowerPiles[startingPile], j);
+                                cout << "reached test 2" << endl;
                                 if((currentCard.getVisible() == false) || (j == lowerPiles[startingPile].size()-1)){ // if you reach a non-vis card OR you reach past the end of the list (there are only visible cards in the pile)
                                 // you found a non-vis card or reached past the end of the list, get the card before it which should be vis
-                                bottomMostVisCard = getCard(lowerPiles[startingPile], j-1);
+                                bottomMostVisCard = getCard(lowerPiles[startingPile], j - 1);//THIS LINE CAUSES CORE DUMPS OCCASIONALLY
+                                cout << "reached Test 3" << endl;
 
                                 break;
                             }
@@ -712,7 +717,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             lowKingtoEmpty(lowerPiles[0]); //checks to see if lowerPiles[0] or lowerPiles[1] are empty. if so will check the other 5 piles front card to see if they are kings
             lowKingtoEmpty(lowerPiles[1]); // and can be moved to either of the potentially open piles
             lowKingtoEmpty(lowerPiles[2]);
-            cout << "test 1" << endl;
+            //cout << "test 1" << endl;
             lowerToAceFirst(lowerPiles[0]);//trys to place the front lowerPiles[0] card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){ //if statement that checks to see if the any of the aces have been placed on the ace piles
                 lowerToAce(lowerPiles[0]);
@@ -723,7 +728,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 lowerToAce(lowerPiles[5]);
                 lowerToAce(lowerPiles[6]);
             }
-            cout << "test 2" << endl;
+            //cout << "test 2" << endl;
             lowerToAceFirst(lowerPiles[1]); //trys to place the front lowerPiles[1] card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){//if statement that checks to see if the any of the aces have been placed on the ace piles
                 lowerToAce(lowerPiles[0]);
@@ -734,7 +739,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 lowerToAce(lowerPiles[5]);
                 lowerToAce(lowerPiles[6]);
             }
-            cout << "test 3" << endl;
+            //cout << "test 3" << endl;
             lowerToAceFirst(lowerPiles[2]); //trys to place the front lowerPiles[2] card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){//if statement that checks to see if the any of the aces have been placed on the ace piles
                 lowerToAce(lowerPiles[0]);
@@ -745,7 +750,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 lowerToAce(lowerPiles[5]);
                 lowerToAce(lowerPiles[6]);
             }
-            cout << "test 4" << endl;
+            //cout << "test 4" << endl;
             lowerToAceFirst(lowerPiles[3]);//trys to place the front lowerPiles[3] card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){
                 lowerToAce(lowerPiles[0]);
@@ -756,7 +761,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 lowerToAce(lowerPiles[5]);
                 lowerToAce(lowerPiles[6]);
             }
-            cout << "test 5" << endl;
+            //cout << "test 5" << endl;
             lowerToAceFirst(lowerPiles[4]);
             if(diamondA || clubA || spadeA || heartA){
                 lowerToAce(lowerPiles[0]);
@@ -767,7 +772,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 lowerToAce(lowerPiles[5]);
                 lowerToAce(lowerPiles[6]);
             }
-            cout << "test 6" << endl;
+            //cout << "test 6" << endl;
             lowerToAceFirst(lowerPiles[5]);
             if(diamondA || clubA || spadeA || heartA){
                 lowerToAce(lowerPiles[0]);
@@ -778,7 +783,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 lowerToAce(lowerPiles[5]);
                 lowerToAce(lowerPiles[6]);
             }
-            cout << "test 7" << endl;
+            //cout << "test 7" << endl;
             lowerToAceFirst(lowerPiles[6]);
             if(diamondA || clubA || spadeA || heartA){
                 lowerToAce(lowerPiles[0]);
@@ -789,7 +794,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 lowerToAce(lowerPiles[5]);
                 lowerToAce(lowerPiles[6]);
             }
-            cout << "test 8" << endl;
+            //cout << "test 8" << endl;
             bool b = checkLowerMove(6);
             cout << "test 9" << endl;
             //cout << "checkLowerMove(6) return value:" << b << endl;
