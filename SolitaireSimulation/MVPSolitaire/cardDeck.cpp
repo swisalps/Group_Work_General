@@ -57,9 +57,9 @@ int randomInt;
                     shuffled.emplace_back(i, "H", false);
 
             }
-            for (Card card: shuffled){
-                std::cout<<card.toString()<<"\n";
-            }
+            // for (Card card: shuffled){
+            //     std::cout<<card.toString()<<"\n";
+            // }
             }
         }
     void makeDiamond(){
