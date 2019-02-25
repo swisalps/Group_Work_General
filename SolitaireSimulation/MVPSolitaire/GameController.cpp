@@ -134,7 +134,7 @@ class GameController
         bool isRed = aCard.isRed();
         bool hmm;
         //cout<<"Deck Top: "<<shuffleDeck.front().toString();
-        //cout << "Flip Card: " << aCard.toString() << endl;
+        cout << "Flip Card: " << aCard.toString() << endl;
         if(cNum == 1){
             lowerToAceFirst(flipPile);
         }
@@ -247,6 +247,7 @@ class GameController
         else{
             flipCard();
         }
+        flipCard();
         if(hasMovedFlip != 0){
             return true;
         }
@@ -660,6 +661,11 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
         {
             shuffleDeck.swap(flipPile);
             shuffleDeck.reverse();
+            cout << "flipPile becomes deck: ";
+            for(std::list<Card>::iterator it=shuffleDeck.begin(); it != shuffleDeck.end(); it++)
+        {
+            cout << it->toStringOneLine() << ", ";
+        }
             if ((hasMovedFlip == 0 ) && (hasMovedLower == 0)){ //Checks if a move has been done since the last time the deck was shuffled
                 failCounter++;
                 if (failCounter > 2){//If there was no moves then the fail counter is increased by one, if it reaches 3 the game is over
@@ -701,9 +707,9 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             //As long as the game is not won or lost the loop will continue
       while(test < 100){
             ctr++;
+            checkFlip();
             lowKingtoEmpty(lowerPiles[0]); //checks to see if lowerPiles[0] or lowerPiles[1] are empty. if so will check the other 5 piles front card to see if they are kings
             lowKingtoEmpty(lowerPiles[1]); // and can be moved to either of the potentially open piles
-            checkFlip();
             lowerToAceFirst(lowerPiles[0]);//trys to place the front lowerPiles[0] card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){ //if statement that checks to see if the any of the aces have been placed on the ace piles
                 lowerToAce(lowerPiles[0]);
