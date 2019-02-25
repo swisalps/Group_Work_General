@@ -139,8 +139,17 @@ class GameController
             lowerToAceFirst(flipPile);
         }
         if(cNum == 13){
-            if(topDiamonds.front().getNum() == 12){
+            if((topDiamonds.front().getNum() == 12) && (aCard.getSuit() == "D")){
                 moveCard(1, flipPile, topDiamonds);
+            }
+            else if((topHearts.front().getNum() == 12) && (aCard.getSuit() == "H")){
+                moveCard(1, flipPile, topHearts);
+            }
+            else if((topSpades.front().getNum() == 12) && (aCard.getSuit() == "S")){
+                moveCard(1, flipPile, topSpades);
+            }
+            else if((topClubs.front().getNum() == 12) && (aCard.getSuit() == "C")){
+                moveCard(1, flipPile, topClubs);
             }
             else if(lowerPiles[0].empty()){
                 moveCard(1, flipPile, lowerPiles[0]);
@@ -194,35 +203,35 @@ class GameController
             //flipCard();
             //cout << lowerPiles[1].front().toString()<< endl;
         }
-        else if((lowerPiles[2].front().isRed() != isRed) && (lowerPiles[2].front().getNum() == cNum + 1) && (lowerPiles[2].front().getNum() != 2)){
+        else if((lowerPiles[2].front().isRed() != isRed) && (lowerPiles[2].front().getNum() == cNum + 1) && (lowerPiles[2].front().getNum() != 2) && (!lowerPiles[2].empty())){
             moveCard(1, flipPile, lowerPiles[2]);
             hasMovedFlip++;
             //flipCard();
            //cout << lowerPiles[2].front().toString()<< endl;
 
         }
-        else if((lowerPiles[3].front().isRed() != isRed) && (lowerPiles[3].front().getNum() == cNum + 1) && (lowerPiles[3].front().getNum() != 2)){
+        else if((lowerPiles[3].front().isRed() != isRed) && (lowerPiles[3].front().getNum() == cNum + 1) && (lowerPiles[3].front().getNum() != 2) && (!lowerPiles[3].empty())){
             moveCard(1, flipPile, lowerPiles[3]);
             hasMovedFlip++;
             //flipCard();
             //cout << lowerPiles[3].front().toString()<< endl;
 
         }
-        else if((lowerPiles[4].front().isRed() != isRed) && (lowerPiles[4].front().getNum() == cNum + 1) && (lowerPiles[4].front().getNum() != 2)){
+        else if((lowerPiles[4].front().isRed() != isRed) && (lowerPiles[4].front().getNum() == cNum + 1) && (lowerPiles[4].front().getNum() != 2) && (!lowerPiles[4].empty())){
             moveCard(1, flipPile, lowerPiles[4]);
             hasMovedFlip++;
             //flipCard();
             //cout << lowerPiles[4].front().toString()<< endl;
 
         }
-        else if((lowerPiles[5].front().isRed() != isRed) && (lowerPiles[5].front().getNum() == cNum + 1) && (lowerPiles[5].front().getNum() != 2)){
+        else if((lowerPiles[5].front().isRed() != isRed) && (lowerPiles[5].front().getNum() == cNum + 1) && (lowerPiles[5].front().getNum() != 2) && (!lowerPiles[5].empty())){
             moveCard(1, flipPile, lowerPiles[5]);
             hasMovedFlip++;
             //flipCard();
             //cout << lowerPiles[5].front().toString()<< endl;
 
         }
-        else if((lowerPiles[6].front().isRed() != isRed) && (lowerPiles[6].front().getNum() == cNum + 1) && (lowerPiles[6].front().getNum() != 2)){
+        else if((lowerPiles[6].front().isRed() != isRed) && (lowerPiles[6].front().getNum() == cNum + 1) && (lowerPiles[6].front().getNum() != 2) && (!lowerPiles[6].empty())){
             moveCard(1, flipPile, lowerPiles[6]);
             hasMovedFlip++;
             //flipCard();
