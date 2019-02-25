@@ -40,7 +40,7 @@ class GameController
     void initSolitaire()
     {
         //To play using rigged deck set deck equal to cardDeck(0) for a pasing deck
-        deck = cardDeck(0);
+        deck = cardDeck(0);//stacked deck
         shuffleDeck = deck.shuffled;
         visCtr = 0;
 	for(int i = 0; i < 7; i++)
@@ -128,13 +128,13 @@ class GameController
     //@return boolean
     bool checkFlip()
     {
-        //while(!flipPile.empty()){
+        if(!flipPile.empty()){
         Card aCard = flipPile.front();
         int cNum = aCard.getNum();
         bool isRed = aCard.isRed();
         bool hmm;
-        cout<<"Deck Top: "<<shuffleDeck.front().toString();
-        cout << "Flip Card: " << aCard.toString() << endl;
+        //cout<<"Deck Top: "<<shuffleDeck.front().toString();
+        //cout << "Flip Card: " << aCard.toString() << endl;
         if(cNum == 1){
             lowerToAceFirst(flipPile);
         }
@@ -224,22 +224,22 @@ class GameController
             flipCard();
             //cout << lowerPiles[6].front().toString()<< endl;
         }
-        else if((topHearts.front().getNum() == cNum + 1) && (aCard.getSuit() == "H")){
+        else if((topHearts.front().getNum() == cNum - 1) && (aCard.getSuit() == "H")){
             moveCard(1, flipPile, topHearts);
             hasMovedFlip++;
             flipCard();
         }
-        else if((topDiamonds.front().getNum() == cNum + 1) && (aCard.getSuit() == "D")){
+        else if((topDiamonds.front().getNum() == cNum - 1) && (aCard.getSuit() == "D")){
             moveCard(1, flipPile, topDiamonds);
             hasMovedFlip++;
             flipCard();
         }
-        else if((topClubs.front().getNum() == cNum + 1) && (aCard.getSuit() == "C")){
+        else if((topClubs.front().getNum() == cNum - 1) && (aCard.getSuit() == "C")){
             moveCard(1, flipPile, topClubs);
             hasMovedFlip++;
             flipCard();
         }
-        else if((topSpades.front().getNum() == cNum + 1) && (aCard.getSuit() == "S")){
+        else if((topSpades.front().getNum() == cNum - 1) && (aCard.getSuit() == "S")){
             moveCard(1, flipPile, topSpades);
             hasMovedFlip++;
             flipCard();
@@ -251,6 +251,9 @@ class GameController
             return true;
         }
         return false;
+
+    }
+    return false;
     }
 
     // Checks one of the lower piles and finds the top visible card then sees if it can fit into any ace-spots
@@ -560,7 +563,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                         if((lowerPiles[i].front().getNum() == lastVisOne.getNum()+1) && (lowerPiles[i].front().isRed() != lastVisOne.isRed()))
                         {
 
-                            cout << "Possibility Confirmed" << endl;
+                           // cout << "Possibility Confirmed" << endl;
                             Card bottomMostVisCard = getCard(lowerPiles[startingPile], 0); // place-holder
                             int numOfVisCards = 0; // the number of cards we need to move
                             for(int j=0; j<lowerPiles[startingPile].size(); j++)
@@ -587,7 +590,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 }
                             moveCard(numOfVisCards, lowerPiles[startingPile], lowerPiles[i]);
                         std::string s = std::to_string(i+1);
-                        cout << "lower" + s + " new front: " << lowerPiles[i].front().toString() << endl;
+                        //cout << "lower" + s + " new front: " << lowerPiles[i].front().toString() << endl;
                         return true;
                         }
 
@@ -683,13 +686,13 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     void run()
     {
             int ctr = 0;
+            cout<<"\n\nTest\n\n";
             flipCard();
         while((!gameWon)&&(!gameLost))
        {
             //As long as the game is not won or lost the loop will continue
     // while(test < 15){
             ctr++;
-
             lowKingtoEmpty(lowerPiles[0]); //checks to see if lowerPiles[0] or lowerPiles[1] are empty. if so will check the other 5 piles front card to see if they are kings
             lowKingtoEmpty(lowerPiles[1]); // and can be moved to either of the potentially open piles
             checkFlip();
@@ -778,6 +781,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     //cout<< "lower5 lastVis return: " << lastVisible(lowerPiles[4]).toString() << endl;
     //cout<< "lower6 lastVis return: " << lastVisible(lowerPiles[5]).toString() << endl;
     //cout<< "lower7 lastVis return: " << lastVisible(lowerPiles[6]).toString() << endl;
+   // displayPiles();
     cout<<"Ran through: "<<ctr<<" times"<<"\n";
     if(gameWon){
         cout<<"You Won!\n";
