@@ -666,6 +666,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
         {
             cout << it->toStringOneLine() << ", ";
         }
+            cout << "\n";
             if ((hasMovedFlip == 0 ) && (hasMovedLower == 0)){ //Checks if a move has been done since the last time the deck was shuffled
                 failCounter++;
                 if (failCounter > 2){//If there was no moves then the fail counter is increased by one, if it reaches 3 the game is over
