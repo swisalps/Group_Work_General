@@ -726,8 +726,19 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
         }
         }
         else{
-           return *ItrVis;
-        }
+            if(pile.size() != 1){
+            for(ItrVis=pile.begin(); ItrVis!=pile.end(); ++ItrVis){
+                cout << "loop" << endl;
+            }
+            --ItrVis;
+            return *ItrVis;
+            }
+            else{
+
+            return *ItrVis;
+            }
+           }
+
         return pile.front();
     }
 
