@@ -572,8 +572,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 Card lastVisOne = lastVisible(lowerPiles[startingPile]);
                 //cout << "lastVis card from pile " << startingPile << ": " << lastVisOne.toString() << endl;
 
-                std::string t = std::to_string(startingPile);
-                //cout << "lastVis value for Pile " + t + ": "<<lastVisOne.toString() << endl;
+                cout << "lastVis value for Pile " << startingPile + 1 << ": "<<lastVisOne.toString() << endl;
                 Itr = lowerPiles[startingPile].begin();
                 //temp.clear();
                 for(int i = 0; i < 7; i++)
@@ -585,14 +584,20 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                         {
                             //cout << "Possibility Confirmed" << endl;
                             Card bottomMostVisCard = getCard(lowerPiles[startingPile], 0); // place-holder
-                            cout << "getCardReturn 1: " << bottomMostVisCard.toString() << endl;
+                            //cout << "getCardReturn 1: " << bottomMostVisCard.toString() << endl;
                             int numOfVisCards = 0; // the number of cards we need to move
                             for(int j=0; j<lowerPiles[startingPile].size(); j++)
                             {
                                 Card currentCard = getCard(lowerPiles[startingPile], j);
-                                cout << "the getcard return2: " << currentCard.toString() << endl;
-
-                                if((currentCard.getVisible() == false) || (j == lowerPiles[startingPile].size()-1)){ // if you reach a non-vis card OR you reach past the end of the list (there are only visible cards in the pile)
+                                //cout << "the getcard return2: " << currentCard.toString() << endl;
+                                if(lowerPiles[startingPile].size() == 1)
+                                {
+                                    cout << "Move 1 card" << endl;
+                                    moveCard(1, lowerPiles[startingPile], lowerPiles[i]);
+                                    cout << "Move complete" << endl;
+                                    return true;
+                                }
+                                else if((currentCard.getVisible() == false) || (j == lowerPiles[startingPile].size()-1)){ // if you reach a non-vis card OR you reach past the end of the list (there are only visible cards in the pile)
                                 // you found a non-vis card or reached past the end of the list, get the card before it which should be vis
                                 bottomMostVisCard = getCard(lowerPiles[startingPile], j-1);//THIS LINE CAUSES CORE DUMPS OCCASIONALLY, when pile is only one big the j-1 doesnt work
                                 cout << "reached Test 3" << endl;
