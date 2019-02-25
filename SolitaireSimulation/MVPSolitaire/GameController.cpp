@@ -40,7 +40,7 @@ class GameController
     void initSolitaire()
     {
         //To play using rigged deck set deck equal to cardDeck(0) for a pasing deck
-        deck = cardDeck(0);//stacked deck
+        deck = cardDeck();//stacked deck
         shuffleDeck = deck.shuffled;
         visCtr = 0;
 	for(int i = 0; i < 7; i++)
@@ -598,6 +598,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                             if(j != startingPile){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to moveCard
                                 if(lowerPiles[j].empty()){ // make sure the otherPile is empty
                                     moveCard(numOfVisCards, lowerPiles[startingPile], lowerPiles[j]);
+                                    //hasMovedLower++;
                                     return true;
                                 }
                                 //else look for another pile that could be empty
@@ -606,6 +607,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 }
                         moveCard(numOfVisCards, lowerPiles[startingPile], lowerPiles[i]);
                         std::string s = std::to_string(i+1);
+                        //hasMovedLower++;
                         //cout << "lower" + s + " new front: " << lowerPiles[i].front().toString() << endl;
                         return true;
                         }
@@ -718,6 +720,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             //As long as the game is not won or lost the loop will continue
       //while(test < 50){
             ctr++;
+            bool b = checkLowerMove(6);
             checkFlip();
             lowKingtoEmpty(lowerPiles[0]); //checks to see if lowerPiles[0] or lowerPiles[1] are empty. if so will check the other 5 piles front card to see if they are kings
             lowKingtoEmpty(lowerPiles[1]); // and can be moved to either of the potentially open piles
@@ -800,7 +803,6 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 lowerToAce(lowerPiles[6]);
             }
             //cout << "test 8" << endl;
-            bool b = checkLowerMove(6);
             //cout << "test 9" << endl;
             //cout << "checkLowerMove(6) return value:" << b << endl;
             freeUpFirstPile(); //checks if lowerPiles[0] size = 1. if so attempts to move that one card to free up pile
