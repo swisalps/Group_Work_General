@@ -703,7 +703,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 hasMovedFlip = 0;
                 hasMovedLower = 0;
                 failCounter = 0;
-            }
+            }//test
         }
     }
 
