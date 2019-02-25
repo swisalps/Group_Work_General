@@ -716,6 +716,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
         visCtr = 0;
         list<Card>::iterator ItrVis = pile.begin();
         if((pile.size() > 1) && (findNonVis(pile) == true)){
+            cout << "findNonVis returned true to lastVis" << endl;
         for(ItrVis=pile.begin(); ItrVis!=pile.end(); ++ItrVis){
             if((ItrVis->getVisible() == 1) && (visCtr != pile.size())){
                 visCtr++;
