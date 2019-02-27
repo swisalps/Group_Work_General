@@ -709,7 +709,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 cout << "loop" << endl;
                 visCtr++;
             }
-            //--ItrVis;
+            --ItrVis;
             return *ItrVis;
             }
             else if (pile.size() == 1){
@@ -731,13 +731,16 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             int ctr = 0;
             //cout<<"\n\nTest\n\n";
             flipCard();
-        //while((!gameWon)&&(!gameLost))
-       //{
+        while((!gameWon)&&(!gameLost))
+       {
             //As long as the game is not won or lost the loop will continue
-      while(test < 15){
+      //while(test < 15){
             ctr++;
-            checkLowerMove(6);
-            checkLowerMove(6);
+            bool b = true;
+            while(b)
+            {
+                b = checkLowerMove(6);
+            }
             checkFlip();
             lowKingtoEmpty(lowerPiles[0]); //checks to see if lowerPiles[0] or lowerPiles[1] are empty. if so will check the other 5 piles front card to see if they are kings
             lowKingtoEmpty(lowerPiles[1]); // and can be moved to either of the potentially open piles
@@ -827,6 +830,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
                 gameWon = true;
             displayPiles();
+            cout << ctr << endl;
     }
     //cout<< "return values from ace trackers: D" << diamondA << ", H" << heartA << ", S" << spadeA << ", C" << clubA << endl;
     //cout<< "lower1 lastVis return: " << lastVisible(lowerPiles[0]).toString() << endl;
