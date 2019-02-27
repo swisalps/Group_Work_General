@@ -39,8 +39,8 @@ class GameController
     //initializes the solitaire game
     void initSolitaire()
     {
-        //To play using rigged deck set deck equal to cardDeck(0) for a pasing deck
-        deck = cardDeck();//stacked deck
+        //To play using rigged deck set deck equal to cardDeck(0) for a pasing deck and cardDeck(1) for a loosing deck
+        deck = cardDeck(1);//stacked deck
         shuffleDeck = deck.shuffled;
         visCtr = 0;
 	for(int i = 0; i < 7; i++)
@@ -734,10 +734,10 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             int ctr = 0;
             //cout<<"\n\nTest\n\n";
             flipCard();
-        while((!gameWon)&&(!gameLost))
-       {
+        while((!gameWon)&&(!gameLost)){
+
             //As long as the game is not won or lost the loop will continue
-      //while(test < 25){
+    //   while(test < 1){
             ctr++;
             bool b = checkLowerMove(6);
             checkFlip();
