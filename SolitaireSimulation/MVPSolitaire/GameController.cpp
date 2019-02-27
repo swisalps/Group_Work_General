@@ -75,12 +75,18 @@ class GameController
     //displays the piles
     void displayPiles(){
         cout << "Pile 1 Front->: ";
+        if(!lowerPiles[0].empty())
+        {
         for(std::list<Card>::iterator it=lowerPiles[0].begin(); it != lowerPiles[0].end(); it++)
             std::cout << it->toStringOneLine() << ", ";
+        }
         cout << " " << endl;
         cout << "Pile 2 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[1].begin(); it != lowerPiles[1].end(); it++)
-            std::cout <<it->toStringOneLine() << ", ";
+        if(!lowerPiles[1].empty())
+        {
+            for(std::list<Card>::iterator it=lowerPiles[1].begin(); it != lowerPiles[1].end(); it++)
+                std::cout <<it->toStringOneLine() << ", ";
+        }
         cout << " " << endl;
         cout << "Pile 3 Front->: ";
         for(std::list<Card>::iterator it=lowerPiles[2].begin(); it != lowerPiles[2].end(); it++)
@@ -600,6 +606,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                         }
                 }
                         moveCard(visCtr, lowerPiles[startingPile], lowerPiles[i]);
+                        displayPiles();
                         //hasMovedLower++;
                         //cout << "lower" + s + " new front: " << lowerPiles[i].front().toString() << endl;
                         return true;
