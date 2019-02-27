@@ -74,40 +74,18 @@ class GameController
 
     //displays the piles
     void displayPiles(){
-        cout << "Pile 1 Front->: ";
-        if(!lowerPiles[0].empty())
+        for(int i = 0; i < 7; i++)
         {
-        for(std::list<Card>::iterator it=lowerPiles[0].begin(); it != lowerPiles[0].end(); it++)
-            std::cout << it->toStringOneLine() << ", ";
+            cout << "Pile " << i + 1 << " Front->: ";
+            if(!lowerPiles[i].empty())
+            {
+                for(std::list<Card>::iterator it = lowerPiles[i].begin(); it != lowerPiles[i].end(); it++)
+                {
+                    std::cout << it->toStringOneLine() << ", ";
+                }
+            }
+            cout << " " << endl;
         }
-        cout << " " << endl;
-        cout << "Pile 2 Front->: ";
-        if(!lowerPiles[1].empty())
-        {
-            for(std::list<Card>::iterator it=lowerPiles[1].begin(); it != lowerPiles[1].end(); it++)
-                std::cout <<it->toStringOneLine() << ", ";
-        }
-        cout << " " << endl;
-        cout << "Pile 3 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[2].begin(); it != lowerPiles[2].end(); it++)
-            std::cout <<it->toStringOneLine() << ", ";
-        cout << " " << endl;
-        cout << "Pile 4 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[3].begin(); it != lowerPiles[3].end(); it++)
-            std::cout <<it->toStringOneLine() << ", ";
-        cout << " " << endl;
-        cout << "Pile 5 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[4].begin(); it != lowerPiles[4].end(); it++)
-            std::cout <<it->toStringOneLine() << ", ";
-        cout << " " << endl;
-        cout << "Pile 6 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[5].begin(); it != lowerPiles[5].end(); it++)
-            std::cout <<it->toStringOneLine() << ", ";
-        cout << " " << endl;
-        cout << "Pile 7 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[6].begin(); it != lowerPiles[6].end(); it++)
-            std::cout <<it->toStringOneLine() << ", ";
-        cout << " " << endl;
         cout << "Diamond Aces: ";
         for(std::list<Card>::iterator it=topDiamonds.begin(); it != topDiamonds.end(); it++)
             std::cout <<it->toStringOneLine() << ", ";
