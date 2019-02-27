@@ -556,11 +556,13 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             list<Card>::iterator Itr;
             if(!(lowerPiles[startingPile]).empty())
             {
+                //cout << "before" << endl;
                 Card lastVisOne = lastVisible(lowerPiles[startingPile]);
+                //cout << "after" << endl;
 
 
                 //std::string t = std::to_string(startingPile);
-                cout << "lastVis value for Pile " << startingPile << ": "<<lastVisOne.toString() << endl;
+                //cout << "lastVis value for Pile " << startingPile << ": "<<lastVisOne.toString() << endl;
                 Itr = lowerPiles[startingPile].begin();
                 for(int i = 0; i < 7; i++)
                 {
@@ -568,8 +570,10 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                     {
                         if((lowerPiles[i].front().getNum() == lastVisOne.getNum()+1) && (lowerPiles[i].front().isRed() != lastVisOne.isRed()))
                         {
-                            cout << "test visCtr: " << visCtr << endl;
+
                             moveCard(visCtr, lowerPiles[startingPile], lowerPiles[i]);
+                            //lowerPiles[startingPile].resize(visCtr);
+                            //cout << "test visCtr: " << visCtr << endl;
                             //hasMovedLower++;
                             //cout << "lower" + s + " new front: " << lowerPiles[i].front().toString() << endl;
                             return true;
@@ -585,22 +589,13 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             {
                 return checkLowerMove(startingPile - 1);
             }
-
-        n++;
-        if(n == 0)
-                {
-                    return checkLowerMove(startingPile - 1);
-                }
-        else
-        {
             return checkLowerMove(startingPile - 1);
-        }
         }
         return false;
     }
 
     bool checkLowerKing(int startingP){
-        cout << "low King called " << endl;
+       // cout << "low King called " << endl;
         if(startingP >= 0 && startingP <= 6){
         list<Card>::iterator Itr;
         if(!lowerPiles[startingP].empty()){
@@ -636,9 +631,8 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
 
     void moveCard(int numCards, list<Card>& source, list<Card>& dest)
     {
-        cout << "moveCard called " << endl;
+        //cout << "moveCard called " << endl;
         if (numCards == 1){  //If there is just one card it is moved to the destination pile and then it is remove from the source pile
-            cout << "moveCard called " << endl;
             dest.push_front(source.front());
             source.pop_front();
         }
@@ -647,7 +641,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             it = source.begin();
             advance(it, numCards);
             source.splice(dest.begin(), source, source.begin(), it);
-            cout << "MoveCard call num: " << numCards << endl;
+            //cout << "MoveCard call num: " << numCards << endl;
         }
         if(!source.front().getVisible())
             source.front().setVis();
@@ -688,6 +682,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     Card lastVisible(std::list<Card> &pile){
         visCtr = 0;
         list<Card>::iterator ItrVis = pile.begin();
+        cout << "size of pile: " << pile.size() << endl;
         if((pile.size() > 1) && (findNonVis(pile) == true)){
             //cout << "findNonVis returned true to lastVis" << endl;
         for(ItrVis=pile.begin(); ItrVis!=pile.end(); ++ItrVis){
@@ -712,6 +707,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 visCtr++;
             }
             --ItrVis;
+            //cout << "end" << endl;
             return *ItrVis;
             }
             else{
@@ -739,6 +735,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             {
                 b = checkLowerMove(6);
             }
+            //checkLowerKing(6);
             checkFlip();
             lowKingtoEmpty(lowerPiles[0]); //checks to see if lowerPiles[0] or lowerPiles[1] are empty. if so will check the other 5 piles front card to see if they are kings
             lowKingtoEmpty(lowerPiles[1]); // and can be moved to either of the potentially open piles
