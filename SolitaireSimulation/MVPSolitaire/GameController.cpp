@@ -74,34 +74,18 @@ class GameController
 
     //displays the piles
     void displayPiles(){
-        cout << "Pile 1 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[0].begin(); it != lowerPiles[0].end(); it++)
-            std::cout << it->toStringOneLine() << ", ";
-        cout << " " << endl;
-        cout << "Pile 2 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[1].begin(); it != lowerPiles[1].end(); it++)
-            std::cout <<it->toStringOneLine() << ", ";
-        cout << " " << endl;
-        cout << "Pile 3 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[2].begin(); it != lowerPiles[2].end(); it++)
-            std::cout <<it->toStringOneLine() << ", ";
-        cout << " " << endl;
-        cout << "Pile 4 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[3].begin(); it != lowerPiles[3].end(); it++)
-            std::cout <<it->toStringOneLine() << ", ";
-        cout << " " << endl;
-        cout << "Pile 5 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[4].begin(); it != lowerPiles[4].end(); it++)
-            std::cout <<it->toStringOneLine() << ", ";
-        cout << " " << endl;
-        cout << "Pile 6 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[5].begin(); it != lowerPiles[5].end(); it++)
-            std::cout <<it->toStringOneLine() << ", ";
-        cout << " " << endl;
-        cout << "Pile 7 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[6].begin(); it != lowerPiles[6].end(); it++)
-            std::cout <<it->toStringOneLine() << ", ";
-        cout << " " << endl;
+        for(int i = 0; i < 7; i++)
+        {
+            cout << "Pile " << i + 1 << " Front->: ";
+            if(!lowerPiles[i].empty())
+            {
+                for(std::list<Card>::iterator it = lowerPiles[i].begin(); it != lowerPiles[i].end(); it++)
+                {
+                    std::cout << it->toStringOneLine() << ", ";
+                }
+            }
+            cout << " " << endl;
+        }
         cout << "Diamond Aces: ";
         for(std::list<Card>::iterator it=topDiamonds.begin(); it != topDiamonds.end(); it++)
             std::cout <<it->toStringOneLine() << ", ";
@@ -745,14 +729,16 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             int ctr = 0;
             //cout<<"\n\nTest\n\n";
             flipCard();
-        //while((!gameWon)&&(!gameLost))
-       //{
+        while((!gameWon)&&(!gameLost))
+       {
             //As long as the game is not won or lost the loop will continue
-      while(test < 30){
+      //while(test < 15){
             ctr++;
-            checkLowerMove(6);
-            checkLowerKing(6);
-            checkLowerMove(6);
+            bool b = true;
+            while(b)
+            {
+                b = checkLowerMove(6);
+            }
             checkFlip();
             lowKingtoEmpty(lowerPiles[0]); //checks to see if lowerPiles[0] or lowerPiles[1] are empty. if so will check the other 5 piles front card to see if they are kings
             lowKingtoEmpty(lowerPiles[1]); // and can be moved to either of the potentially open piles
@@ -842,6 +828,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
                 gameWon = true;
             displayPiles();
+            cout << ctr << endl;
     }
     //cout<< "return values from ace trackers: D" << diamondA << ", H" << heartA << ", S" << spadeA << ", C" << clubA << endl;
     //cout<< "lower1 lastVis return: " << lastVisible(lowerPiles[0]).toString() << endl;
