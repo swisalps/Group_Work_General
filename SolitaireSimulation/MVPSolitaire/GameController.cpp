@@ -391,48 +391,6 @@ class GameController
     }
 
 
-/*
-This method is executed at the beginning of the gameController() method each time a new flip card is flipped. it sees if pile lowerPiles[0] has a size of 1.
-if it does, it sees if it can move that card to any of the other lower piles in order to free up lowerPiles[0] so a king can be placed in the newly created
-open pile spot. this method could become obsolete once checkLowerMove() is fully implemented.
-@return bool: true if pile one is now open, false if not
-*/
-    bool freeUpFirstPile()
-    {
-        if(!lowerPiles[0].empty())
-        {if(lowerPiles[0].size() == 1 && lowerPiles[0].front().getNum() != 13){ //checks to see if lowerPiles[0] has only one card. if so the method will attempt to move it in order to free up the pile
-            Card pOneCard = lowerPiles[0].front();
-            cout << pOneCard.isRed() << endl;
-            if((lowerPiles[1].front().isRed() != pOneCard.isRed()) && (lowerPiles[1].front().getNum() == pOneCard.getNum() + 1)){
-                moveCard(1, lowerPiles[0], lowerPiles[1]);
-        }
-            else if((lowerPiles[2].front().isRed() != pOneCard.isRed()) && (lowerPiles[2].front().getNum() == pOneCard.getNum() + 1)){
-                moveCard(1, lowerPiles[0], lowerPiles[2]);
-            }
-            else if((lowerPiles[3].front().isRed() != pOneCard.isRed()) && (lowerPiles[3].front().getNum() == pOneCard.getNum() + 1)){
-                moveCard(1, lowerPiles[0], lowerPiles[3]);
-            }
-            else if((lowerPiles[4].front().isRed() != pOneCard.isRed()) && (lowerPiles[4].front().getNum() == pOneCard.getNum() + 1)){
-                moveCard(1, lowerPiles[0], lowerPiles[4]);
-            }
-            else if((lowerPiles[5].front().isRed() != pOneCard.isRed()) && (lowerPiles[5].front().getNum() == pOneCard.getNum() + 1)){
-                moveCard(1, lowerPiles[0], lowerPiles[5]);
-            }
-            else if((lowerPiles[6].front().isRed() != pOneCard.isRed()) && (lowerPiles[6].front().getNum() == pOneCard.getNum() + 1)){
-                moveCard(1, lowerPiles[0], lowerPiles[6]);
-            }
-            else{
-                return false;
-            }
-            return false;
-        }
-
-
-        return true;
-    }
-    return false;
-    }
-
     // this method checks if there are any non-visible cards left in the pile
     // this method uses the getCard method as well
     // this method is useful to find if the entire pile can be moved without worrying if there are any non-visible cards we need to splice
@@ -479,6 +437,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             {
                 //cout << "before" << endl;
                 Card lastVisOne = lastVisible(lowerPiles[startingPile]);
+                cout << "CheckLower LastVis value: " << lastVisOne.toString() << endl;
                 //cout << "after" << endl;
                  if(lastVisOne.getNum() == 13){
                     for(int j=0; j<=6; j++){
@@ -486,7 +445,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                             if(lowerPiles[j].empty()){ // make sure the otherPile is empty
                                 moveCard(visCtr, lowerPiles[startingPile], lowerPiles[j]);
                                 hasMovedLower++;
-                                cout << "found move! " << endl;
+                                //cout << "found move! " << endl;
                                 return true;
                             }
                         }
@@ -536,7 +495,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
 
     void moveCard(int numCards, list<Card>& source, list<Card>& dest)
     {
-        //cout << "moveCard called " << endl;
+        cout << "moveCard called " << endl;
         if (numCards == 1){  //If there is just one card it is moved to the destination pile and then it is remove from the source pile
             dest.push_front(source.front());
             source.pop_front();
@@ -587,7 +546,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     Card lastVisible(std::list<Card>& pile){
         visCtr = 0;
         list<Card>::iterator ItrVis = pile.begin();
-        cout << "size of pile: " << pile.size() << endl;
+        //cout << "size of pile: " << pile.size() << endl;
         if((pile.size() > 1) && (findNonVis(pile) == true)){
             //cout << "findNonVis returned true to lastVis" << endl;
             for(ItrVis=pile.begin(); ItrVis!=pile.end(); ++ItrVis){
@@ -607,12 +566,12 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 return *ItrVis;
             }
             else if((pile.size() > 1) && (findNonVis(pile) == false)){
-                for(ItrVis=pile.begin(); ItrVis!=pile.end(); ++ItrVis){
-                    cout << "loop" << endl;
+                for(ItrVis=pile.begin(); ItrVis != pile.end(); ++ItrVis){
+                    //cout << "loop" << endl;
                     visCtr++;
                     }
                 --ItrVis;
-            cout << "isVis allVis return: " <<ItrVis->toString() << endl;
+            //cout << "isVis allVis return: " <<ItrVis->toString() << endl;
                 return *ItrVis;
             }
             else{
@@ -630,10 +589,10 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             int ctr = 0;
             //cout<<"\n\nTest\n\n";
             flipCard();
-        while((!gameWon)&&(!gameLost))
-       {
+        //while((!gameWon)&&(!gameLost))
+       //{
             //As long as the game is not won or lost the loop will continue
-      //while(test < 20){
+      while(test < 20){
             ctr++;
             bool b = true;
             //while(b)
