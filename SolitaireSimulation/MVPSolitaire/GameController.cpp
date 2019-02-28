@@ -469,7 +469,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
         //Yes: recurse; set bool to true
         //No: return; set bool to false
     bool checkLowerMove(int startingPile){
-        //cout << "recursion: " << startingPile << endl;
+        cout << "recursion: " << startingPile << endl;
         int n = 0;
         if(startingPile >= 0 && startingPile <= 6)
         {
@@ -636,14 +636,14 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
       //while(test < 20){
             ctr++;
             bool b = true;
-            while(b)
-            {
+            //while(b)
+            //{
                 b = checkLowerMove(6);
-                //b = checkLowerMove(6);
+                b = checkLowerMove(6);
                 //b = checkLowerMove(6);
                 //displayPiles();
 
-            }
+            //}
             //cout << "made it through checklower while" << endl;
             //checkLowerKing(6);
             checkFlip();
