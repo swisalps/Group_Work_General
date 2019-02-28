@@ -612,7 +612,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                     visCtr++;
                     }
                 --ItrVis;
-            //cout << "end" << endl;
+            cout << "isVis allVis return: " <<ItrVis->toString() << endl;
                 return *ItrVis;
             }
             else{
@@ -639,9 +639,10 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             //while(b)
             //{
                 b = checkLowerMove(6);
-                b = checkLowerMove(6);
-                //b = checkLowerMove(6);
                 //displayPiles();
+                //b = checkLowerMove(6);
+                //b = checkLowerMove(6);
+
 
             //}
             //cout << "made it through checklower while" << endl;
