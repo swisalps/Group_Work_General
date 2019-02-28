@@ -398,7 +398,7 @@ class GameController
     // @param myPile the pile you want to find if it has a non-visible card in it
     // @return true the pile has a non-visible card in it
     // @return false the pile does not have a non-visible card in it; only visible cards
-    bool findNonVis(list<Card>& myPile){
+    bool findNonVis(std::list<Card> myPile){
         list<Card>::iterator itNon = myPile.begin();
          for(itNon=myPile.begin(); itNon!=myPile.end(); ++itNon){
             if(itNon->getVisible() == false){
@@ -518,6 +518,8 @@ class GameController
         if(!source.front().getVisible())
             source.front().setVis();
     }
+
+
 //flips a card from the shuffled deck to the flip pile.
     void flipCard()
     {
