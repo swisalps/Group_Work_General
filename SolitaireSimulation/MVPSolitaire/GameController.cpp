@@ -23,7 +23,7 @@ class GameController
     std::list<Card> pile, temp;
     //lists below will be treated and interacted with as a stack. but are list because of the advantages the list data structure offers in terms of moving sections of data
     std::list<Card> topDiamonds, topSpades, topHearts, topClubs, flipPile;
-    std::array<list<Card>, 7> lowerPiles;
+    std::array<std::list<Card>, 7> lowerPiles;
 
     //constructor for the GameController object: creates and runs the solitaire deck
     GameController()
@@ -47,6 +47,7 @@ class GameController
 	{
 		lowerPiles[i] = makePile(i+1);
 	}
+
         failCounter = 0;
         lowOne = false, lowTwo = false, lowThree = false, lowFour = false, lowFive = false, lowSix = false, lowSeven = false;
         gameLost = false, gameWon = false;
@@ -76,7 +77,7 @@ class GameController
     void displayPiles(){
         for(int i = 0; i < 7; i++)
         {
-            cout << "Pile " << i + 1 << " Front->: ";
+            cout << "Pile " << i + 1 << " Size = " << lowerPiles[i].size() << " Front->: ";
             if(!lowerPiles[i].empty())
             {
                 for(std::list<Card>::iterator it = lowerPiles[i].begin(); it != lowerPiles[i].end(); it++)
