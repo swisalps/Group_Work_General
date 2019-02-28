@@ -503,32 +503,17 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     // @param myPile the pile you want to find if it has a non-visible card in it
     // @return true the pile has a non-visible card in it
     // @return false the pile does not have a non-visible card in it; only visible cards
-    bool findNonVis(list<Card> &myPile){
-        for(int i=0; i<myPile.size(); i++){
-            Card myCard = getCard(myPile, i);
-            if(myCard.getVisible() == false){
-                //cout << "Find nonvis return: " << myCard.getNum() << endl;
+    bool findNonVis(list<Card>& myPile){
+        list<Card>::iterator itNon = myPile.begin();
+         for(itNon=myPile.begin(); itNon!=myPile.end(); ++itNon){
+            if(itNon->getVisible() == false){
+                cout << "nonVis return "<<itNon->toString() << endl;
                 return true;
             }
         }
         return false;
     }
 
-    // This method getCard() takes in the list you want to search and the index of that list
-    // and finds the Card element in that list.
-    Card getCard(list<Card> myList, int index){
-        list<Card>::iterator it = myList.begin();
-        if(myList.size() > 1){
-            for(int i=0; i<index; i++){
-                ++it;
-            }
-            --it;
-            return *it;
-            }
-        else{
-            return *it;
-        }
-    }
 
     //Check if you can move a card from the lower pile you are looking at to the ace-piles
         //Check if there is an invisible card you can make visible
@@ -548,7 +533,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
         //Yes: recurse; set bool to true
         //No: return; set bool to false
     bool checkLowerMove(int startingPile){
-        cout << "recursion: " << startingPile << endl;
+        //cout << "recursion: " << startingPile << endl;
         int n = 0;
         if(startingPile >= 0 && startingPile <= 6)
         {
@@ -559,8 +544,20 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 //cout << "before" << endl;
                 Card lastVisOne = lastVisible(lowerPiles[startingPile]);
                 //cout << "after" << endl;
+                 if(lastVisOne.getNum() == 13){
+                    for(int j=0; j<=6; j++){
+                        if(j != startingPile){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to moveCard
+                            if(lowerPiles[j].empty()){ // make sure the otherPile is empty
+                                moveCard(visCtr, lowerPiles[startingPile], lowerPiles[j]);
+                                hasMovedLower++;
+                                cout << "found move! " << endl;
+                                return true;
+                            }
+                        }
 
-
+                    }
+                }
+                else{
                 //std::string t = std::to_string(startingPile);
                 //cout << "lastVis value for Pile " << startingPile << ": "<<lastVisOne.toString() << endl;
                 Itr = lowerPiles[startingPile].begin();
@@ -582,6 +579,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                     }
 
                 }
+                }
 
 
             }
@@ -593,39 +591,6 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
         }
         return false;
     }
-
-    bool checkLowerKing(int startingP){
-        cout << "King recursion: " << startingP << endl;
-        if(startingP >= 0 && startingP <= 6){
-            cout << "checkKing called: " << startingP << endl;
-            list<Card>::iterator Itr;
-            if(!lowerPiles[startingP].empty()){
-                Card lastVisOne = lastVisible(lowerPiles[startingP]);
-                cout << "lastVis success: " << lastVisOne.toString() << endl;
-                if(lastVisOne.getNum() == 13){
-                    for(int j=0; j<=6; j++){
-                        if(j != startingP){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to moveCard
-                            if(lowerPiles[j].empty()){ // make sure the otherPile is empty
-                                moveCard(visCtr, lowerPiles[startingP], lowerPiles[j]);
-                                hasMovedLower++;
-                                cout << "found move! " << endl;
-                                return true;
-                            }
-                        }
-
-                    }
-                }
-                else{
-                    return checkLowerKing(startingP - 1);
-                }
-
-            }
-            return checkLowerKing(startingP - 1);
-        }
-    return false;
-    }
-
-
 
 /**moves a card from its current position to a new vector
 @param numCards number of cards being moved
@@ -689,16 +654,16 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
         cout << "size of pile: " << pile.size() << endl;
         if((pile.size() > 1) && (findNonVis(pile) == true)){
             //cout << "findNonVis returned true to lastVis" << endl;
-        for(ItrVis=pile.begin(); ItrVis!=pile.end(); ++ItrVis){
-            if((ItrVis->getVisible() == 1) && (visCtr != pile.size())){
-                visCtr++;
-            }
-            else{
-                ItrVis--;
-                return *ItrVis;
-            }
+            for(ItrVis=pile.begin(); ItrVis!=pile.end(); ++ItrVis){
+                if((ItrVis->getVisible() == 1) && (visCtr != pile.size())){
+                    visCtr++;
+                }
+                else{
+                    ItrVis--;
+                    return *ItrVis;
+                }
 
-        }
+            }
         }
         else{
             if(pile.size() == 1){
@@ -706,19 +671,19 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 return *ItrVis;
             }
             else if((pile.size() > 1) && (findNonVis(pile) == false)){
-            for(ItrVis=pile.begin(); ItrVis!=pile.end(); ++ItrVis){
-                cout << "loop" << endl;
-                visCtr++;
-            }
-            --ItrVis;
+                for(ItrVis=pile.begin(); ItrVis!=pile.end(); ++ItrVis){
+                    cout << "loop" << endl;
+                    visCtr++;
+                    }
+                --ItrVis;
             //cout << "end" << endl;
-            return *ItrVis;
+                return *ItrVis;
             }
             else{
                 return *ItrVis;
             }
 
-           }
+        }
 
         return pile.front();
     }
@@ -738,8 +703,12 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             while(b)
             {
                 b = checkLowerMove(6);
+                //b = checkLowerMove(6);
+                //b = checkLowerMove(6);
+                //displayPiles();
+
             }
-            cout << "made it through checklower while" << endl;
+            //cout << "made it through checklower while" << endl;
             //checkLowerKing(6);
             checkFlip();
             lowKingtoEmpty(lowerPiles[0]); //checks to see if lowerPiles[0] or lowerPiles[1] are empty. if so will check the other 5 piles front card to see if they are kings
@@ -825,7 +794,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             //cout << "test 8" << endl;
             //cout << "test 9" << endl;
             //cout << "checkLowerMove(6) return value:" << b << endl;
-            freeUpFirstPile(); //checks if lowerPiles[0] size = 1. if so attempts to move that one card to free up pile
+            //freeUpFirstPile(); //checks if lowerPiles[0] size = 1. if so attempts to move that one card to free up pile
             test++;
             if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
                 gameWon = true;
