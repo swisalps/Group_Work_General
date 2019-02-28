@@ -401,14 +401,14 @@ class GameController
         list<Card>::iterator itNon = myPile.begin();
          for(itNon=myPile.begin(); itNon!=myPile.end(); ++itNon){
             if(itNon->getVisible() == false){
-                cout << "nonVis return "<<itNon->toString() << endl;
+                cout << "nonVis return "<< itNon->toString() << endl;
                 return true;
             }
             else{
-                cout << "Only visible cards" << ", ";
+                //cout << "Only visible cards" << ", ";
             }
         }
-        cout << endl;
+        //cout << endl;
         return false;
     }
 
@@ -433,13 +433,13 @@ class GameController
     bool checkLowerMove(int startingPile){
         cout << "recursion: " << startingPile << endl;
         int n = 0;
-        if(startingPile >= 0 && startingPile <= 6)
+        if((startingPile >= 0) && (startingPile <= 6))
         {
 
             list<Card>::iterator Itr;
             if(!(lowerPiles[startingPile]).empty())
             {
-                cout << "before" << endl;
+                cout << "before size: " << lowerPiles[startingPile].size() << endl;
                 Card lastVisOne = lastVisible(lowerPiles[startingPile]);
                 cout << "CheckLower LastVis value: " << lastVisOne.toString() << endl;
                 //cout << "after" << endl;
@@ -497,9 +497,9 @@ class GameController
 @param dest destination for the cards being moved
 */
 
-    void moveCard(int numCards, list<Card>& source, list<Card>& dest)
+    void moveCard(int numCards, std::list<Card>& source, std::list<Card>& dest)
     {
-        //cout << "moveCard called " << endl;
+        cout << "moveCard called " << endl;
         if (numCards == 1){  //If there is just one card it is moved to the destination pile and then it is remove from the source pile
             dest.push_front(source.front());
             source.pop_front();
@@ -547,14 +547,15 @@ class GameController
         }
     }
 
-    Card lastVisible(std::list<Card>& pile){
+    Card lastVisible(std::list<Card>& ppile){
         visCtr = 0;
-        list<Card>::iterator ItrVis = pile.begin();
-        //cout << "size of pile: " << pile.size() << endl;
-        if((pile.size() > 1) && (findNonVis(pile) == true)){
+        std::list<Card>::iterator ItrVis = ppile.begin();
+        std::list<Card>::iterator ItrVis2 = ppile.begin();
+        cout << "size of pile: " << ppile.size() << endl;
+        if((ppile.size() > 1) && (findNonVis(ppile) == true)){
             //cout << "findNonVis returned true to lastVis" << endl;
-            for(ItrVis=pile.begin(); ItrVis!=pile.end(); ++ItrVis){
-                if((ItrVis->getVisible() == 1) && (visCtr != pile.size())){
+            for(ItrVis=ppile.begin(); ItrVis!=ppile.end(); ++ItrVis){
+                if((ItrVis->getVisible() == 1) && (visCtr != ppile.size())){
                     visCtr++;
                 }
                 else{
@@ -565,24 +566,22 @@ class GameController
             }
         }
         else{
-            if(pile.size() == 1){
+            if(ppile.size() == 1){
                 visCtr++;
-                return *ItrVis;
+                return ppile.back();
             }
-            else if((pile.size() > 1) && (findNonVis(pile) == false)){
-                for(ItrVis=pile.begin(); ItrVis != pile.end(); ++ItrVis){
-                    cout << ItrVis->toString() << endl;
+            else if((ppile.size() > 1) && (findNonVis(ppile) == false)){
+                for(ItrVis2=ppile.begin(); ItrVis2 != ppile.end(); ++ItrVis2){
+                    cout << ItrVis2->toString() << endl;
                     visCtr++;
                     }
-                return *ItrVis;
-            }
-            else{
-                return *ItrVis;
+                    cout << "test: " << ppile.back().toString() << endl;
+                return ppile.back();
             }
 
         }
 
-        return pile.front();
+        return ppile.back();
     }
 
 //runs the GameController class
@@ -603,7 +602,7 @@ class GameController
 
 
             //}
-            cout << "made it through checklower while" << endl;
+            //cout << "made it through checklower while" << endl;
             checkFlip();
             //lowKingtoEmpty(lowerPiles[0]); //checks to see if lowerPiles[0] or lowerPiles[1] are empty. if so will check the other 5 piles front card to see if they are kings
             //lowKingtoEmpty(lowerPiles[1]); // and can be moved to either of the potentially open piles
