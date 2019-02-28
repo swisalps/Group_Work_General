@@ -595,28 +595,32 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     }
 
     bool checkLowerKing(int startingP){
-       // cout << "low King called " << endl;
+        cout << "King recursion: " << startingP << endl;
         if(startingP >= 0 && startingP <= 6){
-        list<Card>::iterator Itr;
-        if(!lowerPiles[startingP].empty()){
-        Card lastVisOne = lastVisible(lowerPiles[startingP]);
-        if(lastVisOne.getNum() == 13){
-            for(int j=0; j<=6; j++){
-            if(j != startingP){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to moveCard
-                if(lowerPiles[j].empty()){ // make sure the otherPile is empty
-                    moveCard(visCtr, lowerPiles[startingP], lowerPiles[j]);
-                    hasMovedLower++;
-                    cout << "found move! " << endl;
-                    return true;
+            cout << "checkKing called: " << startingP << endl;
+            list<Card>::iterator Itr;
+            if(!lowerPiles[startingP].empty()){
+                Card lastVisOne = lastVisible(lowerPiles[startingP]);
+                cout << "lastVis success: " << lastVisOne.toString() << endl;
+                if(lastVisOne.getNum() == 13){
+                    for(int j=0; j<=6; j++){
+                        if(j != startingP){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to moveCard
+                            if(lowerPiles[j].empty()){ // make sure the otherPile is empty
+                                moveCard(visCtr, lowerPiles[startingP], lowerPiles[j]);
+                                hasMovedLower++;
+                                cout << "found move! " << endl;
+                                return true;
+                            }
+                        }
+
+                    }
                 }
+                else{
+                    return checkLowerKing(startingP - 1);
                 }
-                return checkLowerKing(startingP -1);
+
             }
-        }
-        else{
             return checkLowerKing(startingP - 1);
-        }
-    }
         }
     return false;
     }
@@ -679,7 +683,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
         }
     }
 
-    Card lastVisible(std::list<Card> &pile){
+    Card lastVisible(std::list<Card>& pile){
         visCtr = 0;
         list<Card>::iterator ItrVis = pile.begin();
         cout << "size of pile: " << pile.size() << endl;
@@ -725,16 +729,17 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             int ctr = 0;
             //cout<<"\n\nTest\n\n";
             flipCard();
-        while((!gameWon)&&(!gameLost))
-       {
+        //while((!gameWon)&&(!gameLost))
+       //{
             //As long as the game is not won or lost the loop will continue
-      //while(test < 15){
+      while(test < 20){
             ctr++;
             bool b = true;
             while(b)
             {
                 b = checkLowerMove(6);
             }
+            cout << "made it through checklower while" << endl;
             //checkLowerKing(6);
             checkFlip();
             lowKingtoEmpty(lowerPiles[0]); //checks to see if lowerPiles[0] or lowerPiles[1] are empty. if so will check the other 5 piles front card to see if they are kings
