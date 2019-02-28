@@ -433,70 +433,6 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     return false;
     }
 
-    // **** This method will be later incorporated into the checkLowerMethod() once finished. ****
-    // **** MAYBE KEEP FOR TESTING PURPOSES? ***
-    // This method will check a lower pile (pileNumber) and see if its ENTIRE group of visible cards
-    // can be moved to another pile, or an empty pile if the pile we want to move will have a king in it.
-    //@param pileNumber the number indicating which pile (1-7) we want to move
-    //@return true the pile has been moved
-    //@return false the pile we want to move is either empty, has only 1 card in it, or cannot find a valid pile to move into, or if the pileNumber is out of range
-    bool checkLowerMoveEntirePile(int pileNumber){
-        if(pileNumber > 7 || pileNumber < 1){ // check if the pileNumber is out of range. If so, return false.
-            std::cout << "Error: the pile we want to move is out of range.";
-            return false;
-        }
-        //get the current pile to look at (ENCOMPASS INSIDE FOR LOOP???????)
-        std::list<Card> currentPile = lowerPiles[pileNumber-1]; // NOTE: lowerPiles indices count from 0-6 and pileNumber ranges between 1-7, so we need -1.
-        //check to see if the pile is NOT empty.
-        //check to see if the pile has more than one card in it.
-        if((!currentPile.empty()) && (currentPile.size() > 1)){
-                // look at the current pile's bottom-most visible card
-                Card bottomMostVisCard = getCard(currentPile, 0); // place-holder
-                int numOfVisCards = 0; // the number of cards we need to move
-                for(int i=0; i<currentPile.size(); i++){
-                    Card currentCard = getCard(currentPile, i);
-                    if((currentCard.getVisible() == false) || (i == currentPile.size())){ // if you reach a non-vis card OR you reach past the end of the list (there are only visible cards in the pile)
-                        // you found a non-vis card or reached past the end of the list, get the card before it which should be vis
-                        bottomMostVisCard = getCard(currentPile, i-1);
-                        break;
-                    }
-                    numOfVisCards++;
-                }
-                // check if the bottom-most visible card fits with a top card in one of the other piles
-                // assume the bottomMostVisCard is a king
-                if(bottomMostVisCard.getNum() == 13){
-                    for(int i=1; i<=7; i++){
-                        if(i!=pileNumber){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to moveCard
-                            std::list<Card> otherPile = lowerPiles[i-1]; // the pile we are comparing the currentPile to
-                            if(otherPile.empty()){ // make sure the otherPile is empty
-                                moveCard(numOfVisCards, currentPile, otherPile);
-                                return true;
-                            }
-                            //else look for another pile that could be empty
-                        }
-                    }
-                }
-                else{ // the bottomMostVisCard is NOT a king
-                    for(int i=1; i<=7; i++){
-                        if(i!=pileNumber){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to move
-                            std::list<Card> otherPile = lowerPiles[i-1]; // the pile we are comparing the currentPile to
-                            // compare the front/top card of the otherPile to the bottomMostVisCard of the currentPile
-                            if(otherPile.front().getNum() == bottomMostVisCard.getNum() + 1 && //if the num of the other card is higher by 1...
-                                otherPile.front().isRed() != bottomMostVisCard.isRed()){       //if the colors are not the same...
-                                moveCard(numOfVisCards, currentPile, otherPile); // move the pile
-                                return true;
-                            }
-                            // else look for another pile to compare the bottomMostVisCard to.
-                        }
-                    }
-                }
-                std::cout << "Fail: Cannot find a pile to move to.";
-                return false; // we cannot find another pile to move to.
-        }
-        std::cout << "Fail: the pile we want to move is either empty or has only 1 card in it.";
-        return false; // the pileNumber we used is either empty or only has only one card in it.
-    }
-
     // this method checks if there are any non-visible cards left in the pile
     // this method uses the getCard method as well
     // this method is useful to find if the entire pile can be moved without worrying if there are any non-visible cards we need to splice
@@ -694,10 +630,10 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             int ctr = 0;
             //cout<<"\n\nTest\n\n";
             flipCard();
-        //while((!gameWon)&&(!gameLost))
-       //{
+        while((!gameWon)&&(!gameLost))
+       {
             //As long as the game is not won or lost the loop will continue
-      while(test < 20){
+      //while(test < 20){
             ctr++;
             bool b = true;
             while(b)
