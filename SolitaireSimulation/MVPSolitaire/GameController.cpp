@@ -509,8 +509,11 @@ class GameController
             std::list<Card>::iterator it;
             it = source.begin();
             advance(it, numCards);
+            cout << "Source size before spice: " << source.size() << endl;
             source.splice(dest.begin(), source, source.begin(), it);
             //cout << "MoveCard call num: " << numCards << endl;
+            cout << "Source size after spice: " << source.size() << endl;
+
         }
         if(!source.front().getVisible())
             source.front().setVis();
