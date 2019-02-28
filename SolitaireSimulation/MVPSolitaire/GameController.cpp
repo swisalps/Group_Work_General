@@ -404,7 +404,11 @@ class GameController
                 cout << "nonVis return "<<itNon->toString() << endl;
                 return true;
             }
+            else{
+                cout << "Only visible cards" << ", ";
+            }
         }
+        cout << endl;
         return false;
     }
 
@@ -435,7 +439,7 @@ class GameController
             list<Card>::iterator Itr;
             if(!(lowerPiles[startingPile]).empty())
             {
-                //cout << "before" << endl;
+                cout << "before" << endl;
                 Card lastVisOne = lastVisible(lowerPiles[startingPile]);
                 cout << "CheckLower LastVis value: " << lastVisOne.toString() << endl;
                 //cout << "after" << endl;
@@ -495,7 +499,7 @@ class GameController
 
     void moveCard(int numCards, list<Card>& source, list<Card>& dest)
     {
-        cout << "moveCard called " << endl;
+        //cout << "moveCard called " << endl;
         if (numCards == 1){  //If there is just one card it is moved to the destination pile and then it is remove from the source pile
             dest.push_front(source.front());
             source.pop_front();
@@ -567,11 +571,9 @@ class GameController
             }
             else if((pile.size() > 1) && (findNonVis(pile) == false)){
                 for(ItrVis=pile.begin(); ItrVis != pile.end(); ++ItrVis){
-                    //cout << "loop" << endl;
+                    cout << ItrVis->toString() << endl;
                     visCtr++;
                     }
-                --ItrVis;
-            //cout << "isVis allVis return: " <<ItrVis->toString() << endl;
                 return *ItrVis;
             }
             else{
@@ -589,27 +591,27 @@ class GameController
             int ctr = 0;
             //cout<<"\n\nTest\n\n";
             flipCard();
-        //while((!gameWon)&&(!gameLost))
-       //{
+        while((!gameWon)&&(!gameLost))
+       {
             //As long as the game is not won or lost the loop will continue
-      while(test < 20){
+      //while(test < 40){
             ctr++;
             bool b = true;
             //while(b)
             //{
                 b = checkLowerMove(6);
-                //displayPiles();
-                //b = checkLowerMove(6);
-                //b = checkLowerMove(6);
 
 
             //}
-            //cout << "made it through checklower while" << endl;
-            //checkLowerKing(6);
+            cout << "made it through checklower while" << endl;
             checkFlip();
-            lowKingtoEmpty(lowerPiles[0]); //checks to see if lowerPiles[0] or lowerPiles[1] are empty. if so will check the other 5 piles front card to see if they are kings
-            lowKingtoEmpty(lowerPiles[1]); // and can be moved to either of the potentially open piles
-            lowKingtoEmpty(lowerPiles[2]);
+            //lowKingtoEmpty(lowerPiles[0]); //checks to see if lowerPiles[0] or lowerPiles[1] are empty. if so will check the other 5 piles front card to see if they are kings
+            //lowKingtoEmpty(lowerPiles[1]); // and can be moved to either of the potentially open piles
+            //lowKingtoEmpty(lowerPiles[2]);
+            //lowKingtoEmpty(lowerPiles[3]);
+            //lowKingtoEmpty(lowerPiles[4]);
+            //lowKingtoEmpty(lowerPiles[5]);
+            //lowKingtoEmpty(lowerPiles[6]);
             //cout << "test 1" << endl;
             lowerToAceFirst(lowerPiles[0]);//trys to place the front lowerPiles[0] card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){ //if statement that checks to see if the any of the aces have been placed on the ace piles
@@ -687,6 +689,7 @@ class GameController
                 lowerToAce(lowerPiles[5]);
                 lowerToAce(lowerPiles[6]);
             }
+            //checkLowerMove(6);
             //cout << "test 8" << endl;
             //cout << "test 9" << endl;
             //cout << "checkLowerMove(6) return value:" << b << endl;
