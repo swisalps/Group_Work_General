@@ -400,6 +400,16 @@ class GameController
     // @return false the pile does not have a non-visible card in it; only visible cards
     bool findNonVis(std::list<Card> myPile){
         list<Card>::iterator itNon = myPile.begin();
+        if(myPile.empty() == true)
+        {
+            cout << "empty pile" << endl;
+            return false;
+        }
+        else if(myPile.size() == 1)
+        {
+            cout << "one card, no invisible" << endl;
+            return false;
+        }
          for(itNon=myPile.begin(); itNon!=myPile.end(); ++itNon){
             if(itNon->getVisible() == false){
                 cout << "nonVis return "<< itNon->toString() << endl;
@@ -450,7 +460,7 @@ class GameController
                             if(lowerPiles[j].empty()){ // make sure the otherPile is empty
                                 moveCard(visCtr, lowerPiles[startingPile], lowerPiles[j]);
                                 hasMovedLower++;
-                                //cout << "found move! " << endl;
+                                cout << "found move! " << endl;
                                 return true;
                             }
                         }
@@ -477,11 +487,8 @@ class GameController
                         }
 
                     }
-
                 }
                 }
-
-
             }
             else
             {
@@ -510,7 +517,7 @@ class GameController
             it = source.begin();
             advance(it, numCards);
             cout << "Source size before spice: " << source.size() << endl;
-            source.splice(dest.begin(), source, source.begin(), it);
+            dest.splice(dest.begin(), source, source.begin(), it);
             //cout << "MoveCard call num: " << numCards << endl;
             cout << "Source size after spice: " << source.size() << endl;
 
@@ -578,7 +585,7 @@ class GameController
             }
             else if((ppile.size() > 1) && (findNonVis(ppile) == false)){
                 for(ItrVis2=ppile.begin(); ItrVis2 != ppile.end(); ++ItrVis2){
-                    cout << ItrVis2->toString() << endl;
+                    //cout << ItrVis2->toString() << endl;
                     visCtr++;
                     }
                     cout << "test: " << ppile.back().toString() << endl;
