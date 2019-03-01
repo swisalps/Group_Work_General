@@ -114,6 +114,7 @@ class GameController
     //method that checks what piles the most recent flip card can be placed on. First checks if the flip card is an ace, if so it places it on the ace proper ace pile
     //if not an ace, it then checks to see if the flip card was a king, if so, it checks to see if any of the lower piles are empty so the king can be placed
     //if the flip card is not an ace or a king, it will check all 7 lower piles and the 4 ace piles to see if the flip card can be placed at all
+    //also will recursively call itself until the flipPile is empty or it went through an entire call without making a move, finishing by fliping a new card from the deck to the flip pile
     //@return boolean
     bool checkFlip()
     {
@@ -461,10 +462,9 @@ class GameController
                 return true;
             }
             else{
-                //cout << "Only visible cards" << ", ";
+
             }
         }
-        //cout << endl;
         return false;
     }
 
@@ -495,10 +495,7 @@ class GameController
             std::list<Card>::iterator Itr;
             if(!(lowerPiles[startingPile]).empty())
             {
-                //cout << "before size: " << lowerPiles[startingPile].size() << endl;
                 Card lastVisOne = lastVisible(lowerPiles[startingPile]);
-                //cout << "CheckLower LastVis value: " << lastVisOne.toString() << endl;
-                //cout << "after" << endl;
                  if((lastVisOne.getNum() == 13) && (findNonVis(lowerPiles[startingPile]) == true)){
                     for(int j=0; j<=6; j++){
                         if(j != startingPile){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to moveCard
@@ -513,8 +510,6 @@ class GameController
                     }
                 }
                 else{
-                //std::string t = std::to_string(startingPile);
-                //cout << "lastVis value for Pile " << startingPile << ": "<<lastVisOne.toString() << endl;
                 Itr = lowerPiles[startingPile].begin();
                 for(int i = 0; i < 7; i++)
                 {
@@ -524,8 +519,6 @@ class GameController
                         {
 
                             moveCard(visCtr, lowerPiles[startingPile], lowerPiles[i]);
-                            //lowerPiles[startingPile].resize(visCtr);
-                            //cout << "test visCtr: " << visCtr << endl;
                             hasMovedLower++;
                             cout << "lower " << i << " new front: " << lowerPiles[i].front().toString() << endl;
                             return true;
@@ -561,10 +554,9 @@ class GameController
             std::list<Card>::iterator it;
             it = source.begin();
             advance(it, numCards);
-            cout << "Source size before spice: " << source.size() << endl;
+            //cout << "Source size before spice: " << source.size() << endl;
             dest.splice(dest.begin(), source, source.begin(), it);
-            //cout << "MoveCard call num: " << numCards << endl;
-            cout << "Source size after spice: " << source.size() << endl;
+            //cout << "Source size after spice: " << source.size() << endl;
 
         }
         if(!source.front().getVisible())
@@ -604,6 +596,10 @@ class GameController
             }//test
         }
     }
+    //lastVisible method is an integral part of the checklowermove(). It returns the last visible card in a pile and also keeps track of the amount of cards ahead of the last visible card
+    // through the visCtr variabloe. this is important becuase when executing a moveCard() call, you must provide the amount of cards to move, from the front to amount of cards deep in the pile
+    //@param the ppile to find the last visible card for
+    //@returns a Card object that is the last visible for the pile. (visCtr although it is not returned is just as important as the return itself)
 
     Card lastVisible(std::list<Card> ppile){
         visCtr = 0;
@@ -611,7 +607,6 @@ class GameController
         std::list<Card>::iterator ItrVis2 = ppile.begin();
         cout << "size of pile: " << ppile.size() << endl;
         if((ppile.size() > 1) && (findNonVis(ppile) == true)){
-            //cout << "findNonVis returned true to lastVis" << endl;
             for(ItrVis=ppile.begin(); ItrVis!=ppile.end(); ++ItrVis){
                 if((ItrVis->getVisible() == 1) && (visCtr != ppile.size())){
                     visCtr++;
@@ -630,7 +625,6 @@ class GameController
             }
             else if((ppile.size() > 1) && (findNonVis(ppile) == false)){
                 for(ItrVis2=ppile.begin(); ItrVis2 != ppile.end(); ++ItrVis2){
-                    //cout << ItrVis2->toString() << endl;
                     visCtr++;
                     }
                     cout << "test: " << ppile.back().toString() << endl;
@@ -646,7 +640,6 @@ class GameController
     void run()
     {
             int ctr = 0;
-            //cout<<"\n\nTest\n\n";
             flipCard();
         while((!gameWon)&&(!gameLost))
        {
@@ -655,28 +648,12 @@ class GameController
       //while(test < 40){
             ctr++;
             bool b = false;
-            //while(b)
-            //{
             checkFlip();
             b = checkLowerMove(6);
             if(b){
                 checkLowerMove(6);
             }
-            //checkLowerMove(6);
-            //checkLowerMove(6);
 
-
-           // }
-            //cout << "made it through checklower while" << endl;
-
-            //lowKingtoEmpty(lowerPiles[0]); //checks to see if lowerPiles[0] or lowerPiles[1] are empty. if so will check the other 5 piles front card to see if they are kings
-            //lowKingtoEmpty(lowerPiles[1]); // and can be moved to either of the potentially open piles
-            //lowKingtoEmpty(lowerPiles[2]);
-            //lowKingtoEmpty(lowerPiles[3]);
-            //lowKingtoEmpty(lowerPiles[4]);
-            //lowKingtoEmpty(lowerPiles[5]);
-            //lowKingtoEmpty(lowerPiles[6]);
-            //cout << "test 1" << endl;
             lowerToAceFirst(lowerPiles[0]);//trys to place the front lowerPiles[0] card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){ //if statement that checks to see if the any of the aces have been placed on the ace piles
                 lowerToAce(flipPile);
@@ -760,25 +737,14 @@ class GameController
                 lowerToAce(lowerPiles[5]);
                 lowerToAce(lowerPiles[6]);
             }
-            //cout << "test 8" << endl;
-            //cout << "test 9" << endl;
-            //cout << "checkLowerMove(6) return value:" << b << endl;
-            //freeUpFirstPile(); //checks if lowerPiles[0] size = 1. if so attempts to move that one card to free up pile
+
             test++;
             if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
                 gameWon = true;
             displayPiles();
             cout << ctr << endl;
     }
-    //cout<< "return values from ace trackers: D" << diamondA << ", H" << heartA << ", S" << spadeA << ", C" << clubA << endl;
-    //cout<< "lower1 lastVis return: " << lastVisible(lowerPiles[0]).toString() << endl;
-    //cout<< "lower2 lastVis return: " << lastVisible(lowerPiles[1]).toString() << endl;
-    //cout<< "lower3 lastVis return: " << lastVisible(lowerPiles[2]).toString() << endl;
-    //cout<< "lower4 lastVis return: " << lastVisible(lowerPiles[3]).toString() << endl;
-    //cout<< "lower5 lastVis return: " << lastVisible(lowerPiles[4]).toString() << endl;
-    //cout<< "lower6 lastVis return: " << lastVisible(lowerPiles[5]).toString() << endl;
-    //cout<< "lower7 lastVis return: " << lastVisible(lowerPiles[6]).toString() << endl;
-   // displayPiles();
+
     cout<<"Ran through: "<<ctr<<" times"<<"\n";
     if(gameWon){
         cout<<"You Won!\n";
