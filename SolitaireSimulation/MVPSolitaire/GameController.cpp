@@ -334,6 +334,7 @@ class GameController
             if((lowVisCard.getSuit() == "D") && (!topDiamonds.empty())){
                 Card topCard = topDiamonds.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){// if the top card of the ace pile has a number that is less than the number of the low card by 1
+                    cout << "test25" << endl;
                     moveCard(1, lowerPile, topDiamonds);
                     hasMovedLower++;
                     return true;
@@ -342,6 +343,7 @@ class GameController
             else if((lowVisCard.getSuit() == "S") && (!topSpades.empty())){
                 Card topCard = topSpades.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
+                    cout << "test26" << endl;
                      moveCard(1, lowerPile, topSpades);
                      hasMovedLower++;
                      return true;
@@ -350,6 +352,7 @@ class GameController
             else if((lowVisCard.getSuit() == "H") && (!topHearts.empty())){
                 Card topCard = topHearts.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
+                    cout << "test27" << endl;
                     moveCard(1, lowerPile, topHearts);
                     hasMovedLower++;
                     return true;
@@ -358,6 +361,7 @@ class GameController
             else if((lowVisCard.getSuit() == "C") && (!topClubs.empty())){ // the suit of the lowVisCard is a Club
                 Card topCard = topClubs.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){// if the top card of the ace pile has a number that is less than the number of the low card by 1
+                    cout << "test28" << endl;
                     moveCard(1, lowerPile, topClubs);
                     hasMovedLower++;
                     return true;
