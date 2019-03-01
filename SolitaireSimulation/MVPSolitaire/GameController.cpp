@@ -130,52 +130,68 @@ class GameController
         }
         if(cNum == 13){
             if((topDiamonds.front().getNum() == 12) && (aCard.getSuit() == "D")){
+                cout << "test1" << endl;
                 moveCard(1, flipPile, topDiamonds);
+                hasMovedFlip++;
                 moveMade++;
+
             }
             else if((topHearts.front().getNum() == 12) && (aCard.getSuit() == "H")){
+                cout << "test2" << endl;
                 moveCard(1, flipPile, topHearts);
+                hasMovedFlip++;
                 moveMade++;
             }
             else if((topSpades.front().getNum() == 12) && (aCard.getSuit() == "S")){
+                cout << "test3" << endl;
                 moveCard(1, flipPile, topSpades);
+                hasMovedFlip++;
                 moveMade++;
             }
             else if((topClubs.front().getNum() == 12) && (aCard.getSuit() == "C")){
+                cout << "test4" << endl;
                 moveCard(1, flipPile, topClubs);
+                hasMovedFlip++;
                 moveMade++;
             }
             else if(lowerPiles[0].empty()){
+                cout << "test5" << endl;
                 moveCard(1, flipPile, lowerPiles[0]);
                 hasMovedFlip++;
                 moveMade++;
             }
             else if(lowerPiles[1].empty()){
+                cout << "test6" << endl;
                 moveCard(1, flipPile, lowerPiles[1]);
                 hasMovedFlip++;
                 moveMade++;
             }
             else if(lowerPiles[2].empty()){
+                cout << "test7" << endl;
                 moveCard(1, flipPile, lowerPiles[2]);
                 hasMovedFlip++;
                 moveMade++;
             }
             else if(lowerPiles[3].empty()){
+                cout << "test8" << endl;
                 moveCard(1, flipPile, lowerPiles[3]);
                 hasMovedFlip++;
                 moveMade++;
             }
             else if(lowerPiles[4].empty()){
+                cout << "test9" << endl;
                 moveCard(1, flipPile, lowerPiles[4]);
                 hasMovedFlip++;
                 moveMade++;
             }
             else if(lowerPiles[5].empty()){
+                cout << "test10" << endl;
                 moveCard(1, flipPile, lowerPiles[5]);
                 hasMovedFlip++;
                 moveMade++;
             }
             else if(lowerPiles[6].empty()){
+                cout << "test11" << endl;
                 moveCard(1, flipPile, lowerPiles[6]);
                 hasMovedFlip++;
                 moveMade++;
@@ -186,57 +202,68 @@ class GameController
             }
         }
         else if((lowerPiles[0].front().isRed() != isRed) && (lowerPiles[0].front().getNum() == cNum + 1) && (lowerPiles[0].front().getNum() != 2) && (!lowerPiles[0].empty())){
+            cout << "test12" << endl;
             moveCard(1, flipPile, lowerPiles[0]);
             hasMovedFlip++;
             moveMade++;
         }
         else if((lowerPiles[1].front().isRed() != isRed) && (lowerPiles[1].front().getNum() == cNum + 1) && (lowerPiles[1].front().getNum() != 2) && (!lowerPiles[1].empty())){
+            cout << "test13" << endl;
             moveCard(1, flipPile, lowerPiles[1]);
             hasMovedFlip++;
             moveMade++;
         }
         else if((lowerPiles[2].front().isRed() != isRed) && (lowerPiles[2].front().getNum() == cNum + 1) && (lowerPiles[2].front().getNum() != 2) && (!lowerPiles[2].empty())){
+            cout << "test14" << endl;
             moveCard(1, flipPile, lowerPiles[2]);
             hasMovedFlip++;
             moveMade++;
         }
         else if((lowerPiles[3].front().isRed() != isRed) && (lowerPiles[3].front().getNum() == cNum + 1) && (lowerPiles[3].front().getNum() != 2) && (!lowerPiles[3].empty())){
+            cout << "test15" << endl;
             moveCard(1, flipPile, lowerPiles[3]);
             hasMovedFlip++;
             moveMade++;
         }
         else if((lowerPiles[4].front().isRed() != isRed) && (lowerPiles[4].front().getNum() == cNum + 1) && (lowerPiles[4].front().getNum() != 2) && (!lowerPiles[4].empty())){
+            cout << "test16" << endl;
             moveCard(1, flipPile, lowerPiles[4]);
             hasMovedFlip++;
             moveMade++;
         }
         else if((lowerPiles[5].front().isRed() != isRed) && (lowerPiles[5].front().getNum() == cNum + 1) && (lowerPiles[5].front().getNum() != 2) && (!lowerPiles[5].empty())){
+            cout << "test17" << endl;
             moveCard(1, flipPile, lowerPiles[5]);
             hasMovedFlip++;
             moveMade++;
 
         }
         else if((lowerPiles[6].front().isRed() != isRed) && (lowerPiles[6].front().getNum() == cNum + 1) && (lowerPiles[6].front().getNum() != 2) && (!lowerPiles[6].empty())){
+            cout << "test18" << endl;
             moveCard(1, flipPile, lowerPiles[6]);
             hasMovedFlip++;
             moveMade++;
         }
         else if((topHearts.front().getNum() == cNum - 1) && (aCard.getSuit() == "H")){
+            cout << "test19" << endl;
             moveCard(1, flipPile, topHearts);
             hasMovedFlip++;
             moveMade++;
         }
         else if((topDiamonds.front().getNum() == cNum - 1) && (aCard.getSuit() == "D")){
+            cout << "test20" << endl;
             moveCard(1, flipPile, topDiamonds);
             hasMovedFlip++;
             moveMade++;
         }
         else if((topClubs.front().getNum() == cNum - 1) && (aCard.getSuit() == "C")){
+            cout << "test21" << endl;
             moveCard(1, flipPile, topClubs);
             hasMovedFlip++;
             moveMade++;
         }
         else if((topSpades.front().getNum() == cNum - 1) && (aCard.getSuit() == "S")){
+            cout << "test22" << endl;
             moveCard(1, flipPile, topSpades);
             hasMovedFlip++;
             moveMade++;
@@ -268,21 +295,25 @@ class GameController
 
                 if(lowVisCard.getSuit() == "D"){
                     moveCard(1, lowerPile, topDiamonds);
+                    hasMovedLower++;
                     diamondA = true;
                     return 1;
                 }
                 else if(lowVisCard.getSuit() == "S"){
                     moveCard(1, lowerPile, topSpades);
+                    hasMovedLower++;
                     spadeA = true;
                     return 1;
                 }
                 else if(lowVisCard.getSuit() == "H"){
                     moveCard(1, lowerPile, topHearts);
+                    hasMovedLower++;
                     heartA = true;
                     return 1;
                 }
                 else{ // the suit of the lowVisCard is a Club
                     moveCard(1, lowerPile, topClubs);
+                    hasMovedLower++;
                     clubA = true;
                     return 1;
                 }
@@ -303,6 +334,7 @@ class GameController
                 Card topCard = topDiamonds.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){// if the top card of the ace pile has a number that is less than the number of the low card by 1
                     moveCard(1, lowerPile, topDiamonds);
+                    hasMovedLower++;
                     return true;
                 }
             }
@@ -310,6 +342,7 @@ class GameController
                 Card topCard = topSpades.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
                      moveCard(1, lowerPile, topSpades);
+                     hasMovedLower++;
                      return true;
                 }
             }
@@ -317,6 +350,7 @@ class GameController
                 Card topCard = topHearts.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
                     moveCard(1, lowerPile, topHearts);
+                    hasMovedLower++;
                     return true;
                 }
             }
@@ -324,6 +358,7 @@ class GameController
                 Card topCard = topClubs.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){// if the top card of the ace pile has a number that is less than the number of the low card by 1
                     moveCard(1, lowerPile, topClubs);
+                    hasMovedLower++;
                     return true;
                     }
                 }
@@ -342,42 +377,49 @@ class GameController
             if(!lowerPiles[0].empty()){ // check the 1st pile for a king
                 if (lowerPiles[0].front().getNum() == 13){
                     moveCard(1, lowerPiles[0], lowerPile);
+                    hasMovedLower++;
                     return true;
                 }
             }
             else if(!lowerPiles[1].empty()){// check the 2nd pile for a king
                 if (lowerPiles[1].front().getNum() == 13){
                     moveCard(1, lowerPiles[1], lowerPile);
+                    hasMovedLower++;
                     return true;
                 }
             }
             else if(!lowerPiles[2].empty()){
                 if (lowerPiles[2].front().getNum() == 13){
                     moveCard(1, lowerPiles[2], lowerPile);
+                    hasMovedLower++;
                     return true;
                 }
             }
             else if(!lowerPiles[3].empty()){
                 if (lowerPiles[3].front().getNum() == 13){
                     moveCard(1, lowerPiles[3], lowerPile);
+                    hasMovedLower++;
                     return true;
                 }
             }
             else if(!lowerPiles[4].empty()){
                 if (lowerPiles[4].front().getNum() == 13){
                     moveCard(1, lowerPiles[4], lowerPile);
+                    hasMovedLower++;
                     return true;
                 }
             }
             else if(!lowerPiles[5].empty()){
                 if (lowerPiles[5].front().getNum() == 13){
                     moveCard(1, lowerPiles[5], lowerPile);
+                    hasMovedLower++;
                     return true;
                 }
             }
             else if(!lowerPiles[6].empty()){
                 if (lowerPiles[6].front().getNum() == 13){
                     moveCard(1, lowerPiles[6], lowerPile);
+                    hasMovedLower++;
                     return true;
                 }
             }
@@ -442,17 +484,17 @@ class GameController
     bool checkLowerMove(int startingPile){
         cout << "recursion: " << startingPile << endl;
         int n = 0;
-        if((startingPile >= 0) && (startingPile <= 6))
+        if(startingPile >= 0)
         {
 
             std::list<Card>::iterator Itr;
             if(!(lowerPiles[startingPile]).empty())
             {
-                cout << "before size: " << lowerPiles[startingPile].size() << endl;
+                //cout << "before size: " << lowerPiles[startingPile].size() << endl;
                 Card lastVisOne = lastVisible(lowerPiles[startingPile]);
-                cout << "CheckLower LastVis value: " << lastVisOne.toString() << endl;
+                //cout << "CheckLower LastVis value: " << lastVisOne.toString() << endl;
                 //cout << "after" << endl;
-                 if(lastVisOne.getNum() == 13){
+                 if((lastVisOne.getNum() == 13) && (findNonVis(lowerPiles[startingPile]) == true)){
                     for(int j=0; j<=6; j++){
                         if(j != startingPile){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to moveCard
                             if(lowerPiles[j].empty()){ // make sure the otherPile is empty
@@ -479,8 +521,8 @@ class GameController
                             moveCard(visCtr, lowerPiles[startingPile], lowerPiles[i]);
                             //lowerPiles[startingPile].resize(visCtr);
                             //cout << "test visCtr: " << visCtr << endl;
-                            //hasMovedLower++;
-                            //cout << "lower" + s + " new front: " << lowerPiles[i].front().toString() << endl;
+                            hasMovedLower++;
+                            cout << "lower " << i << " new front: " << lowerPiles[i].front().toString() << endl;
                             return true;
                         }
 
@@ -538,12 +580,12 @@ class GameController
         {
             shuffleDeck.swap(flipPile);
             shuffleDeck.reverse();
-            //cout << "flipPile becomes deck: "; //testing to make sure the flipPile is correctly reassembled to into the deck once the deck is emptied
-            //for(std::list<Card>::iterator it=shuffleDeck.begin(); it != shuffleDeck.end(); it++)
-        //{
-            //cout << it->toStringOneLine() << ", ";
-        //}
-            //cout << "\n";
+            cout << "flipPile becomes deck: "; //testing to make sure the flipPile is correctly reassembled to into the deck once the deck is emptied
+            for(std::list<Card>::iterator it=shuffleDeck.begin(); it != shuffleDeck.end(); it++)
+        {
+            cout << it->toStringOneLine() << ", ";
+        }
+            cout << "\n";
             if ((hasMovedFlip == 0 ) && (hasMovedLower == 0)){ //Checks if a move has been done since the last time the deck was shuffled
                 failCounter++;
                 if (failCounter > 2){//If there was no moves then the fail counter is increased by one, if it reaches 3 the game is over
@@ -603,20 +645,25 @@ class GameController
             flipCard();
         while((!gameWon)&&(!gameLost))
        {
+           cout << "---------NEW TURN BEGUN----------" << endl;
             //As long as the game is not won or lost the loop will continue
       //while(test < 40){
             ctr++;
-            bool b = true;
+            bool b = false;
             //while(b)
             //{
-            checkLowerMove(6);
-            checkLowerMove(6);
-            checkLowerMove(6);
-
-
-            //}
-            //cout << "made it through checklower while" << endl;
             checkFlip();
+            b = checkLowerMove(6);
+            if(b){
+                checkLowerMove(6);
+            }
+            //checkLowerMove(6);
+            //checkLowerMove(6);
+
+
+           // }
+            //cout << "made it through checklower while" << endl;
+
             //lowKingtoEmpty(lowerPiles[0]); //checks to see if lowerPiles[0] or lowerPiles[1] are empty. if so will check the other 5 piles front card to see if they are kings
             //lowKingtoEmpty(lowerPiles[1]); // and can be moved to either of the potentially open piles
             //lowKingtoEmpty(lowerPiles[2]);
@@ -627,6 +674,7 @@ class GameController
             //cout << "test 1" << endl;
             lowerToAceFirst(lowerPiles[0]);//trys to place the front lowerPiles[0] card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){ //if statement that checks to see if the any of the aces have been placed on the ace piles
+                lowerToAce(flipPile);
                 lowerToAce(lowerPiles[0]);
                 lowerToAce(lowerPiles[1]);
                 lowerToAce(lowerPiles[2]);
@@ -638,6 +686,7 @@ class GameController
             //cout << "test 2" << endl;
             lowerToAceFirst(lowerPiles[1]); //trys to place the front lowerPiles[1] card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){//if statement that checks to see if the any of the aces have been placed on the ace piles
+                lowerToAce(flipPile);
                 lowerToAce(lowerPiles[0]);
                 lowerToAce(lowerPiles[1]);
                 lowerToAce(lowerPiles[2]);
@@ -649,6 +698,7 @@ class GameController
             //cout << "test 3" << endl;
             lowerToAceFirst(lowerPiles[2]); //trys to place the front lowerPiles[2] card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){//if statement that checks to see if the any of the aces have been placed on the ace piles
+                lowerToAce(flipPile);
                 lowerToAce(lowerPiles[0]);
                 lowerToAce(lowerPiles[1]);
                 lowerToAce(lowerPiles[2]);
@@ -660,6 +710,7 @@ class GameController
             //cout << "test 4" << endl;
             lowerToAceFirst(lowerPiles[3]);//trys to place the front lowerPiles[3] card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){
+                lowerToAce(flipPile);
                 lowerToAce(lowerPiles[0]);
                 lowerToAce(lowerPiles[1]);
                 lowerToAce(lowerPiles[2]);
@@ -671,6 +722,7 @@ class GameController
             //cout << "test 5" << endl;
             lowerToAceFirst(lowerPiles[4]);
             if(diamondA || clubA || spadeA || heartA){
+                lowerToAce(flipPile);
                 lowerToAce(lowerPiles[0]);
                 lowerToAce(lowerPiles[1]);
                 lowerToAce(lowerPiles[2]);
@@ -682,6 +734,7 @@ class GameController
             //cout << "test 6" << endl;
             lowerToAceFirst(lowerPiles[5]);
             if(diamondA || clubA || spadeA || heartA){
+                lowerToAce(flipPile);
                 lowerToAce(lowerPiles[0]);
                 lowerToAce(lowerPiles[1]);
                 lowerToAce(lowerPiles[2]);
@@ -693,6 +746,7 @@ class GameController
             //cout << "test 7" << endl;
             lowerToAceFirst(lowerPiles[6]);
             if(diamondA || clubA || spadeA || heartA){
+                lowerToAce(flipPile);
                 lowerToAce(lowerPiles[0]);
                 lowerToAce(lowerPiles[1]);
                 lowerToAce(lowerPiles[2]);
