@@ -632,7 +632,7 @@ class GameController
             }
 
         }
-
+        // non-reachable statement; only reaches here if the pile size is 1 and findNonVis == false
         return ppile.back();
     }
 
