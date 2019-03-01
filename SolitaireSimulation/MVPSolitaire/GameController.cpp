@@ -553,7 +553,7 @@ class GameController
         }
     }
 
-    Card lastVisible(std::list<Card>& ppile){
+    Card lastVisible(std::list<Card> ppile){
         visCtr = 0;
         std::list<Card>::iterator ItrVis = ppile.begin();
         std::list<Card>::iterator ItrVis2 = ppile.begin();
