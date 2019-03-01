@@ -117,6 +117,7 @@ class GameController
     //@return boolean
     bool checkFlip()
     {
+        int moveMade = 0;
         if(!flipPile.empty()){
         Card aCard = flipPile.front();
         int cNum = aCard.getNum();
@@ -130,133 +131,126 @@ class GameController
         if(cNum == 13){
             if((topDiamonds.front().getNum() == 12) && (aCard.getSuit() == "D")){
                 moveCard(1, flipPile, topDiamonds);
+                moveMade++;
             }
             else if((topHearts.front().getNum() == 12) && (aCard.getSuit() == "H")){
                 moveCard(1, flipPile, topHearts);
+                moveMade++;
             }
             else if((topSpades.front().getNum() == 12) && (aCard.getSuit() == "S")){
                 moveCard(1, flipPile, topSpades);
+                moveMade++;
             }
             else if((topClubs.front().getNum() == 12) && (aCard.getSuit() == "C")){
                 moveCard(1, flipPile, topClubs);
+                moveMade++;
             }
             else if(lowerPiles[0].empty()){
                 moveCard(1, flipPile, lowerPiles[0]);
-                //flipCard();
                 hasMovedFlip++;
+                moveMade++;
             }
             else if(lowerPiles[1].empty()){
                 moveCard(1, flipPile, lowerPiles[1]);
-                //flipCard();
                 hasMovedFlip++;
+                moveMade++;
             }
             else if(lowerPiles[2].empty()){
                 moveCard(1, flipPile, lowerPiles[2]);
-                //flipCard();
                 hasMovedFlip++;
+                moveMade++;
             }
             else if(lowerPiles[3].empty()){
                 moveCard(1, flipPile, lowerPiles[3]);
-                //flipCard();
                 hasMovedFlip++;
+                moveMade++;
             }
             else if(lowerPiles[4].empty()){
                 moveCard(1, flipPile, lowerPiles[4]);
-                //flipCard();
                 hasMovedFlip++;
+                moveMade++;
             }
             else if(lowerPiles[5].empty()){
                 moveCard(1, flipPile, lowerPiles[5]);
-                //flipCard();
                 hasMovedFlip++;
+                moveMade++;
             }
             else if(lowerPiles[6].empty()){
                 moveCard(1, flipPile, lowerPiles[6]);
-                //flipCard();
                 hasMovedFlip++;
+                moveMade++;
             }
 
             else{
-                //cout << "no open spaces for king " << endl;
+                cout << "no open spaces for king " << endl;
             }
         }
         else if((lowerPiles[0].front().isRed() != isRed) && (lowerPiles[0].front().getNum() == cNum + 1) && (lowerPiles[0].front().getNum() != 2) && (!lowerPiles[0].empty())){
             moveCard(1, flipPile, lowerPiles[0]);
             hasMovedFlip++;
-            //flipCard();
-            //cout << lowerPiles[0].front().toString()<< endl;
+            moveMade++;
         }
         else if((lowerPiles[1].front().isRed() != isRed) && (lowerPiles[1].front().getNum() == cNum + 1) && (lowerPiles[1].front().getNum() != 2) && (!lowerPiles[1].empty())){
             moveCard(1, flipPile, lowerPiles[1]);
             hasMovedFlip++;
-            //flipCard();
-            //cout << lowerPiles[1].front().toString()<< endl;
+            moveMade++;
         }
         else if((lowerPiles[2].front().isRed() != isRed) && (lowerPiles[2].front().getNum() == cNum + 1) && (lowerPiles[2].front().getNum() != 2) && (!lowerPiles[2].empty())){
             moveCard(1, flipPile, lowerPiles[2]);
             hasMovedFlip++;
-            //flipCard();
-           //cout << lowerPiles[2].front().toString()<< endl;
-
+            moveMade++;
         }
         else if((lowerPiles[3].front().isRed() != isRed) && (lowerPiles[3].front().getNum() == cNum + 1) && (lowerPiles[3].front().getNum() != 2) && (!lowerPiles[3].empty())){
             moveCard(1, flipPile, lowerPiles[3]);
             hasMovedFlip++;
-            //flipCard();
-            //cout << lowerPiles[3].front().toString()<< endl;
-
+            moveMade++;
         }
         else if((lowerPiles[4].front().isRed() != isRed) && (lowerPiles[4].front().getNum() == cNum + 1) && (lowerPiles[4].front().getNum() != 2) && (!lowerPiles[4].empty())){
             moveCard(1, flipPile, lowerPiles[4]);
             hasMovedFlip++;
-            //flipCard();
-            //cout << lowerPiles[4].front().toString()<< endl;
-
+            moveMade++;
         }
         else if((lowerPiles[5].front().isRed() != isRed) && (lowerPiles[5].front().getNum() == cNum + 1) && (lowerPiles[5].front().getNum() != 2) && (!lowerPiles[5].empty())){
             moveCard(1, flipPile, lowerPiles[5]);
             hasMovedFlip++;
-            //flipCard();
-            //cout << lowerPiles[5].front().toString()<< endl;
+            moveMade++;
 
         }
         else if((lowerPiles[6].front().isRed() != isRed) && (lowerPiles[6].front().getNum() == cNum + 1) && (lowerPiles[6].front().getNum() != 2) && (!lowerPiles[6].empty())){
             moveCard(1, flipPile, lowerPiles[6]);
             hasMovedFlip++;
-            //flipCard();
-            //cout << lowerPiles[6].front().toString()<< endl;
+            moveMade++;
         }
         else if((topHearts.front().getNum() == cNum - 1) && (aCard.getSuit() == "H")){
             moveCard(1, flipPile, topHearts);
             hasMovedFlip++;
-            //flipCard();
+            moveMade++;
         }
         else if((topDiamonds.front().getNum() == cNum - 1) && (aCard.getSuit() == "D")){
             moveCard(1, flipPile, topDiamonds);
             hasMovedFlip++;
-            //flipCard();
+            moveMade++;
         }
         else if((topClubs.front().getNum() == cNum - 1) && (aCard.getSuit() == "C")){
             moveCard(1, flipPile, topClubs);
             hasMovedFlip++;
-            //flipCard();
+            moveMade++;
         }
         else if((topSpades.front().getNum() == cNum - 1) && (aCard.getSuit() == "S")){
             moveCard(1, flipPile, topSpades);
             hasMovedFlip++;
-            //flipCard();
+            moveMade++;
         }
-        else{
-            //flipCard();
-        }
-        flipCard();
-        if(hasMovedFlip != 0){
-            return true;
-        }
-        return false;
 
     }
+    cout << "MoveMade Value: " << moveMade << endl;
+    if((moveMade > 0)){
+        checkFlip();
+        }
+    else{
     flipCard();
+    return false;
+    }
     return false;
     }
 
@@ -615,7 +609,9 @@ class GameController
             bool b = true;
             //while(b)
             //{
-                b = checkLowerMove(6);
+            checkLowerMove(6);
+            checkLowerMove(6);
+            checkLowerMove(6);
 
 
             //}
@@ -705,7 +701,6 @@ class GameController
                 lowerToAce(lowerPiles[5]);
                 lowerToAce(lowerPiles[6]);
             }
-            //checkLowerMove(6);
             //cout << "test 8" << endl;
             //cout << "test 9" << endl;
             //cout << "checkLowerMove(6) return value:" << b << endl;
