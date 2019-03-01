@@ -61,6 +61,61 @@ int randomInt;
             //     std::cout<<card.toString()<<"\n";
             // }
             }
+            if(test == 1){
+                for(int i = 5; i >= 2; i--){
+                    shuffled.emplace_back(i, "D", false);
+                }
+                for(int i = 8; i >= 2; i--){
+                        shuffled.emplace_back(i, "H", false);
+                }
+                for(int i = 7; i >= 2; i--){
+                    shuffled.emplace_back(i, "S", false);
+                }
+                for(int i = 8; i >= 2; i--){
+                        shuffled.emplace_back(i, "C", false);
+                }
+                 shuffled.emplace_back(10, "C", false);
+                for(int i = 8; i >= 6; i--){
+                        shuffled.emplace_back(i, "D", false);
+                }
+                shuffled.emplace_back(1, "D", false);
+                shuffled.emplace_back(1, "S", false);
+                 shuffled.emplace_back(11, "H", false);
+
+                 shuffled.emplace_back(10, "S", false);
+                 shuffled.emplace_back(9, "H", false);
+                 shuffled.emplace_back(9, "C", false);
+                 shuffled.emplace_back(11, "D", false);
+                 shuffled.emplace_back(1, "H", false);
+                 shuffled.emplace_back(11, "C", false);
+
+                 shuffled.emplace_back(13, "D", false);
+                 shuffled.emplace_back(9, "S", false);
+                 shuffled.emplace_back(9, "D", false);
+                 shuffled.emplace_back(12, "S", false);
+                 shuffled.emplace_back(1, "C", false);
+
+                 shuffled.emplace_back(13, "H", false);
+                 shuffled.emplace_back(8, "S", false);
+                 shuffled.emplace_back(10, "H", false);
+                 shuffled.emplace_back(12, "H", false);
+
+
+                 shuffled.emplace_back(13, "C", false);
+                 shuffled.emplace_back(10, "D", false);
+                 shuffled.emplace_back(12, "D", false);
+
+                 shuffled.emplace_back(11, "S", false);
+                 shuffled.emplace_back(12, "C", false);
+
+
+                 shuffled.emplace_back(13, "S", false);
+
+                 shuffled.reverse();
+            //      for (Card card: shuffled){
+            //     std::cout<<card.toString()<<"\n";
+            // }
+        }
         }
     void makeDiamond(){
        for(int i= 1; i <= 13; i = i + 1){
