@@ -125,6 +125,7 @@ class GameController
         bool hmm;
         //cout<<"Deck Top: "<<shuffleDeck.front().toString();
         cout << "Flip Card: " << aCard.toString() << endl;
+        cout << "Flip Deck size: " << flipPile.size() << endl;
         if(cNum == 1){
             lowerToAceFirst(flipPile);
         }
