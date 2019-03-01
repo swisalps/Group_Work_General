@@ -203,7 +203,7 @@ class GameController
             else{
                 cout << "no open spaces for king " << endl;
             }
-        cout << "test111" << endl;
+        //cout << "test111" << endl;
         }
         //cout << "test12" << endl;
         else if((lowerPiles[0].front().isRed() != isRed) && (lowerPiles[0].front().getNum() == cNum + 1) && (lowerPiles[0].front().getNum() != 2) && (!lowerPiles[0].empty())){
@@ -457,17 +457,17 @@ class GameController
         std::list<Card>::iterator itNon = myPile.begin();
         if(myPile.empty() == true)
         {
-            cout << "empty pile" << endl;
+            //cout << "empty pile" << endl;
             return false;
         }
         else if(myPile.size() == 1)
         {
-            cout << "one card, no invisible" << endl;
+            //cout << "one card, no invisible" << endl;
             return false;
         }
          for(itNon=myPile.begin(); itNon!=myPile.end(); ++itNon){
             if(itNon->getVisible() == false){
-                cout << "nonVis return "<< itNon->toString() << endl;
+                //cout << "nonVis return "<< itNon->toString() << endl;
                 return true;
             }
             else{
@@ -504,16 +504,16 @@ class GameController
             std::list<Card>::iterator Itr;
             if(!(lowerPiles[startingPile]).empty())
             {
-                cout << "before" << endl;
+                //cout << "before" << endl;
                 Card lastVisOne = lastVisible(lowerPiles[startingPile]); // promblematic line
-                cout << "after" << endl;
+                //cout << "after" << endl;
                  if((lastVisOne.getNum() == 13) && (findNonVis(lowerPiles[startingPile]) == true)){
                     for(int j=0; j<=6; j++){
                         if(j != startingPile){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to moveCard
                             if(lowerPiles[j].empty()){ // make sure the otherPile is empty
                                 moveCard(visCtr, lowerPiles[startingPile], lowerPiles[j]);
                                 hasMovedLower++;
-                                cout << "found move! " << endl;
+                                //cout << "found move! " << endl;
                                 return true;
                             }
                         }
@@ -531,7 +531,7 @@ class GameController
 
                             moveCard(visCtr, lowerPiles[startingPile], lowerPiles[i]);
                             hasMovedLower++;
-                            cout << "lower " << i << " new front: " << lowerPiles[i].front().toString() << endl;
+                            //cout << "lower " << i << " new front: " << lowerPiles[i].front().toString() << endl;
                             return true;
                         }
 
@@ -556,7 +556,7 @@ class GameController
 
     void moveCard(int numCards, std::list<Card>& source, std::list<Card>& dest)
     {
-        cout << "moveCard called " << endl;
+        //cout << "moveCard called " << endl;
         if (numCards == 1){  //If there is just one card it is moved to the destination pile and then it is remove from the source pile
             dest.push_front(source.front());
             source.pop_front();
@@ -565,11 +565,11 @@ class GameController
             std::list<Card>::iterator it;
             it = source.begin();
             advance(it, numCards);
-            cout << "Source size before spice: " << source.size() << endl;
-            cout << "Dest size before spice: " << dest.size() << endl;
+            //cout << "Source size before spice: " << source.size() << endl;
+            //cout << "Dest size before spice: " << dest.size() << endl;
             dest.splice(dest.begin(), source, source.begin(), it);
-            cout << "Source size after spice: " << source.size() << endl;
-            cout << "Dest size after spice: " << dest.size() << endl;
+            //cout << "Source size after spice: " << source.size() << endl;
+            //cout << "Dest size after spice: " << dest.size() << endl;
 
         }
         if(!source.front().getVisible())
@@ -617,7 +617,7 @@ class GameController
     Card lastVisible(std::list<Card> ppile){
         visCtr = 0;
         std::list<Card>::iterator ItrVis = ppile.begin();
-        cout << "size of pile: " << ppile.size() << endl;
+        //cout << "size of pile: " << ppile.size() << endl;
         if((ppile.size() > 1) && (findNonVis(ppile) == true)){
             for(ItrVis=ppile.begin(); ItrVis!=ppile.end(); ++ItrVis){
                 if((ItrVis->getVisible() == 1) && (visCtr != ppile.size())){
@@ -639,7 +639,7 @@ class GameController
                 for(ItrVis=ppile.begin(); ItrVis != ppile.end(); ++ItrVis){
                     visCtr++;
                     }
-                    cout << "test: " << ppile.back().toString() << endl;
+                    //cout << "test: " << ppile.back().toString() << endl;
                 return ppile.back();
             }
 
@@ -661,11 +661,11 @@ class GameController
             ctr++;
             bool b = false;
             checkFlip();
-            cout << "checkFlip() completed " << endl;
+            //cout << "checkFlip() completed " << endl;
             b = checkLowerMove(6);
-            if(b){
+            //if(b){
                 //checkLowerMove(6);
-            }
+            //}
 
             lowerToAceFirst(lowerPiles[0]);//trys to place the front lowerPiles[0] card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){ //if statement that checks to see if the any of the aces have been placed on the ace piles
