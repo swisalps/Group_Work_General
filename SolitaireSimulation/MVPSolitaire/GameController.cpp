@@ -85,6 +85,10 @@ class GameController
                     std::cout << it->toStringOneLine() << ", ";
                 }
             }
+            else
+            {
+                cout << "Empty";
+            }
             cout << " " << endl;
         }
         cout << "Diamond Aces: ";
@@ -399,7 +403,7 @@ class GameController
     // @return true the pile has a non-visible card in it
     // @return false the pile does not have a non-visible card in it; only visible cards
     bool findNonVis(std::list<Card> myPile){
-        list<Card>::iterator itNon = myPile.begin();
+        std::list<Card>::iterator itNon = myPile.begin();
         if(myPile.empty() == true)
         {
             cout << "empty pile" << endl;
@@ -447,7 +451,7 @@ class GameController
         if((startingPile >= 0) && (startingPile <= 6))
         {
 
-            list<Card>::iterator Itr;
+            std::list<Card>::iterator Itr;
             if(!(lowerPiles[startingPile]).empty())
             {
                 cout << "before size: " << lowerPiles[startingPile].size() << endl;
