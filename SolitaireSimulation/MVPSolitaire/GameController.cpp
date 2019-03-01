@@ -244,25 +244,25 @@ class GameController
             hasMovedFlip++;
             moveMade++;
         }
-        else if((topHearts.front().getNum() == cNum - 1) && (aCard.getSuit() == "H")){
+        else if( (!topHearts.empty()) && (topHearts.front().getNum() == cNum - 1) && (aCard.getSuit() == "H")){
             cout << "test19" << endl;
             moveCard(1, flipPile, topHearts);
             hasMovedFlip++;
             moveMade++;
         }
-        else if((topDiamonds.front().getNum() == cNum - 1) && (aCard.getSuit() == "D")){
+        else if((!topDiamonds.empty()) && (topDiamonds.front().getNum() == cNum - 1) && (aCard.getSuit() == "D")){
             cout << "test20" << endl;
             moveCard(1, flipPile, topDiamonds);
             hasMovedFlip++;
             moveMade++;
         }
-        else if((topClubs.front().getNum() == cNum - 1) && (aCard.getSuit() == "C")){
+        else if((!topClubs.empty()) && (topClubs.front().getNum() == cNum - 1) && (aCard.getSuit() == "C")){
             cout << "test21" << endl;
             moveCard(1, flipPile, topClubs);
             hasMovedFlip++;
             moveMade++;
         }
-        else if((topSpades.front().getNum() == cNum - 1) && (aCard.getSuit() == "S")){
+        else if((!topSpades.empty()) && (topSpades.front().getNum() == cNum - 1) && (aCard.getSuit() == "S")){
             cout << "test22" << endl;
             moveCard(1, flipPile, topSpades);
             hasMovedFlip++;
