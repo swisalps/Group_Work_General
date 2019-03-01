@@ -80,9 +80,9 @@ class GameController
             cout << "Pile " << i + 1 << " Size = " << lowerPiles[i].size() << " Front->: ";
             if(!lowerPiles[i].empty())
             {
-                for(std::list<Card>::iterator it = lowerPiles[i].begin(); it != lowerPiles[i].end(); it++)
+                for(std::list<Card>::iterator it = lowerPiles[i].begin(); it != lowerPiles[i].end(); ++it)
                 {
-                    std::cout << it->toStringOneLine() << ", ";
+                    cout << it->toStringOneLine() << ", ";
                 }
             }
             else
@@ -126,7 +126,9 @@ class GameController
         //cout<<"Deck Top: "<<shuffleDeck.front().toString();
         cout << "Flip Card: " << aCard.toString() << endl;
         cout << "Flip Deck size: " << flipPile.size() << endl;
+        cout << "Norm deck size: " << shuffleDeck.size() << endl;
         if(cNum == 1){
+            cout << "test0" << endl;
             lowerToAceFirst(flipPile);
         }
         if(cNum == 13){
@@ -443,9 +445,10 @@ class GameController
     // @param myPile the pile you want to find if it has a non-visible card in it
     // @return true the pile has a non-visible card in it
     // @return false the pile does not have a non-visible card in it; only visible cards
-    bool findNonVis(std::list<Card> myPile){
+    bool findNonVis(std::list<Card>& myPile){
+        cout << "findNonVis called: " << endl;
         std::list<Card>::iterator itNon = myPile.begin();
-        if(myPile.empty() == true)
+        if(myPile.empty())
         {
             cout << "empty pile" << endl;
             return false;
@@ -562,9 +565,11 @@ class GameController
             it = source.begin();
             advance(it, numCards);
             cout << "Source size before spice: " << source.size() << endl;
+            cout << "Destination size before spice: " << dest.size() << endl;
             dest.splice(dest.begin(), source, source.begin(), it);
             //cout << "MoveCard call num: " << numCards << endl;
             cout << "Source size after spice: " << source.size() << endl;
+            cout << "Destination size after spice: " << dest.size() << endl;
 
         }
         if(!source.front().getVisible())
@@ -577,6 +582,7 @@ class GameController
     {
         if(shuffleDeck.size() > 0)//If the deck is not empty the top card is pushed to the flippile and removed from the deck
         {
+            cout << "FlipCard called, nonreshuffle" << endl;
             flipPile.push_front(shuffleDeck.front());
             shuffleDeck.pop_front();
             flipPile.front().setVis();
@@ -605,13 +611,14 @@ class GameController
         }
     }
 
-    Card lastVisible(std::list<Card> ppile){
+    Card lastVisible(std::list<Card>& ppile){
+        cout << "lastVis called" << endl;
         visCtr = 0;
         std::list<Card>::iterator ItrVis = ppile.begin();
         std::list<Card>::iterator ItrVis2 = ppile.begin();
         cout << "size of pile: " << ppile.size() << endl;
         if((ppile.size() > 1) && (findNonVis(ppile) == true)){
-            //cout << "findNonVis returned true to lastVis" << endl;
+            cout << "findNonVis returned true to lastVis" << endl;
             for(ItrVis=ppile.begin(); ItrVis!=ppile.end(); ++ItrVis){
                 if((ItrVis->getVisible() == 1) && (visCtr != ppile.size())){
                     visCtr++;
@@ -624,21 +631,26 @@ class GameController
             }
         }
         else{
+            cout << "findNonVis returned false to lastVis" << endl;
             if(ppile.size() == 1){
+                cout << "first if" << endl;
                 visCtr++;
-                return ppile.back();
+                return ppile.front();
             }
             else if((ppile.size() > 1) && (findNonVis(ppile) == false)){
+                cout << "second if" << endl;
+                cout << "pile size: " << ppile.size() << endl;
                 for(ItrVis2=ppile.begin(); ItrVis2 != ppile.end(); ++ItrVis2){
-                    //cout << ItrVis2->toString() << endl;
+                    cout << ItrVis2->toString() << endl;
                     visCtr++;
                     }
-                    cout << "test: " << ppile.back().toString() << endl;
+                    cout << "first test" << endl;
+                    cout << "test: " << ItrVis2->toString() << endl;
                 return ppile.back();
             }
 
         }
-
+        cout << "final return" << endl;
         return ppile.back();
     }
 
@@ -658,6 +670,7 @@ class GameController
             //while(b)
             //{
             checkFlip();
+            cout << "not checkFliped" << endl;
             b = checkLowerMove(6);
             if(b){
                 checkLowerMove(6);
@@ -768,6 +781,7 @@ class GameController
             if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
                 gameWon = true;
             displayPiles();
+            cout << "test50" << endl;
             cout << ctr << endl;
     }
     //cout<< "return values from ace trackers: D" << diamondA << ", H" << heartA << ", S" << spadeA << ", C" << clubA << endl;
