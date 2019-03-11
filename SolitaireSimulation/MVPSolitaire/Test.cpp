@@ -11,16 +11,23 @@ using namespace std;
 
 class Test{
     public:
-    cardDeck deck; // this deck is shuffled
+    list<Card> deck;
+    array<list<Card>, 7> lowerPiles;
 
     Test(){
-
+        init();
+        // TEST METHODS
+        
     }
 
     void init(){
         // Create a Shuffled Deck
-        deck = cardDeck();
+        cardDeck shuffDeck = cardDeck();
+        deck = shuffDeck.shuffled;
     }
 
     // ============ TESTS ============
+    void test_getNum(){
+
+    }
 };
