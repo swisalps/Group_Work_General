@@ -7,6 +7,7 @@
 #include <array>
 #include <string>
 #include <chrono>
+#include <sstream>
 using namespace std;
 
 class GameController
@@ -23,7 +24,7 @@ class GameController
     std::list<Card> pile, temp;
     //lists below will be treated and interacted with as a stack. but are list because of the advantages the list data structure offers in terms of moving sections of data
     std::list<Card> topDiamonds, topSpades, topHearts, topClubs, flipPile;
-    std::array<list<Card>, 7> lowerPiles;
+    std::array<std::list<Card>, 7> lowerPiles;
 
     //constructor for the GameController object: creates and runs the solitaire deck
     GameController()
@@ -39,14 +40,15 @@ class GameController
     //initializes the solitaire game
     void initSolitaire()
     {
-        //To play using rigged deck set deck equal to cardDeck(0) for a pasing deck and cardDeck(1) for a loosing deck
-        deck = cardDeck(1);//stacked deck
+        //To play using rigged deck set deck equal to cardDeck(0) for a pasing deck
+        deck = cardDeck();//stacked deck
         shuffleDeck = deck.shuffled;
         visCtr = 0;
 	for(int i = 0; i < 7; i++)
 	{
 		lowerPiles[i] = makePile(i+1);
 	}
+
         failCounter = 0;
         lowOne = false, lowTwo = false, lowThree = false, lowFour = false, lowFive = false, lowSix = false, lowSeven = false;
         gameLost = false, gameWon = false;
@@ -74,34 +76,22 @@ class GameController
 
     //displays the piles
     void displayPiles(){
-        cout << "Pile 1 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[0].begin(); it != lowerPiles[0].end(); it++)
-            std::cout << it->toStringOneLine() << ", ";
-        cout << " " << endl;
-        cout << "Pile 2 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[1].begin(); it != lowerPiles[1].end(); it++)
-            std::cout <<it->toStringOneLine() << ", ";
-        cout << " " << endl;
-        cout << "Pile 3 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[2].begin(); it != lowerPiles[2].end(); it++)
-            std::cout <<it->toStringOneLine() << ", ";
-        cout << " " << endl;
-        cout << "Pile 4 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[3].begin(); it != lowerPiles[3].end(); it++)
-            std::cout <<it->toStringOneLine() << ", ";
-        cout << " " << endl;
-        cout << "Pile 5 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[4].begin(); it != lowerPiles[4].end(); it++)
-            std::cout <<it->toStringOneLine() << ", ";
-        cout << " " << endl;
-        cout << "Pile 6 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[5].begin(); it != lowerPiles[5].end(); it++)
-            std::cout <<it->toStringOneLine() << ", ";
-        cout << " " << endl;
-        cout << "Pile 7 Front->: ";
-        for(std::list<Card>::iterator it=lowerPiles[6].begin(); it != lowerPiles[6].end(); it++)
-            std::cout <<it->toStringOneLine() << ", ";
-        cout << " " << endl;
+        for(int i = 0; i < 7; i++)
+        {
+            cout << "Pile " << i + 1 << " Size = " << lowerPiles[i].size() << " Front->: ";
+            if(!lowerPiles[i].empty())
+            {
+                for(std::list<Card>::iterator it = lowerPiles[i].begin(); it != lowerPiles[i].end(); it++)
+                {
+                    std::cout << it->toStringOneLine() << ", ";
+                }
+            }
+            else
+            {
+                cout << "Empty";
+            }
+            cout << " " << endl;
+        }
         cout << "Diamond Aces: ";
         for(std::list<Card>::iterator it=topDiamonds.begin(); it != topDiamonds.end(); it++)
             std::cout <<it->toStringOneLine() << ", ";
@@ -125,9 +115,11 @@ class GameController
     //method that checks what piles the most recent flip card can be placed on. First checks if the flip card is an ace, if so it places it on the ace proper ace pile
     //if not an ace, it then checks to see if the flip card was a king, if so, it checks to see if any of the lower piles are empty so the king can be placed
     //if the flip card is not an ace or a king, it will check all 7 lower piles and the 4 ace piles to see if the flip card can be placed at all
+    //also will recursively call itself until the flipPile is empty or it went through an entire call without making a move, finishing by fliping a new card from the deck to the flip pile
     //@return boolean
     bool checkFlip()
     {
+        int moveMade = 0;
         if(!flipPile.empty()){
         Card aCard = flipPile.front();
         int cNum = aCard.getNum();
@@ -135,139 +127,169 @@ class GameController
         bool hmm;
         //cout<<"Deck Top: "<<shuffleDeck.front().toString();
         cout << "Flip Card: " << aCard.toString() << endl;
+        cout << "Flip Deck size: " << flipPile.size() << endl;
         if(cNum == 1){
+            cout << "test0" << endl;
             lowerToAceFirst(flipPile);
         }
         if(cNum == 13){
-            if((topDiamonds.front().getNum() == 12) && (aCard.getSuit() == "D")){
+            if((!topDiamonds.empty()) && (aCard.getSuit() == "D") && (topDiamonds.front().getNum() == 12)){
+                cout << "test1" << endl;
                 moveCard(1, flipPile, topDiamonds);
+                hasMovedFlip++;
+                moveMade++;
+
             }
-            else if((topHearts.front().getNum() == 12) && (aCard.getSuit() == "H")){
+            else if((!topHearts.empty()) && (aCard.getSuit() == "H") && (topHearts.front().getNum() == 12)){
+                cout << "test2" << endl;
                 moveCard(1, flipPile, topHearts);
+                hasMovedFlip++;
+                moveMade++;
             }
-            else if((topSpades.front().getNum() == 12) && (aCard.getSuit() == "S")){
+            else if((!topSpades.empty()) && (aCard.getSuit() == "S") && (topSpades.front().getNum() == 12)){
+                cout << "test3" << endl;
                 moveCard(1, flipPile, topSpades);
+                hasMovedFlip++;
+                moveMade++;
             }
-            else if((topClubs.front().getNum() == 12) && (aCard.getSuit() == "C")){
+            else if((!topClubs.empty()) && (aCard.getSuit() == "C") && (topClubs.front().getNum() == 12)){
+                cout << "test4" << endl;
                 moveCard(1, flipPile, topClubs);
+                hasMovedFlip++;
+                moveMade++;
             }
             else if(lowerPiles[0].empty()){
+                cout << "test5" << endl;
                 moveCard(1, flipPile, lowerPiles[0]);
-                //flipCard();
                 hasMovedFlip++;
+                moveMade++;
             }
             else if(lowerPiles[1].empty()){
+                cout << "test6" << endl;
                 moveCard(1, flipPile, lowerPiles[1]);
-                //flipCard();
                 hasMovedFlip++;
+                moveMade++;
             }
             else if(lowerPiles[2].empty()){
+                cout << "test7" << endl;
                 moveCard(1, flipPile, lowerPiles[2]);
-                //flipCard();
                 hasMovedFlip++;
+                moveMade++;
             }
             else if(lowerPiles[3].empty()){
+                cout << "test8" << endl;
                 moveCard(1, flipPile, lowerPiles[3]);
-                //flipCard();
                 hasMovedFlip++;
+                moveMade++;
             }
             else if(lowerPiles[4].empty()){
+                cout << "test9" << endl;
                 moveCard(1, flipPile, lowerPiles[4]);
-                //flipCard();
                 hasMovedFlip++;
+                moveMade++;
             }
             else if(lowerPiles[5].empty()){
+                cout << "test10" << endl;
                 moveCard(1, flipPile, lowerPiles[5]);
-                //flipCard();
                 hasMovedFlip++;
+                moveMade++;
             }
             else if(lowerPiles[6].empty()){
+                cout << "test11" << endl;
                 moveCard(1, flipPile, lowerPiles[6]);
-                //flipCard();
                 hasMovedFlip++;
+                moveMade++;
             }
 
             else{
-                //cout << "no open spaces for king " << endl;
+                cout << "no open spaces for king " << endl;
             }
+        //cout << "test111" << endl;
         }
-        else if((lowerPiles[0].front().isRed() != isRed) && (lowerPiles[0].front().getNum() == cNum + 1) && (lowerPiles[0].front().getNum() != 2) && (!lowerPiles[0].empty())){
+        //cout << "test12" << endl;
+		else if ((!lowerPiles[0].empty()) && (lowerPiles[0].front().isRed() != isRed) && (lowerPiles[0].front().getNum() == cNum + 1) && (lowerPiles[0].front().getNum() != 2)){
+            cout << "test12" << endl;
             moveCard(1, flipPile, lowerPiles[0]);
             hasMovedFlip++;
-            //flipCard();
-            //cout << lowerPiles[0].front().toString()<< endl;
+            moveMade++;
         }
-        else if((lowerPiles[1].front().isRed() != isRed) && (lowerPiles[1].front().getNum() == cNum + 1) && (lowerPiles[1].front().getNum() != 2) && (!lowerPiles[1].empty())){
+        //cout << "test13" << endl;
+		else if ((!lowerPiles[1].empty()) && (lowerPiles[1].front().isRed() != isRed) && (lowerPiles[1].front().getNum() == cNum + 1) && (lowerPiles[1].front().getNum() != 2)){
+            cout << "test13" << endl;
             moveCard(1, flipPile, lowerPiles[1]);
             hasMovedFlip++;
-            //flipCard();
-            //cout << lowerPiles[1].front().toString()<< endl;
+            moveMade++;
         }
-        else if((lowerPiles[2].front().isRed() != isRed) && (lowerPiles[2].front().getNum() == cNum + 1) && (lowerPiles[2].front().getNum() != 2) && (!lowerPiles[2].empty())){
+        //cout << "test14" << endl;
+		else if ((!lowerPiles[2].empty()) && (lowerPiles[2].front().isRed() != isRed) && (lowerPiles[2].front().getNum() == cNum + 1) && (lowerPiles[2].front().getNum() != 2)){
+            cout << "test14" << endl;
             moveCard(1, flipPile, lowerPiles[2]);
             hasMovedFlip++;
-            //flipCard();
-           //cout << lowerPiles[2].front().toString()<< endl;
-
+            moveMade++;
         }
-        else if((lowerPiles[3].front().isRed() != isRed) && (lowerPiles[3].front().getNum() == cNum + 1) && (lowerPiles[3].front().getNum() != 2) && (!lowerPiles[3].empty())){
+        //cout << "test15" << endl;
+		else if ((!lowerPiles[3].empty()) && (lowerPiles[3].front().isRed() != isRed) && (lowerPiles[3].front().getNum() == cNum + 1) && (lowerPiles[3].front().getNum() != 2)){
+            cout << "test15" << endl;
             moveCard(1, flipPile, lowerPiles[3]);
             hasMovedFlip++;
-            //flipCard();
-            //cout << lowerPiles[3].front().toString()<< endl;
-
+            moveMade++;
         }
-        else if((lowerPiles[4].front().isRed() != isRed) && (lowerPiles[4].front().getNum() == cNum + 1) && (lowerPiles[4].front().getNum() != 2) && (!lowerPiles[4].empty())){
+        //cout << "test16" << endl;
+		else if ((!lowerPiles[4].empty()) && (lowerPiles[4].front().isRed() != isRed) && (lowerPiles[4].front().getNum() == cNum + 1) && (lowerPiles[4].front().getNum() != 2)){
+            cout << "test16" << endl;
             moveCard(1, flipPile, lowerPiles[4]);
             hasMovedFlip++;
-            //flipCard();
-            //cout << lowerPiles[4].front().toString()<< endl;
-
+            moveMade++;
         }
-        else if((lowerPiles[5].front().isRed() != isRed) && (lowerPiles[5].front().getNum() == cNum + 1) && (lowerPiles[5].front().getNum() != 2) && (!lowerPiles[5].empty())){
+        //cout << "test17" << endl;
+		else if ((!lowerPiles[5].empty()) && (lowerPiles[5].front().isRed() != isRed) && (lowerPiles[5].front().getNum() == cNum + 1) && (lowerPiles[5].front().getNum() != 2)){
+            cout << "test17" << endl;
             moveCard(1, flipPile, lowerPiles[5]);
             hasMovedFlip++;
-            //flipCard();
-            //cout << lowerPiles[5].front().toString()<< endl;
+            moveMade++;
 
         }
-        else if((lowerPiles[6].front().isRed() != isRed) && (lowerPiles[6].front().getNum() == cNum + 1) && (lowerPiles[6].front().getNum() != 2) && (!lowerPiles[6].empty())){
+        //cout << "test18" << endl;
+		else if ((!lowerPiles[6].empty()) && (lowerPiles[6].front().isRed() != isRed) && (lowerPiles[6].front().getNum() == cNum + 1) && (lowerPiles[6].front().getNum() != 2)){
+            cout << "test18" << endl;
             moveCard(1, flipPile, lowerPiles[6]);
             hasMovedFlip++;
-            //flipCard();
-            //cout << lowerPiles[6].front().toString()<< endl;
+            moveMade++;
         }
-        else if((topHearts.front().getNum() == cNum - 1) && (aCard.getSuit() == "H")){
+        else if( (!topHearts.empty()) && (topHearts.front().getNum() == cNum - 1) && (aCard.getSuit() == "H")){
+            cout << "test19" << endl;
             moveCard(1, flipPile, topHearts);
             hasMovedFlip++;
-            //flipCard();
+            moveMade++;
         }
-        else if((topDiamonds.front().getNum() == cNum - 1) && (aCard.getSuit() == "D")){
+        else if((!topDiamonds.empty()) && (topDiamonds.front().getNum() == cNum - 1) && (aCard.getSuit() == "D")){
+            cout << "test20" << endl;
             moveCard(1, flipPile, topDiamonds);
             hasMovedFlip++;
-            //flipCard();
+            moveMade++;
         }
-        else if((topClubs.front().getNum() == cNum - 1) && (aCard.getSuit() == "C")){
+        else if((!topClubs.empty()) && (topClubs.front().getNum() == cNum - 1) && (aCard.getSuit() == "C")){
+            cout << "test21" << endl;
             moveCard(1, flipPile, topClubs);
             hasMovedFlip++;
-            //flipCard();
+            moveMade++;
         }
-        else if((topSpades.front().getNum() == cNum - 1) && (aCard.getSuit() == "S")){
+        else if((!topSpades.empty()) && (topSpades.front().getNum() == cNum - 1) && (aCard.getSuit() == "S")){
+            cout << "test22" << endl;
             moveCard(1, flipPile, topSpades);
             hasMovedFlip++;
-            //flipCard();
+            moveMade++;
         }
-        else{
-            //flipCard();
-        }
-        flipCard();
-        if(hasMovedFlip != 0){
-            return true;
-        }
-        return false;
 
     }
+    cout << "MoveMade Value: " << moveMade << endl;
+    if((moveMade > 0)){
+        checkFlip();
+        }
+    else{
     flipCard();
+    return false;
+    }
     return false;
     }
 
@@ -285,21 +307,25 @@ class GameController
 
                 if(lowVisCard.getSuit() == "D"){
                     moveCard(1, lowerPile, topDiamonds);
+                    hasMovedLower++;
                     diamondA = true;
                     return 1;
                 }
                 else if(lowVisCard.getSuit() == "S"){
                     moveCard(1, lowerPile, topSpades);
+                    hasMovedLower++;
                     spadeA = true;
                     return 1;
                 }
                 else if(lowVisCard.getSuit() == "H"){
                     moveCard(1, lowerPile, topHearts);
+                    hasMovedLower++;
                     heartA = true;
                     return 1;
                 }
                 else{ // the suit of the lowVisCard is a Club
                     moveCard(1, lowerPile, topClubs);
+                    hasMovedLower++;
                     clubA = true;
                     return 1;
                 }
@@ -319,28 +345,36 @@ class GameController
             if((lowVisCard.getSuit() == "D") && (!topDiamonds.empty())){
                 Card topCard = topDiamonds.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){// if the top card of the ace pile has a number that is less than the number of the low card by 1
+                    cout << "test25" << endl;
                     moveCard(1, lowerPile, topDiamonds);
+                    hasMovedLower++;
                     return true;
                 }
             }
             else if((lowVisCard.getSuit() == "S") && (!topSpades.empty())){
                 Card topCard = topSpades.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
+                    cout << "test26" << endl;
                      moveCard(1, lowerPile, topSpades);
+                     hasMovedLower++;
                      return true;
                 }
             }
             else if((lowVisCard.getSuit() == "H") && (!topHearts.empty())){
                 Card topCard = topHearts.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){ // if the top card of the ace pile has a number that is less than the number of the low card by 1
+                    cout << "test27" << endl;
                     moveCard(1, lowerPile, topHearts);
+                    hasMovedLower++;
                     return true;
                 }
             }
             else if((lowVisCard.getSuit() == "C") && (!topClubs.empty())){ // the suit of the lowVisCard is a Club
                 Card topCard = topClubs.front();
                 if(topCard.getNum() == lowVisCard.getNum() - 1){// if the top card of the ace pile has a number that is less than the number of the low card by 1
+                    cout << "test28" << endl;
                     moveCard(1, lowerPile, topClubs);
+                    hasMovedLower++;
                     return true;
                     }
                 }
@@ -359,42 +393,49 @@ class GameController
             if(!lowerPiles[0].empty()){ // check the 1st pile for a king
                 if (lowerPiles[0].front().getNum() == 13){
                     moveCard(1, lowerPiles[0], lowerPile);
+                    hasMovedLower++;
                     return true;
                 }
             }
             else if(!lowerPiles[1].empty()){// check the 2nd pile for a king
                 if (lowerPiles[1].front().getNum() == 13){
                     moveCard(1, lowerPiles[1], lowerPile);
+                    hasMovedLower++;
                     return true;
                 }
             }
             else if(!lowerPiles[2].empty()){
                 if (lowerPiles[2].front().getNum() == 13){
                     moveCard(1, lowerPiles[2], lowerPile);
+                    hasMovedLower++;
                     return true;
                 }
             }
             else if(!lowerPiles[3].empty()){
                 if (lowerPiles[3].front().getNum() == 13){
                     moveCard(1, lowerPiles[3], lowerPile);
+                    hasMovedLower++;
                     return true;
                 }
             }
             else if(!lowerPiles[4].empty()){
                 if (lowerPiles[4].front().getNum() == 13){
                     moveCard(1, lowerPiles[4], lowerPile);
+                    hasMovedLower++;
                     return true;
                 }
             }
             else if(!lowerPiles[5].empty()){
                 if (lowerPiles[5].front().getNum() == 13){
                     moveCard(1, lowerPiles[5], lowerPile);
+                    hasMovedLower++;
                     return true;
                 }
             }
             else if(!lowerPiles[6].empty()){
                 if (lowerPiles[6].front().getNum() == 13){
                     moveCard(1, lowerPiles[6], lowerPile);
+                    hasMovedLower++;
                     return true;
                 }
             }
@@ -406,112 +447,6 @@ class GameController
         return false;
     }
 
-
-/*
-This method is executed at the beginning of the gameController() method each time a new flip card is flipped. it sees if pile lowerPiles[0] has a size of 1.
-if it does, it sees if it can move that card to any of the other lower piles in order to free up lowerPiles[0] so a king can be placed in the newly created
-open pile spot. this method could become obsolete once checkLowerMove() is fully implemented.
-@return bool: true if pile one is now open, false if not
-*/
-    bool freeUpFirstPile()
-    {
-        if(!lowerPiles[0].empty())
-        {if(lowerPiles[0].size() == 1 && lowerPiles[0].front().getNum() != 13){ //checks to see if lowerPiles[0] has only one card. if so the method will attempt to move it in order to free up the pile
-            Card pOneCard = lowerPiles[0].front();
-            cout << pOneCard.isRed() << endl;
-            if((lowerPiles[1].front().isRed() != pOneCard.isRed()) && (lowerPiles[1].front().getNum() == pOneCard.getNum() + 1)){
-                moveCard(1, lowerPiles[0], lowerPiles[1]);
-        }
-            else if((lowerPiles[2].front().isRed() != pOneCard.isRed()) && (lowerPiles[2].front().getNum() == pOneCard.getNum() + 1)){
-                moveCard(1, lowerPiles[0], lowerPiles[2]);
-            }
-            else if((lowerPiles[3].front().isRed() != pOneCard.isRed()) && (lowerPiles[3].front().getNum() == pOneCard.getNum() + 1)){
-                moveCard(1, lowerPiles[0], lowerPiles[3]);
-            }
-            else if((lowerPiles[4].front().isRed() != pOneCard.isRed()) && (lowerPiles[4].front().getNum() == pOneCard.getNum() + 1)){
-                moveCard(1, lowerPiles[0], lowerPiles[4]);
-            }
-            else if((lowerPiles[5].front().isRed() != pOneCard.isRed()) && (lowerPiles[5].front().getNum() == pOneCard.getNum() + 1)){
-                moveCard(1, lowerPiles[0], lowerPiles[5]);
-            }
-            else if((lowerPiles[6].front().isRed() != pOneCard.isRed()) && (lowerPiles[6].front().getNum() == pOneCard.getNum() + 1)){
-                moveCard(1, lowerPiles[0], lowerPiles[6]);
-            }
-            else{
-                return false;
-            }
-            return false;
-        }
-
-
-        return true;
-    }
-    return false;
-    }
-
-    // **** This method will be later incorporated into the checkLowerMethod() once finished. ****
-    // **** MAYBE KEEP FOR TESTING PURPOSES? ***
-    // This method will check a lower pile (pileNumber) and see if its ENTIRE group of visible cards
-    // can be moved to another pile, or an empty pile if the pile we want to move will have a king in it.
-    //@param pileNumber the number indicating which pile (1-7) we want to move
-    //@return true the pile has been moved
-    //@return false the pile we want to move is either empty, has only 1 card in it, or cannot find a valid pile to move into, or if the pileNumber is out of range
-    bool checkLowerMoveEntirePile(int pileNumber){
-        if(pileNumber > 7 || pileNumber < 1){ // check if the pileNumber is out of range. If so, return false.
-            std::cout << "Error: the pile we want to move is out of range.";
-            return false;
-        }
-        //get the current pile to look at (ENCOMPASS INSIDE FOR LOOP???????)
-        std::list<Card> currentPile = lowerPiles[pileNumber-1]; // NOTE: lowerPiles indices count from 0-6 and pileNumber ranges between 1-7, so we need -1.
-        //check to see if the pile is NOT empty.
-        //check to see if the pile has more than one card in it.
-        if((!currentPile.empty()) && (currentPile.size() > 1)){
-                // look at the current pile's bottom-most visible card
-                Card bottomMostVisCard = getCard(currentPile, 0); // place-holder
-                int numOfVisCards = 0; // the number of cards we need to move
-                for(int i=0; i<currentPile.size(); i++){
-                    Card currentCard = getCard(currentPile, i);
-                    if((currentCard.getVisible() == false) || (i == currentPile.size())){ // if you reach a non-vis card OR you reach past the end of the list (there are only visible cards in the pile)
-                        // you found a non-vis card or reached past the end of the list, get the card before it which should be vis
-                        bottomMostVisCard = getCard(currentPile, i-1);
-                        break;
-                    }
-                    numOfVisCards++;
-                }
-                // check if the bottom-most visible card fits with a top card in one of the other piles
-                // assume the bottomMostVisCard is a king
-                if(bottomMostVisCard.getNum() == 13){
-                    for(int i=1; i<=7; i++){
-                        if(i!=pileNumber){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to moveCard
-                            std::list<Card> otherPile = lowerPiles[i-1]; // the pile we are comparing the currentPile to
-                            if(otherPile.empty()){ // make sure the otherPile is empty
-                                moveCard(numOfVisCards, currentPile, otherPile);
-                                return true;
-                            }
-                            //else look for another pile that could be empty
-                        }
-                    }
-                }
-                else{ // the bottomMostVisCard is NOT a king
-                    for(int i=1; i<=7; i++){
-                        if(i!=pileNumber){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to move
-                            std::list<Card> otherPile = lowerPiles[i-1]; // the pile we are comparing the currentPile to
-                            // compare the front/top card of the otherPile to the bottomMostVisCard of the currentPile
-                            if(otherPile.front().getNum() == bottomMostVisCard.getNum() + 1 && //if the num of the other card is higher by 1...
-                                otherPile.front().isRed() != bottomMostVisCard.isRed()){       //if the colors are not the same...
-                                moveCard(numOfVisCards, currentPile, otherPile); // move the pile
-                                return true;
-                            }
-                            // else look for another pile to compare the bottomMostVisCard to.
-                        }
-                    }
-                }
-                std::cout << "Fail: Cannot find a pile to move to.";
-                return false; // we cannot find another pile to move to.
-        }
-        std::cout << "Fail: the pile we want to move is either empty or has only 1 card in it.";
-        return false; // the pileNumber we used is either empty or only has only one card in it.
-    }
 
     // this method checks if there are any non-visible cards left in the pile
     // this method uses the getCard method as well
@@ -519,29 +454,30 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     // @param myPile the pile you want to find if it has a non-visible card in it
     // @return true the pile has a non-visible card in it
     // @return false the pile does not have a non-visible card in it; only visible cards
-    bool findNonVis(list<Card> myPile){
-        for(int i=0; i<myPile.size(); i++){
-            Card myCard = getCard(myPile, i);
-            if(myCard.getVisible() == false){
+    bool findNonVis(std::list<Card> myPile){
+        std::list<Card>::iterator itNon = myPile.begin();
+        if(myPile.empty() == true)
+        {
+            //cout << "empty pile" << endl;
+            return false;
+        }
+        else if(myPile.size() == 1)
+        {
+            //cout << "one card, no invisible" << endl;
+            return false;
+        }
+         for(itNon=myPile.begin(); itNon!=myPile.end(); ++itNon){
+            if(itNon->getVisible() == false){
+                //cout << "nonVis return "<< itNon->toString() << endl;
                 return true;
             }
             else{
-                return false;
+
             }
         }
         return false;
     }
 
-    // This method getCard() takes in the list you want to search and the index of that list
-    // and finds the Card element in that list.
-    Card getCard(list<Card> myList, int index){
-        list<Card>::iterator it = myList.begin();
-        for(int i=0; i<index; i++){
-            ++it;
-        }
-        //--it;
-        return *it;
-    }
 
     //Check if you can move a card from the lower pile you are looking at to the ace-piles
         //Check if there is an invisible card you can make visible
@@ -563,94 +499,55 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
     bool checkLowerMove(int startingPile){
         cout << "recursion: " << startingPile << endl;
         int n = 0;
-        if(startingPile >= 0 && startingPile <= 6)
+        if(startingPile >= 0)
         {
 
-            list<Card>::iterator Itr;
+            std::list<Card>::iterator Itr;
             if(!(lowerPiles[startingPile]).empty())
             {
-                Card lastVisOne = lastVisible(lowerPiles[startingPile]);
-                //cout << "lastVis card from pile " << startingPile << ": " << lastVisOne.toString() << endl;
+                //cout << "before" << endl;
+                Card lastVisOne = lastVisible(lowerPiles[startingPile]); // promblematic line
+                //cout << "after" << endl;
+                 if((lastVisOne.getNum() == 13) && (findNonVis(lowerPiles[startingPile]) == true)){
+                    for(int j=0; j<=6; j++){
+                        if(j != startingPile){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to moveCard
+                            if(lowerPiles[j].empty()){ // make sure the otherPile is empty
+                                moveCard(visCtr, lowerPiles[startingPile], lowerPiles[j]);
+                                hasMovedLower++;
+                                //cout << "found move! " << endl;
+                                return true;
+                            }
+                        }
 
-                std::string t = std::to_string(startingPile);
-                //cout << "lastVis value for Pile " + t + ": "<<lastVisOne.toString() << endl;
+                    }
+                }
+                else{
                 Itr = lowerPiles[startingPile].begin();
-                //temp.clear();
                 for(int i = 0; i < 7; i++)
                 {
                     if((i != startingPile) && (!lowerPiles[i].empty()))
                     {
-                        //cout << "Testing 1" << endl;
                         if((lowerPiles[i].front().getNum() == lastVisOne.getNum()+1) && (lowerPiles[i].front().isRed() != lastVisOne.isRed()))
                         {
-                            //cout << "Possibility Confirmed" << endl;
-                            Card bottomMostVisCard = getCard(lowerPiles[startingPile], 0); // place-holder
-                            cout << "getCardReturn 1: " << bottomMostVisCard.toString() << endl;
-                            int numOfVisCards = 0; // the number of cards we need to move
-                            for(int j=0; j<lowerPiles[startingPile].size(); j++)
-                            {
-                                Card currentCard = getCard(lowerPiles[startingPile], j);
-                                cout << "the getcard return2: " << currentCard.toString() << endl;
 
-                                if((currentCard.getVisible() == false) || (j == lowerPiles[startingPile].size()-1)){ // if you reach a non-vis card OR you reach past the end of the list (there are only visible cards in the pile)
-                                // you found a non-vis card or reached past the end of the list, get the card before it which should be vis
-                                bottomMostVisCard = getCard(lowerPiles[startingPile], j-1);//THIS LINE CAUSES CORE DUMPS OCCASIONALLY, when pile is only one big the j-1 doesnt work
-                                cout << "reached Test 3" << endl;
-
-                                break;
-                            }
-                            numOfVisCards++;
-
-                            }
-                            if(bottomMostVisCard.getNum() == 13){
-                            for(int j=0; j<=6; j++){
-                            if(j != startingPile){ // make sure we move the pile to a different pile; think of pileNumber as the currentPile; skips over the pile we want to moveCard
-                                if(lowerPiles[j].empty()){ // make sure the otherPile is empty
-                                    moveCard(numOfVisCards, lowerPiles[startingPile], lowerPiles[j]);
-                                    //hasMovedLower++;
-                                    return true;
-                                }
-                                //else look for another pile that could be empty
-                            }
-                        }
-                }
-                        moveCard(numOfVisCards, lowerPiles[startingPile], lowerPiles[i]);
-                        std::string s = std::to_string(i+1);
-                        //hasMovedLower++;
-                        //cout << "lower" + s + " new front: " << lowerPiles[i].front().toString() << endl;
-                        return true;
+                            moveCard(visCtr, lowerPiles[startingPile], lowerPiles[i]);
+                            hasMovedLower++;
+                            //cout << "lower " << i << " new front: " << lowerPiles[i].front().toString() << endl;
+                            return true;
                         }
 
-                        //if((lowerPiles[i].front().getNum() == lastVisOne.getNum()+1) && (lowerPiles[i].front().isRed() != lastVisOne.isRed()) && (lowerPiles[i].size() == 1)){
-                           // cout << "pile was 1 big: " << endl;
-                            //moveCard(1, lowerPiles[startingPile], lowerPiles[i]);
-                            //return true;
-                        //}
                     }
-
                 }
-
-
+                }
             }
             else
             {
                 return checkLowerMove(startingPile - 1);
             }
-
-        n++;
-        if(n == 0)
-                {
-                    return checkLowerMove(startingPile - 1);
-                }
-        else
-        {
             return checkLowerMove(startingPile - 1);
-        }
         }
         return false;
     }
-
-
 
 /**moves a card from its current position to a new vector
 @param numCards number of cards being moved
@@ -658,7 +555,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
 @param dest destination for the cards being moved
 */
 
-    void moveCard(int numCards, list<Card>& source, list<Card>& dest)
+    void moveCard(int numCards, std::list<Card>& source, std::list<Card>& dest)
     {
         //cout << "moveCard called " << endl;
         if (numCards == 1){  //If there is just one card it is moved to the destination pile and then it is remove from the source pile
@@ -669,11 +566,20 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             std::list<Card>::iterator it;
             it = source.begin();
             advance(it, numCards);
-            source.splice(dest.begin(), source, source.begin(), it);
+            //cout << "Source size before spice: " << source.size() << endl;
+            //cout << "Dest size before spice: " << dest.size() << endl;
+            dest.splice(dest.begin(), source, source.begin(), it);
+            //cout << "Source size after spice: " << source.size() << endl;
+            //cout << "Dest size after spice: " << dest.size() << endl;
+
         }
-        if(!source.front().getVisible())
-            source.front().setVis();
+		if (!source.empty()){
+			if (!source.front().getVisible())
+				source.front().setVis();
+		}
     }
+
+
 //flips a card from the shuffled deck to the flip pile.
     void flipCard()
     {
@@ -687,7 +593,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
         {
             shuffleDeck.swap(flipPile);
             shuffleDeck.reverse();
-            //cout << "flipPile becomes deck: "; //testing to make sure the flipPile is correctly reassembled to into the deck once the deck is emptied
+            cout << "flipPile becomes deck: "; //testing to make sure the flipPile is correctly reassembled to into the deck once the deck is emptied
             for(std::list<Card>::iterator it=shuffleDeck.begin(); it != shuffleDeck.end(); it++)
         {
             cout << it->toStringOneLine() << ", ";
@@ -703,50 +609,70 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 hasMovedFlip = 0;
                 hasMovedLower = 0;
                 failCounter = 0;
-            }
+            }//test
         }
     }
+    //lastVisible method is an integral part of the checklowermove(). It returns the last visible card in a pile and also keeps track of the amount of cards ahead of the last visible card
+    // through the visCtr variabloe. this is important becuase when executing a moveCard() call, you must provide the amount of cards to move, from the front to amount of cards deep in the pile
+    //@param the ppile to find the last visible card for
+    //@returns a Card object that is the last visible for the pile. (visCtr although it is not returned is just as important as the return itself)
 
-    Card lastVisible(std::list<Card> &pile){
+    Card lastVisible(std::list<Card> ppile){
         visCtr = 0;
-        list<Card>::iterator ItrVis = pile.begin();
-        if(pile.size() > 1){
-        for(ItrVis=pile.begin(); ItrVis!=pile.end(); ++ItrVis){
-            if(ItrVis->getVisible() == 1){
-                visCtr++;
-            }
-            else{
-                ItrVis--;
-                return *ItrVis;
-            }
+        std::list<Card>::iterator ItrVis = ppile.begin();
+        //cout << "size of pile: " << ppile.size() << endl;
+        if((ppile.size() > 1) && (findNonVis(ppile) == true)){
+            for(ItrVis=ppile.begin(); ItrVis!=ppile.end(); ++ItrVis){
+                if((ItrVis->getVisible() == 1) && (visCtr != ppile.size())){
+                    visCtr++;
+                }
+                else{
+                    ItrVis--;
+                    return *ItrVis;
+                }
 
-        }
+            }
         }
         else{
-           return *ItrVis;
+            if(ppile.size() == 1){
+                visCtr++;
+                return ppile.back();
+            }
+            else if((ppile.size() > 1) && (findNonVis(ppile) == false)){
+                for(ItrVis=ppile.begin(); ItrVis != ppile.end(); ++ItrVis){
+                    visCtr++;
+                    }
+                    //cout << "test: " << ppile.back().toString() << endl;
+                return ppile.back();
+            }
+
         }
-        return pile.front();
+        // non-reachable statement; only reaches here if the pile size is 1 and findNonVis == false
+        return ppile.back();
     }
 
 //runs the GameController class
     void run()
     {
             int ctr = 0;
-            //cout<<"\n\nTest\n\n";
             flipCard();
-        while((!gameWon)&&(!gameLost)){
-
+        while((!gameWon)&&(!gameLost))
+       {
+           cout << "---------NEW TURN BEGUN----------" << endl;
             //As long as the game is not won or lost the loop will continue
-    //   while(test < 1){
+      //while(test < 40){
             ctr++;
-            bool b = checkLowerMove(6);
+            bool b = false;
             checkFlip();
-            lowKingtoEmpty(lowerPiles[0]); //checks to see if lowerPiles[0] or lowerPiles[1] are empty. if so will check the other 5 piles front card to see if they are kings
-            lowKingtoEmpty(lowerPiles[1]); // and can be moved to either of the potentially open piles
-            lowKingtoEmpty(lowerPiles[2]);
-            //cout << "test 1" << endl;
+            //cout << "checkFlip() completed " << endl;
+            b = checkLowerMove(6);
+            //if(b){
+                //checkLowerMove(6);
+            //}
+
             lowerToAceFirst(lowerPiles[0]);//trys to place the front lowerPiles[0] card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){ //if statement that checks to see if the any of the aces have been placed on the ace piles
+                lowerToAce(flipPile);
                 lowerToAce(lowerPiles[0]);
                 lowerToAce(lowerPiles[1]);
                 lowerToAce(lowerPiles[2]);
@@ -758,6 +684,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             //cout << "test 2" << endl;
             lowerToAceFirst(lowerPiles[1]); //trys to place the front lowerPiles[1] card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){//if statement that checks to see if the any of the aces have been placed on the ace piles
+                lowerToAce(flipPile);
                 lowerToAce(lowerPiles[0]);
                 lowerToAce(lowerPiles[1]);
                 lowerToAce(lowerPiles[2]);
@@ -769,6 +696,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             //cout << "test 3" << endl;
             lowerToAceFirst(lowerPiles[2]); //trys to place the front lowerPiles[2] card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){//if statement that checks to see if the any of the aces have been placed on the ace piles
+                lowerToAce(flipPile);
                 lowerToAce(lowerPiles[0]);
                 lowerToAce(lowerPiles[1]);
                 lowerToAce(lowerPiles[2]);
@@ -780,6 +708,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             //cout << "test 4" << endl;
             lowerToAceFirst(lowerPiles[3]);//trys to place the front lowerPiles[3] card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){
+                lowerToAce(flipPile);
                 lowerToAce(lowerPiles[0]);
                 lowerToAce(lowerPiles[1]);
                 lowerToAce(lowerPiles[2]);
@@ -791,6 +720,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             //cout << "test 5" << endl;
             lowerToAceFirst(lowerPiles[4]);
             if(diamondA || clubA || spadeA || heartA){
+                lowerToAce(flipPile);
                 lowerToAce(lowerPiles[0]);
                 lowerToAce(lowerPiles[1]);
                 lowerToAce(lowerPiles[2]);
@@ -802,6 +732,8 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             //cout << "test 6" << endl;
             lowerToAceFirst(lowerPiles[5]);
             if(diamondA || clubA || spadeA || heartA){
+
+                lowerToAce(flipPile);
                 lowerToAce(lowerPiles[0]);
                 lowerToAce(lowerPiles[1]);
                 lowerToAce(lowerPiles[2]);
@@ -813,6 +745,7 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
             //cout << "test 7" << endl;
             lowerToAceFirst(lowerPiles[6]);
             if(diamondA || clubA || spadeA || heartA){
+                lowerToAce(flipPile);
                 lowerToAce(lowerPiles[0]);
                 lowerToAce(lowerPiles[1]);
                 lowerToAce(lowerPiles[2]);
@@ -821,24 +754,13 @@ open pile spot. this method could become obsolete once checkLowerMove() is fully
                 lowerToAce(lowerPiles[5]);
                 lowerToAce(lowerPiles[6]);
             }
-            //cout << "test 8" << endl;
-            //cout << "test 9" << endl;
-            //cout << "checkLowerMove(6) return value:" << b << endl;
-            freeUpFirstPile(); //checks if lowerPiles[0] size = 1. if so attempts to move that one card to free up pile
             test++;
             if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
                 gameWon = true;
             displayPiles();
+            cout << ctr << endl;
     }
-    //cout<< "return values from ace trackers: D" << diamondA << ", H" << heartA << ", S" << spadeA << ", C" << clubA << endl;
-    //cout<< "lower1 lastVis return: " << lastVisible(lowerPiles[0]).toString() << endl;
-    //cout<< "lower2 lastVis return: " << lastVisible(lowerPiles[1]).toString() << endl;
-    //cout<< "lower3 lastVis return: " << lastVisible(lowerPiles[2]).toString() << endl;
-    //cout<< "lower4 lastVis return: " << lastVisible(lowerPiles[3]).toString() << endl;
-    //cout<< "lower5 lastVis return: " << lastVisible(lowerPiles[4]).toString() << endl;
-    //cout<< "lower6 lastVis return: " << lastVisible(lowerPiles[5]).toString() << endl;
-    //cout<< "lower7 lastVis return: " << lastVisible(lowerPiles[6]).toString() << endl;
-   // displayPiles();
+
     cout<<"Ran through: "<<ctr<<" times"<<"\n";
     if(gameWon){
         cout<<"You Won!\n";
