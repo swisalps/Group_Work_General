@@ -206,42 +206,42 @@ class GameController
         //cout << "test111" << endl;
         }
         //cout << "test12" << endl;
-        else if((lowerPiles[0].front().isRed() != isRed) && (lowerPiles[0].front().getNum() == cNum + 1) && (lowerPiles[0].front().getNum() != 2) && (!lowerPiles[0].empty())){
+        else if ((!lowerPiles[0].empty()) && (lowerPiles[0].front().isRed() != isRed) && (lowerPiles[0].front().getNum() == cNum + 1) && (lowerPiles[0].front().getNum() != 2)){
             cout << "test12" << endl;
             moveCard(1, flipPile, lowerPiles[0]);
             hasMovedFlip++;
             moveMade++;
         }
         //cout << "test13" << endl;
-        else if((lowerPiles[1].front().isRed() != isRed) && (lowerPiles[1].front().getNum() == cNum + 1) && (lowerPiles[1].front().getNum() != 2) && (!lowerPiles[1].empty())){
+		else if ((!lowerPiles[1].empty()) && (lowerPiles[1].front().isRed() != isRed) && (lowerPiles[1].front().getNum() == cNum + 1) && (lowerPiles[1].front().getNum() != 2)){
             cout << "test13" << endl;
             moveCard(1, flipPile, lowerPiles[1]);
             hasMovedFlip++;
             moveMade++;
         }
         //cout << "test14" << endl;
-        else if((lowerPiles[2].front().isRed() != isRed) && (lowerPiles[2].front().getNum() == cNum + 1) && (lowerPiles[2].front().getNum() != 2) && (!lowerPiles[2].empty())){
+		else if ((!lowerPiles[2].empty()) && (lowerPiles[2].front().isRed() != isRed) && (lowerPiles[2].front().getNum() == cNum + 1) && (lowerPiles[2].front().getNum() != 2)){
             cout << "test14" << endl;
             moveCard(1, flipPile, lowerPiles[2]);
             hasMovedFlip++;
             moveMade++;
         }
         //cout << "test15" << endl;
-        else if((lowerPiles[3].front().isRed() != isRed) && (lowerPiles[3].front().getNum() == cNum + 1) && (lowerPiles[3].front().getNum() != 2) && (!lowerPiles[3].empty())){
+		else if ((!lowerPiles[3].empty()) && (lowerPiles[3].front().isRed() != isRed) && (lowerPiles[3].front().getNum() == cNum + 1) && (lowerPiles[3].front().getNum() != 2)){
             cout << "test15" << endl;
             moveCard(1, flipPile, lowerPiles[3]);
             hasMovedFlip++;
             moveMade++;
         }
         //cout << "test16" << endl;
-        else if((lowerPiles[4].front().isRed() != isRed) && (lowerPiles[4].front().getNum() == cNum + 1) && (lowerPiles[4].front().getNum() != 2) && (!lowerPiles[4].empty())){
+		else if ((!lowerPiles[4].empty()) && (lowerPiles[4].front().isRed() != isRed) && (lowerPiles[4].front().getNum() == cNum + 1) && (lowerPiles[4].front().getNum() != 2)){
             cout << "test16" << endl;
             moveCard(1, flipPile, lowerPiles[4]);
             hasMovedFlip++;
             moveMade++;
         }
         //cout << "test17" << endl;
-        else if((lowerPiles[5].front().isRed() != isRed) && (lowerPiles[5].front().getNum() == cNum + 1) && (lowerPiles[5].front().getNum() != 2) && (!lowerPiles[5].empty())){
+		else if ((!lowerPiles[5].empty()) && (lowerPiles[5].front().isRed() != isRed) && (lowerPiles[5].front().getNum() == cNum + 1) && (lowerPiles[5].front().getNum() != 2)){
             cout << "test17" << endl;
             moveCard(1, flipPile, lowerPiles[5]);
             hasMovedFlip++;
@@ -249,7 +249,7 @@ class GameController
 
         }
         //cout << "test18" << endl;
-        else if((lowerPiles[6].front().isRed() != isRed) && (lowerPiles[6].front().getNum() == cNum + 1) && (lowerPiles[6].front().getNum() != 2) && (!lowerPiles[6].empty())){
+		else if ((!lowerPiles[6].empty()) && (lowerPiles[6].front().isRed() != isRed) && (lowerPiles[6].front().getNum() == cNum + 1) && (lowerPiles[6].front().getNum() != 2)){
             cout << "test18" << endl;
             moveCard(1, flipPile, lowerPiles[6]);
             hasMovedFlip++;
@@ -572,8 +572,10 @@ class GameController
             //cout << "Dest size after spice: " << dest.size() << endl;
 
         }
-        if(!source.front().getVisible())
-            source.front().setVis();
+        if (!source.empty()){
+			if (!source.front().getVisible())
+				source.front().setVis();
+		}
     }
 
 
