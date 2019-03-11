@@ -647,7 +647,7 @@ class GameController
        {
            cout << "---------NEW TURN BEGUN----------" << endl;
             //As long as the game is not won or lost the loop will continue
-      //while(test < 40){
+      //while(test < 20){
             ctr++;
             bool b = false;
             checkFlip();
