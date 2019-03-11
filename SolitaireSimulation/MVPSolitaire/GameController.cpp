@@ -505,7 +505,7 @@ class GameController
             if(!(lowerPiles[startingPile]).empty())
             {
                 //cout << "before" << endl;
-                Card lastVisOne = lastVisible(lowerPiles[startingPile]); // promblematic line
+                Card lastVisOne = lastVisible(lowerPiles[startingPile]);
                 //cout << "after" << endl;
                  if((lastVisOne.getNum() == 13) && (findNonVis(lowerPiles[startingPile]) == true)){
                     for(int j=0; j<=6; j++){
@@ -610,7 +610,7 @@ class GameController
         }
     }
     //lastVisible method is an integral part of the checklowermove(). It returns the last visible card in a pile and also keeps track of the amount of cards ahead of the last visible card
-    // through the visCtr variabloe. this is important becuase when executing a moveCard() call, you must provide the amount of cards to move, from the front to amount of cards deep in the pile
+    // through the visCtr variable. this is important becuase when executing a moveCard() call, you must provide the amount of cards to move, from the front to amount of cards deep in the pile
     //@param the ppile to find the last visible card for
     //@returns a Card object that is the last visible for the pile. (visCtr although it is not returned is just as important as the return itself)
 
@@ -663,9 +663,9 @@ class GameController
             checkFlip();
             //cout << "checkFlip() completed " << endl;
             b = checkLowerMove(6);
-            //if(b){
-                //checkLowerMove(6);
-            //}
+            while(b){
+                checkLowerMove(6);
+            }
 
             lowerToAceFirst(lowerPiles[0]);//trys to place the front lowerPiles[0] card if its an ace onto the ace piles
             if(diamondA || clubA || spadeA || heartA){ //if statement that checks to see if the any of the aces have been placed on the ace piles
