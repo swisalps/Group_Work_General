@@ -43,6 +43,8 @@ class GameController
         deck = cardDeck();//stacked deck
         shuffleDeck = deck.shuffled;
         visCtr = 0;
+        hasMovedLower = 0;
+        hasMovedFlip = 0;
 	for(int i = 0; i < 7; i++)
 	{
 		lowerPiles[i] = makePile(i+1);
@@ -639,7 +641,7 @@ class GameController
     }
 
 //runs the GameController class
-    void run()
+    int run()
     {
             int ctr = 0;
             flipCard();
@@ -658,6 +660,13 @@ class GameController
             }
 
             lowerToAceFirst(lowerPiles[0]);//trys to place the front lowerPiles[0] card if its an ace onto the ace piles
+            lowerToAceFirst(lowerPiles[1]);
+            lowerToAceFirst(lowerPiles[2]);
+            lowerToAceFirst(lowerPiles[3]);
+            lowerToAceFirst(lowerPiles[4]);
+            lowerToAceFirst(lowerPiles[5]);
+            lowerToAceFirst(lowerPiles[6]);
+
             if(diamondA || clubA || spadeA || heartA){ //if statement that checks to see if the any of the aces have been placed on the ace piles
                 lowerToAce(flipPile);
                 lowerToAce(lowerPiles[0]);
@@ -751,9 +760,11 @@ class GameController
     cout<<"Ran through: "<<ctr<<" times"<<"\n";
     if(gameWon){
         cout<<"You Won!\n";
+        return 1;
     }
     else{
         cout<<"You lost!\n";
+        return 0;
     }
     }
 
@@ -765,6 +776,8 @@ class GameController
 };
 int main()
     {
-        new GameController();
+        GameController* game = new GameController();
+        //cout << "Test " << game << endl;
+        delete game;
         return 0;
     }
