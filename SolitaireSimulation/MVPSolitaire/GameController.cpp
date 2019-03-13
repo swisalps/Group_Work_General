@@ -127,8 +127,8 @@ class GameController
         bool isRed = aCard.isRed();
         bool hmm;
         //cout<<"Deck Top: "<<shuffleDeck.front().toString();
-        cout << "Flip Card: " << aCard.toString() << endl;
-        cout << "Flip Deck size: " << flipPile.size() << endl;
+        //cout << "Flip Card: " << aCard.toString() << endl;
+        //cout << "Flip Deck size: " << flipPile.size() << endl;
         if(cNum == 1){
             lowerToAceFirst(flipPile);
         }
@@ -647,7 +647,7 @@ class GameController
             flipCard();
         while((!gameWon)&&(!gameLost))
        {
-           cout << "---------NEW TURN BEGUN----------" << endl;
+           //cout << "---------NEW TURN BEGUN----------" << endl;
             //As long as the game is not won or lost the loop will continue
       //while(test < 20){
             ctr++;
@@ -753,8 +753,8 @@ class GameController
             test++;
             if((topDiamonds.size() == 13)&&(topHearts.size() == 13)&&(topClubs.size() == 13)&&(topSpades.size() == 13))
                 gameWon = true;
-            displayPiles();
-            cout << ctr << endl;
+            //displayPiles();
+            //cout << ctr << endl;
     }
 
     cout<<"Ran through: "<<ctr<<" times"<<"\n";

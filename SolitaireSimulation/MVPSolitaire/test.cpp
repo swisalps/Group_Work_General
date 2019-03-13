@@ -1,4 +1,5 @@
-#include "cardDeck.cpp"
+//#include "cardDeck.cpp"
+#include "GameController.cpp"
 #include <vector>
 #include <stdlib.h>
 #include <stack>
@@ -22,6 +23,7 @@ class Test{
         test_getVisible();
         test_setNotVisible();
         test_setVisible();
+        test_winPercent(30);
     }
 
     void init(){
@@ -91,13 +93,27 @@ class Test{
             cout << "The top card of pile 0 is NOT visible" << endl;
         }
     }
+
+    void test_winPercent(int numGames){
+        int gameCtr = 0;
+        int winCtr = 0;
+        GameController* game = new GameController();
+        while(gameCtr < numGames){
+            if(game->run()==1){
+                winCtr++;
+                gameCtr++;
+            }
+            else{
+                gameCtr++;
+            }
+        }
+        double winPer = winCtr / gameCtr;
+        cout << "Win Percentage: " << winPer << endl;
+    }
 };
 
-int main(){
+int maintest(){
     new Test();
-    while(i<10){
-        GameController* game = new GameController();
-        if
-    }
+    test_winPercent(30);
     return 0;
 }
