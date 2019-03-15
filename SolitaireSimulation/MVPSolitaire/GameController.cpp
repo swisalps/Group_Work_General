@@ -788,8 +788,17 @@ class GameController
 };
 int main()
     {
+        int n = 0;
+        int winCtr = 0;
+        double winP = 0.0;
+        while(n<50){
         GameController* game = new GameController();
+        if(game->run()==1){
+            winCtr++;
+        }
+        n++;
         //cout << "Test " << game << endl;
         delete game;
+        }
         return 0;
     }
