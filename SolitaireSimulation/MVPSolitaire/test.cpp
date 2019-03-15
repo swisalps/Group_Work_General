@@ -97,8 +97,9 @@ class Test{
     void test_winPercent(int numGames){
         int gameCtr = 0;
         int winCtr = 0;
-        GameController* game = new GameController();
+
         while(gameCtr < numGames){
+            GameController* game = new GameController();
             if(game->run()==1){
                 winCtr++;
                 gameCtr++;
@@ -106,6 +107,7 @@ class Test{
             else{
                 gameCtr++;
             }
+        delete game;
         }
         double winPer = winCtr / gameCtr;
         cout << "Win Percentage: " << winPer << endl;
