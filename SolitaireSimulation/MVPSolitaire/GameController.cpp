@@ -36,7 +36,7 @@ class GameController
             //int ctr = 0;
             initSolitaire();
             //int winlose = run();
-            run();
+            //run();
             //if(winlose==1){
                 //winCtr++;
             //}
@@ -788,17 +788,20 @@ class GameController
 };
 int main()
     {
-        int n = 0;
-        int winCtr = 0;
-        double winP = 0.0;
-        while(n<50){
+        //int n = 0;
+        //int winCtr = 0;
+        //double winP = 0.0;
+        //while(n<5){
         GameController* game = new GameController();
-        if(game->run()==1){
-            winCtr++;
-        }
-        n++;
-        //cout << "Test " << game << endl;
+        int winl = game->run();
+        //if(winl==1){
+            //winCtr++;
+        //}
+        //n++;
+        //cout << "Test " << winl << endl;
         delete game;
-        }
+        //}
+       //winP = winCtr/n;
+        //cout << "Win percentage: " << winP << endl;
         return 0;
     }
