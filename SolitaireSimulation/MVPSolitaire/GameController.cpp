@@ -28,13 +28,25 @@ class GameController
     //constructor for the GameController object: creates and runs the solitaire deck
     GameController()
     {
-        auto start = std::chrono::high_resolution_clock::now();
-        int ctr = 0;
-        initSolitaire();
-        run();
-        auto stop = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop-start);
-        cout<<"Execution Time: "<<duration.count()<<" microseconds\n";
+        //int n = 0;
+        //int winCtr = 0;
+        //double winP = 0.0;
+        //while(n < 50){
+            auto start = std::chrono::high_resolution_clock::now();
+            //int ctr = 0;
+            initSolitaire();
+            //int winlose = run();
+            run();
+            //if(winlose==1){
+                //winCtr++;
+            //}
+            //n++;
+            auto stop = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop-start);
+            cout<<"Execution Time: "<<duration.count()<<" microseconds\n";
+        //}
+        //winP = winCtr/n;
+        //cout << "win Percentage after " << n << ": " << winP << endl;
     }
     //initializes the solitaire game
     void initSolitaire()
@@ -65,12 +77,12 @@ class GameController
         shuffleDeck.pop_front();
         }
         pile.front().setVis();
-        cout << "Pile " + std::to_string(numCards) + " Front->: ";
+        //cout << "Pile " + std::to_string(numCards) + " Front->: ";
         for(std::list<Card>::iterator it=pile.begin(); it != pile.end(); it++)
         {
-            std::cout << it->toStringOneLine() << ", ";
+            //std::cout << it->toStringOneLine() << ", ";
         }
-        cout << " " << endl;
+        //cout << " " << endl;
         return pile;
 
     }
@@ -191,7 +203,7 @@ class GameController
             }
 
             else{
-                cout << "no open spaces for king " << endl;
+                //cout << "no open spaces for king " << endl;
             }
 
         }
@@ -585,9 +597,9 @@ class GameController
             //cout << "flipPile becomes deck: "; //testing to make sure the flipPile is correctly reassembled to into the deck once the deck is emptied
             for(std::list<Card>::iterator it=shuffleDeck.begin(); it != shuffleDeck.end(); it++)
         {
-            cout << it->toStringOneLine() << ", ";
+            //cout << it->toStringOneLine() << ", ";
         }
-            cout << "\n";
+            //cout << "\n";
             if ((hasMovedFlip == 0 ) && (hasMovedLower == 0)){ //Checks if a move has been done since the last time the deck was shuffled
                 failCounter++;
                 if (failCounter > 2){//If there was no moves then the fail counter is increased by one, if it reaches 3 the game is over

@@ -23,7 +23,7 @@ class Test{
         test_getVisible();
         test_setNotVisible();
         test_setVisible();
-        test_winPercent(30);
+        //test_winPercent(30);
     }
 
     void init(){
@@ -114,6 +114,5 @@ class Test{
 
 int maintest(){
     new Test();
-    test_winPercent(30);
     return 0;
 }
