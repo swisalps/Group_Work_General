@@ -16,11 +16,12 @@ class GameController
     int hasMovedFlip;
     int hasMovedLower;
     int failCounter;
-    int test;
+    int test, moves;
+    double gamesWon, gamesLost;
     int visCtr, lowOneInt, lowTwoInt, lowThreeInt, lowFourInt, lowFiveInt, lowSixInt, lowSevenInt;
     bool gameLost, gameWon, heartA, clubA, spadeA, diamondA, lowOne, lowTwo, lowThree, lowFour, lowFive, lowSix, lowSeven;
     std::list<Card> shuffleDeck;
-    std::list<Card> pile, temp;
+    std::list<Card> pile;
     //lists below will be treated and interacted with as a stack. but are list because of the advantages the list data structure offers in terms of moving sections of data
     std::list<Card> topDiamonds, topSpades, topHearts, topClubs, flipPile;
     std::array<std::list<Card>, 7> lowerPiles;
@@ -34,7 +35,7 @@ class GameController
         //while(n < 50){
             auto start = std::chrono::high_resolution_clock::now();
             //int ctr = 0;
-            initSolitaire();
+
             //int winlose = run();
             run();
             //if(winlose==1){
@@ -42,7 +43,7 @@ class GameController
             //}
             //n++;
             auto stop = std::chrono::high_resolution_clock::now();
-            auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop-start);
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop-start);
             cout<<"Execution Time: "<<duration.count()<<" microseconds\n";
         //}
         //winP = winCtr/n;
@@ -55,6 +56,7 @@ class GameController
         deck = cardDeck();//stacked deck
         shuffleDeck = deck.shuffled;
         visCtr = 0;
+        moves = 0;
         hasMovedLower = 0;
         hasMovedFlip = 0;
 	for(int i = 0; i < 7; i++)
@@ -558,6 +560,7 @@ class GameController
 
     void moveCard(int numCards, std::list<Card>& source, std::list<Card>& dest)
     {
+        moves++;
         //cout << "moveCard called " << endl;
         if (numCards == 1){  //If there is just one card it is moved to the destination pile and then it is remove from the source pile
             dest.push_front(source.front());
@@ -653,8 +656,16 @@ class GameController
     }
 
 //runs the GameController class
-    int run()
+    void run()
     {
+        gamesWon = 0;
+        gamesLost = 0;
+        int gamesPlayed = 0;
+        srand(time(NULL));
+        while (gamesPlayed<1000)
+        {
+            reset();
+            initSolitaire();
             int ctr = 0;
             flipCard();
         while((!gameWon)&&(!gameLost))
@@ -769,36 +780,45 @@ class GameController
             //cout << ctr << endl;
     }
 
-    cout<<"Ran through: "<<ctr<<" times"<<"\n";
+    cout<<"Total Moves: "<<ctr<<"\n";
     if(gameWon){
+        //displayPiles();
         cout<<"You Won!\n";
-        return 1;
+        gamesWon++;
     }
     else{
+        //displayPiles();
         cout<<"You lost!\n";
-        return 0;
-    }
+
+
     }
 
-//terminates the program
-    void stop()
-    {
-        return;
+    gamesPlayed++;
+    }
+    double winPerc = (gamesWon/gamesPlayed+0.0)*100.0;
+cout<<"Played "<<gamesPlayed<<" and won "<<gamesWon<<" for a win percentage of: "<<winPerc<<"%"<<endl;
+
+    }
+    void reset(){
+        shuffleDeck.clear();
+        topDiamonds.clear();
+        topSpades.clear();
+        topClubs.clear();
+        topHearts.clear();
+        flipPile.clear();
+        for(std::list<Card> pile:lowerPiles){
+            pile.clear();
+        }
     }
 };
 int main()
     {
-        int n = 0;
-        int winCtr = 0;
-        double winP = 0.0;
-        while(n<50){
+
         GameController* game = new GameController();
-        if(game->run()==1){
-            winCtr++;
-        }
-        n++;
+
+
         //cout << "Test " << game << endl;
         delete game;
-        }
+
         return 0;
     }
