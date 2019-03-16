@@ -817,8 +817,10 @@ int main()
         GameController* game = new GameController();
 
 
+
         //cout << "Test " << game << endl;
         delete game;
+
 
         return 0;
     }

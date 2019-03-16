@@ -114,7 +114,7 @@ class Test{
     }
 };
 
-int maintest(){
+int main2(){
     new Test();
     return 0;
 }
