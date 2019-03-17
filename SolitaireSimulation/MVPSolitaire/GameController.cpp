@@ -22,6 +22,7 @@ class GameController
     bool gameLost, gameWon, heartA, clubA, spadeA, diamondA, lowOne, lowTwo, lowThree, lowFour, lowFive, lowSix, lowSeven;
     std::list<Card> shuffleDeck;
     std::list<Card> pile;
+    std::list<int> moveAverage;
     //lists below will be treated and interacted with as a stack. but are list because of the advantages the list data structure offers in terms of moving sections of data
     std::list<Card> topDiamonds, topSpades, topHearts, topClubs, flipPile;
     std::array<std::list<Card>, 7> lowerPiles;
@@ -781,6 +782,8 @@ class GameController
     }
 
     cout<<"Total Moves: "<<ctr<<"\n";
+    moveAverage.push_front(ctr);
+
     if(gameWon){
         //displayPiles();
         cout<<"You Won!\n";
@@ -795,8 +798,16 @@ class GameController
 
     gamesPlayed++;
     }
+    int totalMoves = 0;
+    double averageMoves;
     double winPerc = (gamesWon/gamesPlayed+0.0)*100.0;
+    for(int i=0; i<moveAverage.size(); i++){
+        totalMoves += moveAverage.front();
+        moveAverage.pop_front();
+    }
+    averageMoves = totalMoves/moveAverage.size();
 cout<<"Played "<<gamesPlayed<<" and won "<<gamesWon<<" for a win percentage of: "<<winPerc<<"%"<<endl;
+cout << "Average moves made per game: " << averageMoves << endl;
 
     }
     void reset(){
