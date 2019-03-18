@@ -794,12 +794,13 @@ class GameController
     }
 
     cout<<"Total Moves: "<<moves<<"\n";
-    moveAverage.push_front(moves);
+
 
     if(gameWon){
         //displayPiles();
         cout<<"You Won!\n";
         gamesWon++;
+        moveAverage.push_front(moves);
     }
     else{
         //displayPiles();
@@ -820,7 +821,7 @@ class GameController
     }
     averageMoves = totalMoves/moveAverage.size();
 cout<<"Played "<<gamesPlayed<<" and won "<<gamesWon<<" for a win percentage of: "<<winPerc<<"%"<<endl;
-cout << "Average moves made per game: " << averageMoves << endl;
+cout << "Average moves made per winning game: " << averageMoves << endl;
 cout<<"Average time per move: " <<  (((float)((float)avgTimePerMoveTotal/gamesPlayed))/CLOCKS_PER_SEC)*1000000 <<" microseconds\n";
     }
     void reset(){
