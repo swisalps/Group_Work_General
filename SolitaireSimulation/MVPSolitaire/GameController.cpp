@@ -7,6 +7,7 @@
 #include <array>
 #include <string>
 #include <chrono>
+#include <time.h>
 using namespace std;
 
 class GameController
@@ -26,10 +27,14 @@ class GameController
     //lists below will be treated and interacted with as a stack. but are list because of the advantages the list data structure offers in terms of moving sections of data
     std::list<Card> topDiamonds, topSpades, topHearts, topClubs, flipPile;
     std::array<std::list<Card>, 7> lowerPiles;
+    clock_t avgTimePerMoveTotal;
+    clock_t totalMoveTime, moveStart;
 
     //constructor for the GameController object: creates and runs the solitaire deck
     GameController()
     {
+
+
         //int n = 0;
         //int winCtr = 0;
         //double winP = 0.0;
@@ -45,7 +50,7 @@ class GameController
             //n++;
             auto stop = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop-start);
-            cout<<"Execution Time: "<<duration.count()<<" microseconds\n";
+            cout<<"Total execution Time: "<<duration.count()<<" milliseconds\n";
         //}
         //winP = winCtr/n;
         //cout << "win Percentage after " << n << ": " << winP << endl;
@@ -53,6 +58,8 @@ class GameController
     //initializes the solitaire game
     void initSolitaire()
     {
+        moveStart = clock();
+        totalMoveTime = clock()-clock();
         //To play using rigged deck set deck equal to cardDeck(0) for a pasing deck
         deck = cardDeck();//stacked deck
         shuffleDeck = deck.shuffled;
@@ -561,7 +568,8 @@ class GameController
 
     void moveCard(int numCards, std::list<Card>& source, std::list<Card>& dest)
     {
-        moves++;
+        clock_t timer = clock() - moveStart;
+
         //cout << "moveCard called " << endl;
         if (numCards == 1){  //If there is just one card it is moved to the destination pile and then it is remove from the source pile
             dest.push_front(source.front());
@@ -582,6 +590,10 @@ class GameController
 			if (!source.front().getVisible())
 				source.front().setVis();
 		}
+        totalMoveTime = totalMoveTime + timer;
+        moveStart = clock();
+        moves = moves + 1;
+        //cout<<"Total current Moves: "<<moves<<endl;
     }
 
 
@@ -663,7 +675,7 @@ class GameController
         gamesLost = 0;
         int gamesPlayed = 0;
         srand(time(NULL));
-        while (gamesPlayed<1000)
+        while (gamesPlayed<1500)
         {
             reset();
             initSolitaire();
@@ -781,8 +793,8 @@ class GameController
             //cout << ctr << endl;
     }
 
-    cout<<"Total Moves: "<<ctr<<"\n";
-    moveAverage.push_front(ctr);
+    cout<<"Total Moves: "<<moves<<"\n";
+    moveAverage.push_front(moves);
 
     if(gameWon){
         //displayPiles();
@@ -797,6 +809,7 @@ class GameController
     }
 
     gamesPlayed++;
+    avgTimePerMoveTotal = avgTimePerMoveTotal + ((float)totalMoveTime/moves);
     }
     int totalMoves = 0;
     double averageMoves;
@@ -808,7 +821,7 @@ class GameController
     averageMoves = totalMoves/moveAverage.size();
 cout<<"Played "<<gamesPlayed<<" and won "<<gamesWon<<" for a win percentage of: "<<winPerc<<"%"<<endl;
 cout << "Average moves made per game: " << averageMoves << endl;
-
+cout<<"Average time per move: " <<  (((float)((float)avgTimePerMoveTotal/gamesPlayed))/CLOCKS_PER_SEC)*1000000 <<" microseconds\n";
     }
     void reset(){
         shuffleDeck.clear();
