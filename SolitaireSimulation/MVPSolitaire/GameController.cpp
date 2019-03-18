@@ -688,13 +688,12 @@ class GameController
       //while(test < 20){
             ctr++;
             bool b = false;
-            checkFlip();
             //cout << "checkFlip() completed " << endl;
             b = checkLowerMove(6);
             while(b){
                 b = checkLowerMove(6);
             }
-
+            checkFlip();
             lowerToAceFirst(lowerPiles[0]);//trys to place the front lowerPiles[0] card if its an ace onto the ace piles
             lowerToAceFirst(lowerPiles[1]);
             lowerToAceFirst(lowerPiles[2]);
