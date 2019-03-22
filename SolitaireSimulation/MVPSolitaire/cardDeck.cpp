@@ -11,6 +11,7 @@ std::vector<Card> unShuffle;
 std::list<Card> shuffled;
 int randomInt;
 
+
 //constructs a card instance made up of the cards number,
 //suit and whether its value is visible to the user or not
     cardDeck(){
@@ -61,7 +62,7 @@ int randomInt;
             //     std::cout<<card.toString()<<"\n";
             // }
             }
-            //Creates a deck that always dfails
+
             if(test == 1){
                 for(int i = 5; i >= 2; i--){
                     shuffled.emplace_back(i, "D", false);
@@ -142,7 +143,7 @@ int randomInt;
    //Shuffles the deck using the original fisher yates theory
    std::list<Card> shuffleDeck(){
        for(int n = unShuffle.size(); n > 0; n--){
-           srand(time(NULL));
+
            randomInt = rand() % unShuffle.size();
            //std::cout<< randomInt<< "||";
            Card temp = unShuffle[randomInt];
