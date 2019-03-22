@@ -36,7 +36,7 @@ int randomInt;
         //@param test indicates whether the deck should pass(test = 0) or fail(test = 0)
         cardDeck(int test){
             if(test == 0){
-                //construct first part of deck
+
 
                 for(int i = 13; i >= 4; i--){
                     shuffled.emplace_back(i, "C", false);
@@ -62,6 +62,7 @@ int randomInt;
             //     std::cout<<card.toString()<<"\n";
             // }
             }
+
             if(test == 1){
                 for(int i = 5; i >= 2; i--){
                     shuffled.emplace_back(i, "D", false);
