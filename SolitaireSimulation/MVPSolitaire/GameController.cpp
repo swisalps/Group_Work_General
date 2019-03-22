@@ -598,26 +598,34 @@ class GameController
                for(int j = 0; j <= 6; j++){
                    if((j != startingP) && (!lowerPiles[j].empty())){
                         if((lowerPiles[j].front().getNum() == frontCard.getNum()+1) && (lowerPiles[j].front().isRed() != frontCard.isRed())){
-                            cout << "made through condition with dest " << j << " and start " << startingP << endl;
+                            //cout << "made through condition with dest " << j << " and start " << startingP << endl;
                             if(!visted.empty()){
-                                for(Itr=visted.begin(); Itr!=visted.end(); ++Itr){
+                                Itr = visted.begin();
+                                for(int i = 0; i < visted.size(); i++){
                                     if(*Itr==j){ //if J
                                         Itr++;
                                         if(*Itr==startingP){
-                                            cout << "move already made" << endl;
+                                            //cout << "move already made" << endl;
                                             repeatMove = true;
                                             return false;
                                         }
+                                        else{
+                                           Itr++;
+                                        }
                                     }
-                                    Itr++;
+                                    else{
+                                        Itr++;
+                                        Itr++;
+                                    }
+
                                 }
                             }
                             if(repeatMove == false){
                                     moveCard(1, lowerPiles[startingP], lowerPiles[j]);
                                     visted.push_front(j);//adds the original pile and destination pile of the moved card to the visted list. groupings of 2
-                                    cout << "destination pile: " << j << endl;
+                                    //cout << "destination pile: " << j << endl;
                                     visted.push_front(startingP); //visted = startingP, j, _ , _ , _ ,
-                                    cout << "origin pile: " << startingP << endl;
+                                    //cout << "origin pile: " << startingP << endl;
                                     hasMovedLower++;
                                     return true;
                             }
