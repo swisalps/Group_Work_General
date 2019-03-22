@@ -155,7 +155,7 @@ class GameController
         //cout << "Flip Deck size: " << flipPile.size() << endl;
 
         if(cNum == 1){
-            cout << "test0" << endl;
+            //cout << "test0" << endl;
             lowerToAceFirst(flipPile);
         }
         if(cNum == 13){
@@ -185,50 +185,50 @@ class GameController
                 moveMade++;
             }
             else if(lowerPiles[0].empty()){
-                cout << "test5" << endl;
+                //cout << "test5" << endl;
                 moveCard(1, flipPile, lowerPiles[0]);
                 hasMovedFlip++;
                 moveMade++;
             }
             else if(lowerPiles[1].empty()){
-                cout << "test6" << endl;
+                //cout << "test6" << endl;
                 moveCard(1, flipPile, lowerPiles[1]);
                 hasMovedFlip++;
                 moveMade++;
             }
             else if(lowerPiles[2].empty()){
-                cout << "test7" << endl;
+                //cout << "test7" << endl;
                 moveCard(1, flipPile, lowerPiles[2]);
                 hasMovedFlip++;
                 moveMade++;
             }
             else if(lowerPiles[3].empty()){
-                cout << "test8" << endl;
+                //cout << "test8" << endl;
                 moveCard(1, flipPile, lowerPiles[3]);
                 hasMovedFlip++;
                 moveMade++;
             }
             else if(lowerPiles[4].empty()){
-                cout << "test9" << endl;
+                //cout << "test9" << endl;
                 moveCard(1, flipPile, lowerPiles[4]);
                 hasMovedFlip++;
                 moveMade++;
             }
             else if(lowerPiles[5].empty()){
-                cout << "test10" << endl;
+                //cout << "test10" << endl;
                 moveCard(1, flipPile, lowerPiles[5]);
                 hasMovedFlip++;
                 moveMade++;
             }
             else if(lowerPiles[6].empty()){
-                cout << "test11" << endl;
+                //cout << "test11" << endl;
                 moveCard(1, flipPile, lowerPiles[6]);
                 hasMovedFlip++;
                 moveMade++;
             }
 
             else{
-                cout << "no open spaces for king " << endl;
+                //cout << "no open spaces for king " << endl;
             }
 
         }
@@ -609,7 +609,7 @@ class GameController
             //cout << "Source size after spice: " << source.size() << endl;
             //cout << "Dest size after spice: " << dest.size() << endl;
 
-
+        }
         if (!source.empty()){
 			if (!source.front().getVisible())
 				source.front().setVis();
@@ -620,6 +620,7 @@ class GameController
         //cout<<"Total current Moves: "<<moves<<endl;
 
     }
+
 
 
 //flips a card from the shuffled deck to the flip pile.
@@ -635,7 +636,7 @@ class GameController
         {
             shuffleDeck.swap(flipPile);
             shuffleDeck.reverse();
-            cout << "flipPile becomes deck: "; //testing to make sure the flipPile is correctly reassembled to into the deck once the deck is emptied
+            //cout << "flipPile becomes deck: "; //testing to make sure the flipPile is correctly reassembled to into the deck once the deck is emptied
             for(std::list<Card>::iterator it=shuffleDeck.begin(); it != shuffleDeck.end(); it++)
         {
             //cout << it->toStringOneLine() << ", ";
