@@ -598,7 +598,8 @@ class GameController
                         if((lowerPiles[j].front().getNum() == frontCard.getNum()+1) && (lowerPiles[j].front().isRed() != frontCard.isRed())){
                             cout << "made through condition with dest " << j << " and start " << startingP << endl;
                             if(!visted.empty()){
-                                for(Itr=visted.begin(); Itr!=visted.end(); ++Itr){
+                                Itr = visted.begin();
+                                for(int i = 0; i < visted.size(); i++){
                                     if(*Itr==j){ //if J
                                         Itr++;
                                         if(*Itr==startingP){
@@ -606,8 +607,15 @@ class GameController
                                             repeatMove = true;
                                             return false;
                                         }
+                                        else{
+                                           Itr++; 
+                                        }
                                     }
-                                    Itr++;
+                                    else{
+                                        Itr++;
+                                        Itr++;
+                                    }
+                                    
                                 }
                             }
                             if(repeatMove == false){
@@ -753,7 +761,7 @@ class GameController
         //gamesWon = 0;
         //gamesLost = 0;
         //int gamesPlayed = 0;
-        //srand(time(NULL));
+        srand(time(NULL));
        // while (gamesPlayed<1500)
         //{
             //reset();
@@ -761,12 +769,11 @@ class GameController
             int ctr = 0;
             flipCard();
              std::list<int>::iterator Itr;
-        //while((!gameWon)&&(!gameLost))
-       //{
+        while((!gameWon)&&(!gameLost)){
 
 
             //As long as the game is not won or lost the loop will continue
-      while(test < 10){
+      //while(test < 10){
           cout << "---------NEW TURN BEGUN----------" << endl;
             ctr++;
             bool b = false;
@@ -783,7 +790,7 @@ class GameController
                     }
                     cout << "" << endl;
             checkLowerPartial(6);
-            displayPiles();
+            //displayPiles();
             checkFlip();
 
             lowerToAceFirst(lowerPiles[0]);//trys to place the front lowerPiles[0] card if its an ace onto the ace piles
