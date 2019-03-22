@@ -595,7 +595,8 @@ class GameController
                Card frontCard = lowerPiles[startingP].front();
                for(int j = 0; j <= 6; j++){
                    if((j != startingP) && (!lowerPiles[j].empty())){
-                        if((lowerPiles[j].front().getNum() == frontCard.getNum()+1) && (lowerPiles[j].front().isRed() != frontCard.getNum()+1)){
+                        if((lowerPiles[j].front().getNum() == frontCard.getNum()+1) && (lowerPiles[j].front().isRed() != frontCard.isRed())){
+                            cout << "made through condition with dest " << j << " and start " << startingP << endl;
                             if(!visted.empty()){
                                 for(Itr=visted.begin(); Itr!=visted.end(); ++Itr){
                                     if(*Itr==j){ //if J
@@ -603,19 +604,25 @@ class GameController
                                         if(*Itr==startingP){
                                             cout << "move already made" << endl;
                                             repeatMove = true;
+                                            return false;
                                         }
                                     }
                                     Itr++;
-                                    Itr++;
                                 }
-                                if(!repeatMove){
+                            }
+                            if(repeatMove == false){
                                     moveCard(1, lowerPiles[startingP], lowerPiles[j]);
                                     visted.push_front(j);//adds the original pile and destination pile of the moved card to the visted list. groupings of 2
+                                    cout << "destination pile: " << j << endl;
                                     visted.push_front(startingP); //visted = startingP, j, _ , _ , _ ,
+                                    cout << "origin pile: " << startingP << endl;
                                     hasMovedLower++;
                                     return true;
                             }
-                        }
+                            else{
+                                checkLowerPartial(startingP - 1);
+                            }
+
                    }
                }
             }
@@ -743,29 +750,40 @@ class GameController
 //runs the GameController class
     void run()
     {
-        gamesWon = 0;
-        gamesLost = 0;
-        int gamesPlayed = 0;
-        srand(time(NULL));
-        while (gamesPlayed<1500)
-        {
-            reset();
+        //gamesWon = 0;
+        //gamesLost = 0;
+        //int gamesPlayed = 0;
+        //srand(time(NULL));
+       // while (gamesPlayed<1500)
+        //{
+            //reset();
             initSolitaire();
             int ctr = 0;
             flipCard();
-        while((!gameWon)&&(!gameLost))
-       {
+             std::list<int>::iterator Itr;
+        //while((!gameWon)&&(!gameLost))
+       //{
 
-           //cout << "---------NEW TURN BEGUN----------" << endl;
+
             //As long as the game is not won or lost the loop will continue
-      //while(test < 20){
+      while(test < 10){
+          cout << "---------NEW TURN BEGUN----------" << endl;
             ctr++;
             bool b = false;
+            //visted.clear();
             //cout << "checkFlip() completed " << endl;
             b = checkLowerMove(6);
             while(b){
                 b = checkLowerMove(6);
             }
+            displayPiles();
+            cout << "visted contents: ";
+           for(Itr=visted.begin(); Itr != visted.end(); ++Itr){
+                cout << *Itr << ", ";
+                    }
+                    cout << "" << endl;
+            checkLowerPartial(6);
+            displayPiles();
             checkFlip();
 
             lowerToAceFirst(lowerPiles[0]);//trys to place the front lowerPiles[0] card if its an ace onto the ace piles
@@ -884,20 +902,20 @@ class GameController
 
     }
 
-    gamesPlayed++;
-    avgTimePerMoveTotal = avgTimePerMoveTotal + ((float)totalMoveTime/moves);
-    }
-    int totalMoves = 0;
-    double averageMoves;
-    double winPerc = (gamesWon/gamesPlayed+0.0)*100.0;
-    for(int i=0; i<moveAverage.size(); i++){
-        totalMoves += moveAverage.front();
-        moveAverage.pop_front();
-    }
-    averageMoves = totalMoves/moveAverage.size();
-cout<<"Played "<<gamesPlayed<<" and won "<<gamesWon<<" for a win percentage of: "<<winPerc<<"%"<<endl;
-cout << "Average moves made per winning game: " << averageMoves << endl;
-cout<<"Average time per move: " <<  (((float)((float)avgTimePerMoveTotal/gamesPlayed))/CLOCKS_PER_SEC)*1000000 <<" microseconds\n";
+    //gamesPlayed++;
+    //avgTimePerMoveTotal = avgTimePerMoveTotal + ((float)totalMoveTime/moves);
+    //}
+    //int totalMoves = 0;
+    //double averageMoves;
+    //double winPerc = (gamesWon/gamesPlayed+0.0)*100.0;
+    //for(int i=0; i<moveAverage.size(); i++){
+        //totalMoves += moveAverage.front();
+        //moveAverage.pop_front();
+    //}
+    //averageMoves = totalMoves/moveAverage.size();
+//cout<<"Played "<<gamesPlayed<<" and won "<<gamesWon<<" for a win percentage of: "<<winPerc<<"%"<<endl;
+//cout << "Average moves made per winning game: " << averageMoves << endl;
+//cout<<"Average time per move: " <<  (((float)((float)avgTimePerMoveTotal/gamesPlayed))/CLOCKS_PER_SEC)*1000000 <<" microseconds\n";
     }
     void reset(){
         shuffleDeck.clear();
