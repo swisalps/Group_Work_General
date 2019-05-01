@@ -1,7 +1,8 @@
 #include <stdlib.h>     /* srand, rand */
 #include <iostream>
+#include <string>
 
-
+using namespace std;
 class Card {
 public:
 int num;
@@ -52,13 +53,13 @@ bool isVis;
          }
      }
 
-     std::string toString(){
-         std::string temp = "";
-         return  std::to_string(num) + suit + std::to_string(isVis) + "\n" ;
+     string toString(){
+         string temp = "";
+         return  to_string(num) + suit + to_string(isVis) + "\n" ;
      }
-     std::string toStringOneLine(){
-         std::string temp = "";
-         return  std::to_string(num) + suit + std::to_string(isVis);
+     string toStringOneLine(){
+         string temp = "";
+         return  to_string(num) + suit + to_string(isVis);
      }
 };
 
